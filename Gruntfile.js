@@ -17,6 +17,16 @@ module.exports = function (grunt) {
         file: 'app.js'
       }
     },
+    jasmine_node: {
+     options: {
+       forceExit: true,
+       match: '.',
+       matchall: false,
+       extensions: 'js',
+       specNameMatcher: 'spec'
+      },
+      all: ['spec/']
+    },
     watch: {
       options: {
         nospawn: true,
@@ -44,8 +54,8 @@ module.exports = function (grunt) {
           'app/views/**/*.jade'
         ],
         options: { livereload: reloadPort }
-      }
-    }
+      } 
+   }
   });
 
   grunt.config.requires('watch.js.files');
@@ -70,4 +80,6 @@ module.exports = function (grunt) {
     'develop',
     'watch'
   ]);
+
+  grunt.registerTask('test', 'jasmine_node');
 };
