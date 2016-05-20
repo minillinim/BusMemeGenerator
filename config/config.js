@@ -27,7 +27,7 @@ var config = {
       name: 'app'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://bus-meme:bus-meme@ds025752.mlab.com:25752/heroku_1w4jjjbn'
+    db: process.env.MONGODB_URI
   }
 };
 
