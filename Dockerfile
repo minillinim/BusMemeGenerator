@@ -4,6 +4,8 @@ FROM node:argon
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+ENV PORT 3000
+
 # Install app dependencies
 COPY package.json /usr/src/app/
 RUN npm install
@@ -11,5 +13,5 @@ RUN npm install
 # Bundle app source
 COPY . /usr/src/app
 
-EXPOSE NODE_PORT
+EXPOSE 3000
 CMD [ "npm", "start" ]
