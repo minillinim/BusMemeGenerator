@@ -78,7 +78,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'develop',
-    'watch'
+    'watch',
+    'jasmine_node'
   ]);
 
   grunt.registerTask('test', 'jasmine_node');
