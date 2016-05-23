@@ -1,0 +1,28 @@
+input {
+    height: 32px;
+    margin-right: 0;
+    vertical-align: middle;
+    font-size: 14px;
+    padding-left: 10px;
+    border-radius: 3px;
+    line-height: 20px;
+    font-style: italic;
+    margin: 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background-color: #5264A1;
+    color: $input-color;
+}
+
+button {
+    font-size: 16px;
+    height: 32px;
+    vertical-align: middle;
+    max-width: none;
+    min-width: 0;
+    padding: 0px 24px 0 10px;
+    margin: 2px;
+    background-color:$button-color;
+    color:$input-color;
+}

@@ -1,0 +1,72 @@
+input {
+  height: 32px;
+  margin-right: 0;
+  vertical-align: middle;
+  font-size: 14px;
+  padding-left: 10px;
+  border-radius: 3px;
+  line-height: 20px;
+  font-style: italic;
+  margin: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  background-color: #5264A1;
+  color: white; }
+
+button {
+  font-size: 16px;
+  height: 32px;
+  vertical-align: middle;
+  max-width: none;
+  min-width: 0;
+  padding: 0px 24px 0 10px;
+  margin: 2px;
+  background-color: #050D4D;
+  color: white; }
+
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 100%;
+  background-color: #5E81F2;
+  color: yellow; }
+
+#main {
+  text-transform: uppercase; }
+  #main #title {
+    text-align: center; }
+    #main #title .first-line {
+      font-size: 52px; }
+    #main #title .second-line {
+      font-size: 40px; }
+    #main #title .third-line {
+      font-size: 36px; }
+  #main #journey {
+    padding-top: 50px;
+    margin-left: 10%; }
+    #main #journey .instructions {
+      text-transform: uppercase;
+      font-size: 18px;
+      padding-bottom: 30px; }
+    #main #journey .journey-details {
+      margin-left: 50px; }
+      #main #journey .journey-details .start-address, #main #journey .journey-details .dest-address {
+        color: white;
+        font-size: 12px;
+        padding: 20px, 0;
+        margin-top: 10px;
+        text-transform: none; }
+        #main #journey .journey-details .start-address input, #main #journey .journey-details .dest-address input {
+          display: block;
+          padding: 5px,0;
+          width: 500px;
+          margin-top: 5px; }
+      #main #journey .journey-details button {
+        margin-top: 20px;
+        padding: 5px,10px; }
+
+a {
+  color: #00B7FF; }
+
+/*# sourceMappingURL=main.css.map */
