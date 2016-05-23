@@ -17,6 +17,16 @@ module.exports = function (grunt) {
         file: 'app.js'
       }
     },
+    sass:{
+      options:{
+        sourceMap: true
+      },
+      dist:{
+        files:{
+          'public/css/main.css': 'public/css/main.scss'
+        }
+      }
+    },
     jasmine_node: {
      options: {
        forceExit: true,
@@ -42,7 +52,7 @@ module.exports = function (grunt) {
       },
       css: {
         files: [
-          'public/css/*.css'
+          'public/css/*.scss'
         ],
         options: {
           livereload: reloadPort
@@ -77,10 +87,11 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', [
+    'scss',
     'develop',
-    'watch',
-    'jasmine_node'
+    'watch'
   ]);
+  grunt.registerTask('scss', ['sass']);
 
   grunt.registerTask('test', 'jasmine_node');
 };
