@@ -28,5 +28,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/directions', function (req, res, next) {
-    res.send(directions());
+    // res.send(directions());
+    res.render('directions', {title:'test'});
+
 });
