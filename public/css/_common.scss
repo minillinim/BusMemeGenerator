@@ -5,14 +5,16 @@ input {
     font-size: 14px;
     padding-left: 10px;
     border-radius: 3px;
+    border:none;
     line-height: 20px;
     font-style: italic;
     margin: 2px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    background-color: #5264A1;
+    background-color: $input-bg-color;
     color: $input-color;
+    opacity: 0.8;
 }
 
 button {
@@ -25,4 +27,6 @@ button {
     margin: 2px;
     background-color:$button-color;
     color:$input-color;
+    border:none;
+    border-radius:3px;
 }

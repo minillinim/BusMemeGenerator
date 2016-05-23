@@ -5,14 +5,16 @@ input {
   font-size: 14px;
   padding-left: 10px;
   border-radius: 3px;
+  border: none;
   line-height: 20px;
   font-style: italic;
   margin: 2px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  background-color: #5264A1;
-  color: white; }
+  background-color: #4769B3;
+  color: white;
+  opacity: 0.8; }
 
 button {
   font-size: 16px;
@@ -22,33 +24,43 @@ button {
   min-width: 0;
   padding: 0px 24px 0 10px;
   margin: 2px;
-  background-color: #050D4D;
-  color: white; }
+  background-color: #033054;
+  color: white;
+  border: none;
+  border-radius: 3px; }
 
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   height: 100%;
-  background-color: #5E81F2;
-  color: yellow; }
+  background-color: #6595FC;
+  color: #FFFA32; }
 
 #main {
   text-transform: uppercase; }
   #main #title {
     text-align: center; }
     #main #title .first-line {
-      font-size: 52px; }
+      font-size: 56px; }
     #main #title .second-line {
       font-size: 40px; }
     #main #title .third-line {
-      font-size: 36px; }
+      font-size: 32px; }
   #main #journey {
     padding-top: 50px;
-    margin-left: 10%; }
+    margin-left: 20%; }
     #main #journey .instructions {
       text-transform: uppercase;
       font-size: 18px;
-      padding-bottom: 30px; }
+      padding-bottom: 30px;
+      display: inline-block;
+      padding-top: 5px; }
+    #main #journey img {
+      width: 32px;
+      display: inline-block;
+      vertical-align: top;
+      padding-right: 30px;
+      margin-left: -15px; }
     #main #journey .journey-details {
       margin-left: 50px; }
       #main #journey .journey-details .start-address, #main #journey .journey-details .dest-address {
@@ -60,11 +72,12 @@ body {
         #main #journey .journey-details .start-address input, #main #journey .journey-details .dest-address input {
           display: block;
           padding: 5px,0;
-          width: 500px;
+          width: 60%;
           margin-top: 5px; }
-      #main #journey .journey-details button {
+      #main #journey .journey-details .next-button {
         margin-top: 20px;
-        padding: 5px,10px; }
+        padding: 5px;
+        width: 10%; }
 
 a {
   color: #00B7FF; }
