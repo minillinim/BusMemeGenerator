@@ -1,5 +1,6 @@
 var express = require('express'),
   router = express.Router(),
+  directions = require('./direction')
   mongoose = require('mongoose'),
   Location = mongoose.model('Location');
 
@@ -27,5 +28,5 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/directions', function (req, res, next) {
-    res.send(directions);
+    res.send(directions());
 });

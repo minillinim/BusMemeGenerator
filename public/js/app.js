@@ -1,10 +1,11 @@
 var app = angular.module('BusMeme', []);
 
-app.controller('BusDirections', function($scope, GoogleAPIService){
+app.controller('BusDirections', function($scope, GoogleAPIService, $location){
 	$scope.startAddress = "hello";
 	GoogleAPIService.getDirections().then(function(response){
-		$scope.directions = response.data;
+		$scope.directions = response;
 	});
+
 });
 
 

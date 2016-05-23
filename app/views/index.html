@@ -2,6 +2,7 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
 	</head>
 	<body>
@@ -29,8 +30,7 @@
 						Enter destination address
 						<input type="text" id="start-address"/>
 					</div>
-					{{directions}}
-					<button class="next-button">Next</button>
+					<button class="next-button" ng-click="goToMap()">Next</button>
 				</div>
 			</div>
 		</div>
