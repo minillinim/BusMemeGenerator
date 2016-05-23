@@ -22,9 +22,10 @@ module.exports = function (app) {
 router.get('/', function (req, res, next) {
   Location.find(function (err, locations) {
     if (err) return next(err);
-    res.render('index', {
-      title: 'Bus Meme Generator',
-      locations: locations
-    });
+    res.render('index', {title: 'Bus Meme Generator'});
   });
+});
+
+router.get('/directions', function (req, res, next) {
+    res.send(directions);
 });

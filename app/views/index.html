@@ -1,6 +1,8 @@
-<html>
+<html ng-app="BusMeme">
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
 	</head>
 	<body>
 		<div id="main">
@@ -10,20 +12,20 @@
 				<div class="third-line">Generator</div>
 			</div>
 
-			<div id="journey">
+			<div id="journey" ng-controller="BusDirections">
 				<img src="../assets/step-1.gif"/>
 				<div class="instructions">Enter your start and end locations</div>
 
 				<div class="journey-details">
 					<div class="start-address">
 						Enter start address
-						<input type="text" id="start-address"/>
+						<input ng-model="startAddress" type="text" id="start-address"/>
 					</div>
 					<div class="dest-address">
 						Enter destination address
 						<input type="text" id="start-address"/>
 					</div>
-					
+					{{directions}}
 					<button class="next-button">Next</button>
 				</div>
 			</div>
