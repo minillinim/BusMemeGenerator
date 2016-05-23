@@ -29,4 +29,8 @@ button {
     color:$input-color;
     border:none;
     border-radius:3px;
+    cursor:pointer;
+}
+button:hover{
+    transform: scale(1.1); 
 }

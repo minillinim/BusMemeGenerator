@@ -27,7 +27,28 @@ button {
   background-color: #033054;
   color: white;
   border: none;
-  border-radius: 3px; }
+  border-radius: 3px;
+  cursor: pointer; }
+
+button:hover {
+  transform: scale(1.1); }
+
+#nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1300;
+  height: 90px; }
+  #nav .gallery {
+    color: white;
+    right: 10px;
+    position: fixed;
+    padding: 20px;
+    display: inline-block; }
+    #nav .gallery img {
+      display: inline-block;
+      width: 16px; }
 
 body {
   padding: 50px;

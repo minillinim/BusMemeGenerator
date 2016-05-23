@@ -1,0 +1,21 @@
+#nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1300;
+    height: 90px;
+
+    .gallery{
+    	color: $input-color;
+	    right: 10px;
+	    position: fixed;
+	    padding: 20px;
+	    display:inline-block;
+	    
+	    img{
+	    	display:inline-block;
+	    	width:16px;
+	    }
+    }
+}
