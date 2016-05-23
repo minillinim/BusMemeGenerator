@@ -34,7 +34,6 @@ body {
 		.instructions{
 			text-transform:uppercase;
 			font-size:18px;
-			padding-bottom:30px;
     		display: inline-block;
     		padding-top:5px;
 		}
@@ -44,12 +43,13 @@ body {
 			display: inline-block;
 		    vertical-align: top;
 		    padding-right: 30px;
-		    margin-left:-15px;
+		    margin-left:-13px;
 		}
 		
 		.journey-details{
 			
-			margin-left:50px;
+			padding:30px 0 80px 50px;
+    		border-left: thick solid $separator-color;
 
 			.start-address, .dest-address{
 				color:$input-color;
