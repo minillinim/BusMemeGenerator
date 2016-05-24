@@ -9,8 +9,7 @@ app.controller('MapController', function($scope, MapService){
 	$scope.destAddressLong = document.getElementById('destAddressLong').value;
 
 		MapService.getDirections($scope.startAddressLat, $scope.startAddressLong, $scope.destAddressLat, $scope.destAddressLong).then(function(response){
-			$scope.mapData = response
-			console.log("hhehhehe");
+			$scope.mapData = response.data;
 			console.log($scope.mapData);
 		});
 

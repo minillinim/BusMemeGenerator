@@ -23,6 +23,7 @@
     "morgan": "^1.6.1",
     "npm": "^3.9.2",
     "request": "^2.72.0",
+    "request-promise": "^3.0.0",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {

@@ -1,9 +1,7 @@
-var request = require("request");
+var request = require('request-promise');
 
 var directions = function(startAddressLat,startAddressLong, destAddressLat, destAddressLong){
-	return request.get('https://maps.googleapis.com/maps/api/directions/json?&mode=DRIVING&origin='+ startAddressLat +','+startAddressLong+'&destination='+ destAddressLat+','+destAddressLong, function (error, response, body) {
-		return response.body;
-	});
+	return request('https://maps.googleapis.com/maps/api/directions/json?&mode=DRIVING&origin='+ startAddressLat +','+startAddressLong+'&destination='+ destAddressLat+','+destAddressLong);
 };
 
 module.exports = directions;
