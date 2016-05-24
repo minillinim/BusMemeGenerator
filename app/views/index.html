@@ -1,24 +1,25 @@
-<html ng-app="BusMeme">
+<html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
+		 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+		 <script type="text/javascript" src="js/map.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
         <script src="../js/places-autocomplete.js"></script>
         <script src="../js/address-validation.js"></script>
 	</head>
-	<body >
+	<body ng-app="bus-meme">
 		<div id="nav">
 			<div class="gallery">
 			<img src="../assets/gallery.png"/>Gallery</div>
 		</div>
-		<div id="main">
+		<div id="main" ng-controller="MapController">
 			<div id="title">
 				<div class="first-line">Logan</div>
 				<div class="second-line">Bus Meme</div>
 				<div class="third-line">Generator</div>
 			</div>
-
-			<div id="journey" ng-controller="BusDirections">
-			<form method="post" onsubmit="return validateAddresses()" action="/directions">
+			<div id="journey">
+			<div>
 				<img src="../assets/step-1.gif"/>
 				<div class="instructions">Enter your start and end locations</div>
 
@@ -42,12 +43,12 @@
 						<input class="radiobutton" type="radio" name="hascar" value="driving" checked="true"> Yes, I do
 	  					<input class="radiobutton second" type="radio" name="hascar" value="walking"> No, I rely on public transport
 					</div>
-
 					<div id="validation-errors"></div>
-					<input class="button next-button" type="submit" value="Next"></input>
-					</form>
+					<input class="button next-button" ng-click="getMapData()"  type="submit" value="Next"></input>
+					</div>
 				</div>
 			</div>
+			{{mapData}}
 		</div>
 	</body>
 </html>

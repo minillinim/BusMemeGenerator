@@ -42,3 +42,4 @@ function getPostalCode(place){
 
     return postalCode;
 }
+

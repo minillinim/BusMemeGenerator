@@ -4,18 +4,6 @@ var express = require('express'),
   mongoose = require('mongoose'),
   Location = mongoose.model('Location');
 
-
-var logan = new Location({
-  state: 'QLD',
-  city: 'Logan Central',
-  suburb: 'Logan',
-  postalCode: '4114'
-});
-
-logan.save(function(err, data){
-  console.log(data.suburb + " was saved");
-});
-
 module.exports = function (app) {
   app.use('/', router);
 };
@@ -24,6 +12,11 @@ router.get('/', function (req, res, next) {
     res.render('index', {title: 'Bus Meme Generator'});
 });
 
+router.get('/map/:startAddressLat/:startAddressLong/:destAddressLat/:destAddressLong', function(req, res){
+  res.setHeader('Content-Type', 'application/json');
+  res.json(directions(req.params.startAddressLat, req.params.startAddressLong,req.params.destAddressLat, req.params.destAddressLong))
+});
+
 router.post('/directions', function (req, res, next) {
-    res.render('map', {directions:directions(req.body.startAddress, req.body.destAddress)});
+    res.render('map');
 });
