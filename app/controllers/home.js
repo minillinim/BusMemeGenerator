@@ -24,6 +24,7 @@ router.get('/', function (req, res, next) {
     res.render('index', {title: 'Bus Meme Generator'});
 });
 
-router.get('/directions/:startAddress/:destAddress', function (req, res, next) {
+router.post('/directions', function (req, res, next) {
+    console.log(req.body.startAddress);
     res.render('map', {directions:directions()});
 });

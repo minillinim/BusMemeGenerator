@@ -15,19 +15,21 @@
 			</div>
 
 			<div id="journey" ng-controller="BusDirections">
+			<form method="post" action="/directions">
 				<img src="../assets/step-1.gif"/>
 				<div class="instructions">Enter your start and end locations</div>
 
 				<div class="journey-details">
 					<div class="start-address">
 						Enter start address
-						<input ng-model="startAddress" type="text" id="start-address"/>
+						<input name="startAddress" type="text" id="start-address" required="Start Address is required" />
 					</div>
 					<div class="dest-address">
 						Enter destination address
-						<input ng-model="destAddress" type="text" id="dest-address"/>
+						<input name="destAddress" type="text" id="dest-address" required="Destination is required" />
 					</div>
-					<button class="next-button" onclick="window.location.href='/directions/abc/def'">Next</button>
+					<input class="next-button" type="submit" value="Next"></input>
+					</form>
 				</div>
 			</div>
 		</div>
