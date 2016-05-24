@@ -4,10 +4,14 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var LocationSchema = new Schema({
-  state: String,
-  city: String,
-  suburb: String,
-  postalCode: String
+  startAddress: String,
+  startAddressLat: String,
+  startAddressLong: String,
+  startPostalCode: String,
+  destAddress: String,
+  destAddressLat: String,
+  destAddressLong: String,
+  destPostalCode: String
 });
 
 mongoose.model('Location', LocationSchema);

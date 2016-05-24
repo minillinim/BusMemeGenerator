@@ -4,8 +4,10 @@
 		<link rel="stylesheet" type="text/css" href="css/map.css">
 	</head>
 	<body>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 		<script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
-		
+		<script type="text/javascript" src="js/map.js"></script>
 		<div style='overflow:hidden;height:600px;width:600px;'>
 			<div id='gmap_canvas' style='height:600px;width:600px;'>
 			</div>
@@ -32,9 +34,7 @@
 
 				infowindow.open(map,marker);
 			}
-			
 			google.maps.event.addDomListener(window, 'load', init_map);
-
 	</script>
 	</body>
 </html>
