@@ -25,6 +25,5 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/directions', function (req, res, next) {
-    console.log(req.body.startAddress);
-    res.render('map', {directions:directions()});
+    res.render('map', {directions:directions(req.body.startAddress, req.body.destAddress)});
 });
