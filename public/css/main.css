@@ -33,6 +33,9 @@ input {
 .button:hover {
   transform: scale(1.1); }
 
+.checkbox {
+  text-transform: none; }
+
 #nav {
   position: fixed;
   top: 0;
@@ -99,6 +102,17 @@ body {
           padding: 5px,0;
           width: 60%;
           margin-top: 5px; }
+      #main #journey .journey-details .travel-comparison {
+        text-transform: none;
+        color: white;
+        font-size: 12px; }
+        #main #journey .journey-details .travel-comparison p {
+          margin-bottom: 0;
+          margin-top: 20px; }
+        #main #journey .journey-details .travel-comparison input {
+          display: inline; }
+        #main #journey .journey-details .travel-comparison input.radiobutton.second {
+          margin-left: 20px; }
       #main #journey .journey-details .next-button {
         margin-top: 20px;
         padding: 5px;

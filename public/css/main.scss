@@ -67,6 +67,23 @@ body {
 				}
 			}
 
+			.travel-comparison{
+			    text-transform: none;
+		    	color:$input-color;
+		    	font-size:12px;
+
+		    	p{
+		    		margin-bottom:0;
+		    		margin-top: 20px;
+		    	}
+			    input{
+			    	display:inline;
+			    }
+			    input.radiobutton.second {
+				    margin-left: 20px;
+				}
+			}
+
 			.next-button{
 				margin-top:20px;
 				padding:5px;
