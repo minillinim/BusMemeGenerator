@@ -16,10 +16,10 @@ app.controller('MapController', function($scope, MapService){
 	}
 });
 
-app.factory('MapService',function($http){
+app.factory('MapService',function($http, $location){
 	return {
 		getDirections: function(startAddressLat, startAddressLong,destAddressLat, destAddressLong ){
-			return $http.get('http://localhost:3000/map/'+startAddressLat +'/'+ startAddressLong+'/'+destAddressLat + '/'+ destAddressLong)
+			return $http.get($location.$$absUrl+'map/'+startAddressLat +'/'+ startAddressLong+'/'+destAddressLat + '/'+ destAddressLong)
 		}
 	};
 })
