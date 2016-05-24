@@ -1,8 +1,10 @@
 <html ng-app="BusMeme">
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+        <script src="../js/places-autocomplete.js"></script>
 	</head>
-	<body>
+	<body >
 		<div id="nav">
 			<div class="gallery">
 			<img src="../assets/gallery.png"/>Gallery</div>
@@ -23,10 +25,14 @@
 					<div class="start-address">
 						Enter start address
 						<input name="startAddress" type="text" id="start-address" required="Start Address is required" />
+						<input type="hidden" id="startAddressLat" value="">
+						<input type="hidden" id="startAddressLong" value="">
 					</div>
 					<div class="dest-address">
 						Enter destination address
 						<input name="destAddress" type="text" id="dest-address" required="Destination is required" />
+						<input type="hidden" id="destAddressLat" value="">
+						<input type="hidden" id="destAddressLong" value="">
 					</div>
 					<div class="travel-comparison">
 						<p>Do you have a car?</p>
