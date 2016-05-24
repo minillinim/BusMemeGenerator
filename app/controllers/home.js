@@ -1,6 +1,6 @@
 var express = require('express'),
   router = express.Router(),
-  directions = require('./direction')
+  directions = require('./map')
   mongoose = require('mongoose'),
   Location = mongoose.model('Location');
 
@@ -21,14 +21,9 @@ module.exports = function (app) {
 };
 
 router.get('/', function (req, res, next) {
-  Location.find(function (err, locations) {
-    if (err) return next(err);
     res.render('index', {title: 'Bus Meme Generator'});
-  });
 });
 
-router.get('/directions', function (req, res, next) {
-    // res.send(directions());
-    res.render('directions', {title:'test'});
-
+router.get('/directions/:startAddress/:destAddress', function (req, res, next) {
+    res.render('map', {directions:directions()});
 });
