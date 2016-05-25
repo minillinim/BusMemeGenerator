@@ -77,11 +77,6 @@ body {
   #main #journey {
     padding-top: 50px;
     margin-left: 20%; }
-    #main #journey .instructions {
-      text-transform: uppercase;
-      font-size: 18px;
-      display: inline-block;
-      padding-top: 5px; }
     #main #journey img {
       width: 32px;
       display: inline-block;
@@ -119,6 +114,12 @@ body {
         margin-top: 20px;
         padding: 5px;
         width: 10%; }
+
+.instructions {
+  text-transform: uppercase;
+  font-size: 18px;
+  display: inline-block;
+  padding-top: 5px; }
 
 a {
   color: #00B7FF; }
