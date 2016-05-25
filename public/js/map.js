@@ -10,9 +10,11 @@ app.config(function($routeProvider){
 app.controller('MapController', function($scope, MapService, $location){
 	var directionsDisplay;
 	var map;
+	$scope.showMap = false;
 
 	$scope.getMapData = function(){
 		if (validateAddresses()){
+			$scope.showMap = true;
 			$scope.startAddressLat = document.getElementById('startAddressLat').value;
 			$scope.startAddressLong= document.getElementById('startAddressLong').value;
 			$scope.destAddressLat = document.getElementById('destAddressLat').value;
