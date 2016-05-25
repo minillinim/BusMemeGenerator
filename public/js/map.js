@@ -35,13 +35,19 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
             };
 
             MapService.getDirections(travelOptions, 'public', function (result, status) {
-                console.log('DirectionsService public', $scope.mode, result);
+                $scope.public = {
+                    distance: result.routes[0].legs[0].distance.text,
+                    duration: result.routes[0].legs[0].duration.text
+                };
                 if (status == google.maps.DirectionsStatus.OK) {
                     transitDirections.setDirections(result);
                 }
             });
             MapService.getDirections(travelOptions, $scope.mode, function (result, status) {
-                console.log('DirectionsService.driving or walking', $scope.mode, result);
+                $scope.other = {
+                    distance: result.routes[0].legs[0].distance.text,
+                    duration: result.routes[0].legs[0].duration.text
+                };
                 if (status == google.maps.DirectionsStatus.OK) {
                     drivingOrWalkingDirections.setDirections(result);
                 }
