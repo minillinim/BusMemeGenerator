@@ -15,24 +15,29 @@
 
 #map-results{
 	display:none;
-	height:600px;
-	width:600px;
-	margin-left:20%;
 
 	img{
 		width:32px;
 		display: inline-block;
 	    vertical-align: top;
 	    padding-right: 30px;
-	    margin-left:-13px;
+	    margin-left:-18px;
+	    margin-top:-1px;
 	}
 
 	.map-wrapper{
-	
 		padding:30px 0 80px 50px;
-		border-left: thick solid $separator-color;
 	}
 }
 #map-results.showmap{
 	display:block;
+	margin-left:20%;
+    border-left: thick solid $separator-color;
+    height: 800px;
+
+    .empty-space{
+    	height:50px;
+	    border-left: thick solid $text-color;
+	    margin-left: -5px;
+    }
 }

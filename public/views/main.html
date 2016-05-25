@@ -13,7 +13,7 @@
         <img src="../assets/step-1.gif"/>
         <div class="instructions">Enter your start and end locations</div>
 
-        <div class="journey-details">
+        <div id="journey-details">
             <div class="start-address">
                 Enter start address
                 <input name="startAddress" type="text" id="start-address" required="Start Address is required"/>
@@ -30,8 +30,8 @@
             </div>
             <div class="travel-comparison">
                 <p>Do you have a car?</p>
-                <input class="radiobutton" type="radio" ng-model="mode" name="hascar" value="driving" checked="true"> Yes, I do
-                <input class="radiobutton second" type="radio" name="hascar" ng-model="mode" value="walking"> No, I rely on public
+                <input class="radiobutton" type="radio" ng-model="mode" name="hascar" value="driving" ng-checked="true"> Yes, I do
+                <input class="radiobutton second" type="radio" name="hascar" ng-model="mode" value="walking" ng-checked="false"> No, I rely on public
                 transport
             </div>
             <div id="validation-errors"></div>
@@ -42,6 +42,7 @@
         <img id="googlemapbinary" />
     </div>
     <div id="map-results" ng-show="showMap">
+    	<div class="empty-space"></div>
         <img src="../assets/step-2.gif"/>	
         <div class="map-wrapper">
 	        <div id='gmap_canvas'>

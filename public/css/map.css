@@ -65,21 +65,25 @@ input {
     background: none !important; }
 
 #map-results {
-  display: none;
-  height: 600px;
-  width: 600px;
-  margin-left: 20%; }
+  display: none; }
   #map-results img {
     width: 32px;
     display: inline-block;
     vertical-align: top;
     padding-right: 30px;
-    margin-left: -13px; }
+    margin-left: -18px;
+    margin-top: -1px; }
   #map-results .map-wrapper {
-    padding: 30px 0 80px 50px;
-    border-left: thick solid #547CD4; }
+    padding: 30px 0 80px 50px; }
 
 #map-results.showmap {
-  display: block; }
+  display: block;
+  margin-left: 20%;
+  border-left: thick solid #547CD4;
+  height: 800px; }
+  #map-results.showmap .empty-space {
+    height: 50px;
+    border-left: thick solid #FFFA32;
+    margin-left: -5px; }
 
 /*# sourceMappingURL=map.css.map */

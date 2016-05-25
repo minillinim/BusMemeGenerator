@@ -7,7 +7,7 @@ app.config(function($routeProvider){
   })
 });
 
-app.controller('MapController', function($scope, MapService, $location){
+app.controller('MapController', function($scope, MapService, $location, $anchorScroll){
 	var transitDirections;
 	var drivingOrWalkingDirections;
 	var map;
@@ -21,8 +21,12 @@ app.controller('MapController', function($scope, MapService, $location){
 			$scope.destAddressLat = document.getElementById('destAddressLat').value;
 			$scope.destAddressLong = document.getElementById('destAddressLong').value;
 
-			document.getElementById('map-results').className = 'showmap';
 			initMap();
+
+			document.getElementById('map-results').className = 'showmap';
+			document.getElementById('journey-details').className = 'done';
+	  		$anchorScroll('map-results');
+
 			var travelOptions = {
 				startLat: document.getElementById('startAddressLat').value,
 				startLng: document.getElementById('startAddressLong').value,
@@ -45,6 +49,7 @@ app.controller('MapController', function($scope, MapService, $location){
 
 		} else{
 			document.getElementById('map-results').className = "";
+			document.getElementById('journey-details').className = "";
 		}
 	};
 
