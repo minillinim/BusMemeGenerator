@@ -22,8 +22,8 @@ app.controller('MapController', function($scope, MapService, $location){
 
 			document.getElementById('map-results').className = 'showmap';
 			initMap();
-			MapService.getDirections($scope.startAddressLat, $scope.startAddressLong, $scope.destAddressLat, $scope.destAddressLong, function(result, status) {
-				console.log('DirectionsService.rout', result, status);
+			MapService.getDirections($scope.startAddressLat, $scope.startAddressLong, $scope.destAddressLat, $scope.destAddressLong, ($scope.mode === 'driving'), function(result, status) {
+				console.log('DirectionsService.rout', $scope.mode);
 				if (status == google.maps.DirectionsStatus.OK) {
 					directionsDisplay.setDirections(result);
 				}
@@ -50,16 +50,20 @@ app.controller('MapController', function($scope, MapService, $location){
 
 app.factory('MapService',function($http, $location){
 	return {
-		getDirections: function(startAddressLat, startAddressLong,destAddressLat, destAddressLong, callback){
+		getDirections: function(startAddressLat, startAddressLong,destAddressLat, destAddressLong, driving, callback){
 			var directionsService = new google.maps.DirectionsService();
 
 			var start = new google.maps.LatLng(startAddressLat,startAddressLong);
 			var end =new google.maps.LatLng(destAddressLat,destAddressLong);
 			var request = {
 				origin:start,
-				destination:end,
-				travelMode: google.maps.TravelMode.DRIVING
+				destination:end
 			};
+			if (driving) {
+				request.travelMode = google.maps.TravelMode.DRIVING;
+			} else {
+				request.travelMode = google.maps.TravelMode.TRANSIT;
+			}
 			directionsService.route(request, callback);
 		}
 	};
