@@ -78,6 +78,21 @@ input {
     font-size: 18px;
     display: inline-block;
     padding-top: 5px; }
+  #map-results .journey-summary {
+    color: white;
+    text-transform: none;
+    padding-left: 50px; }
+    #map-results .journey-summary .summary-label {
+      text-decoration: none;
+      display: inline-block;
+      width: 60px; }
+    #map-results .journey-summary .summary-content {
+      display: inline-block;
+      border-bottom: 1px solid #547CD4;
+      padding-bottom: 2px;
+      width: 535px;
+      padding-top: 8px;
+      font-size: 12px; }
   #map-results .map-wrapper {
     padding: 30px 0 80px 50px; }
 

@@ -13,6 +13,13 @@ app.controller('MapController', function($scope, MapService, $location, $anchorS
 	var map;
 	$scope.showMap = false;
 
+	function initStep2(){
+			document.getElementById('map-results').className = 'showmap';
+			document.getElementById('journey-details').className = 'done';
+	  		$anchorScroll('map-results');
+			document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
+			document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
+	}
 	$scope.getMapData = function(){
 		if (validateAddresses()){
 			$scope.showMap = true;
@@ -22,10 +29,6 @@ app.controller('MapController', function($scope, MapService, $location, $anchorS
 			$scope.destAddressLong = document.getElementById('destAddressLong').value;
 
 			initMap();
-
-			document.getElementById('map-results').className = 'showmap';
-			document.getElementById('journey-details').className = 'done';
-	  		$anchorScroll('map-results');
 
 			var travelOptions = {
 				startLat: document.getElementById('startAddressLat').value,
@@ -46,6 +49,8 @@ app.controller('MapController', function($scope, MapService, $location, $anchorS
 					drivingOrWalkingDirections.setDirections(result);
 				}
 			});
+
+			initStep2();
 
 		} else{
 			document.getElementById('map-results').className = "";
