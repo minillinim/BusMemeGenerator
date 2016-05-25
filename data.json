@@ -1,0 +1,327 @@
+{
+  "geocoded_waypoints": [
+    {
+      "geocoder_status": "OK",
+      "place_id": "EjEzOS00NSBEZXJieSBSZCwgTG9nYW4gUmVzZXJ2ZSBRTEQgNDEzMywgQXVzdHJhbGlh",
+      "types": [
+        "street_address"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJdSpDcwVakWsRmPh8Lxse-cA",
+      "types": [
+        "street_address"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "bounds": {
+        "northeast": {
+          "lat": -27.472284,
+          "lng": 153.1456205
+        },
+        "southwest": {
+          "lat": -27.7275653,
+          "lng": 153.0230705
+        }
+      },
+      "copyrights": "Map data ©2016 Google",
+      "legs": [
+        {
+          "distance": {
+            "text": "36.7 km",
+            "value": 36694
+          },
+          "duration": {
+            "text": "33 mins",
+            "value": 1968
+          },
+          "end_address": "127 William St, Brisbane QLD 4000, Australia",
+          "end_location": {
+            "lat": -27.4729371,
+            "lng": 153.0243493
+          },
+          "start_address": "39-45 Derby Rd, Logan Reserve QLD 4133, Australia",
+          "start_location": {
+            "lat": -27.7237772,
+            "lng": 153.0907061
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "0.9 km",
+                "value": 851
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 63
+              },
+              "end_location": {
+                "lat": -27.7275653,
+                "lng": 153.0976733
+              },
+              "html_instructions": "Head u003cbu003eeastu003c/bu003e on u003cbu003eDerby Rdu003c/bu003e",
+              "polyline": {
+                "points": "rxehD}okekBzAkPR}@R}@Vi@b@u@BEZi@@?`@e@f@a@lEuDHIp@i@XWtCaC"
+              },
+              "start_location": {
+                "lat": -27.7237772,
+                "lng": 153.0907061
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "5.0 km",
+                "value": 4978
+              },
+              "duration": {
+                "text": "5 mins",
+                "value": 277
+              },
+              "end_location": {
+                "lat": -27.6915377,
+                "lng": 153.1195723
+              },
+              "html_instructions": "Turn u003cbu003eleftu003c/bu003e onto u003cbu003eLogan Reserve Rdu003c/bu003e",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "hpfhDm{leQ[Ui@Oc@GOqAaDWm@Qc@Si@Qk@I]Ke@AEKo@Mm@Mm@GWOg@EOMc@M_@_@gAyBiG{BwFQm@M_@Um@Se@U_@_A}AwA_CqAmBA?yFmIKMaDuE_DyEqB_Dg@w@U]AAuAqBwFmISW_@a@SQYWcAQ]E_@CkBS[CsBSIDuCYuEg@GAEAEC}CYwC[u@GcIw@iGo@gRiB}Gq@w@IiKeAgAKGAkBS_AGE?s@Gg@CWA}@Bm@Bk@Dy@HiE]@O@[?G?[C]Cg@ISE[I[I[MQIe@Ua@OeFoBk@S]I]Im@M]E]E}BSuFa@"
+              },
+              "start_location": {
+                "lat": -27.7275653,
+                "lng": 153.0976733
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.9 km",
+                "value": 932
+              },
+              "duration": {
+                "text": "2 mins",
+                "value": 98
+              },
+              "end_location": {
+                "lat": -27.691072,
+                "lng": 153.1282948
+              },
+              "html_instructions": "At the roundabout, take the u003cbu003e3rdu003c/bu003e exit onto u003cbu003eBeutel Stu003c/bu003e",
+              "maneuver": "roundabout-left",
+              "polyline": {
+                "points": "bo_hDidqeCHABCBE@E?GCCEAEAGBGBEBCFAf@}GJqAh@gIHsABc@@I@Y@U?WAc@Ac@Ai@OiBAWC[kA}MMYKKEEEEA?CCIGA?OEMC"
+              },
+              "start_location": {
+                "lat": -27.6915377,
+                "lng": 153.1195723
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.8 km",
+                "value": 799
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 79
+              },
+              "end_location": {
+                "lat": -27.6919958,
+                "lng": 153.136207
+              },
+              "html_instructions": "Turn u003cbu003erightu003c/bu003e onto u003cbu003eBrisbane-Beenleigh Rdu003c/bu003e/u003cbu003eKingston Rdu003c/bu003e/u003cbu003eState Route 94u003c/bu003e/u003cbu003eState Route 95u003c/bu003e",
+              "maneuver": "turn-right",
+              "polyline": {
+                "points": "dl_hDyzreGAMATmDP_CZmENsB@KDeALkCRmCDo@LgBJiABm@H_AJkADk@?GBQD}@Fo@"
+              },
+              "start_location": {
+                "lat": -27.691072,
+                "lng": 153.1282948
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "5.4 km",
+                "value": 5366
+              },
+              "duration": {
+                "text": "7 mins",
+                "value": 408
+              },
+              "end_location": {
+                "lat": -27.645817,
+                "lng": 153.1442255
+              },
+              "html_instructions": "Turn u003cbu003eleftu003c/bu003e onto u003cbu003eLoganlea Rdu003c/bu003e",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "~q_hDiltecAMcBQQC}AMg@CIAmBOoBUw@EyAOqAOwAQSAOAa@Gm@I_AIu@G_CUe@EsAO]E{@Ge@AUAK?W@a@BS@OBOBMBs@L]Fi@Jk@H_@Bw@BY@[?g@?eAE]EeD]aCUaAKcBMkBOs@GQAa@GoEa@wAOaAMy@GcCUmCUq@E]?u@AgACm@Cy@I_AOk@GIAu@Im@Em@Go@Gk@GGAKAUEq@KGAe@GgBU_@E_@C}@IgBQQCoCWcAKUAUCk@GuBQs@Ie@G}BUk@I_@Cc@EKA[AEAkAEc@IqAO[Ck@GOCe@EaAKk@GgEe@{C[{@KiAOa@IWGu@UOGUIQK}A_Ag@_@q@e@AAgBqA_@Uo@a@{@e@OI[UcAs@WSSSKMKKe@m@eBmC_@o@Y]MM[[SUUQWQMKQIKE[MOEWIICYEWCq@Cg@?YBWBoB^g@NaARa@H}A`@eAuBj@kAViB^uBd@_BZu@Ni@FoADg@@u@Ei@Ee@EOCMAaCYkAS"
+              },
+              "start_location": {
+                "lat": -27.6919958,
+                "lng": 153.136207
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.7 km",
+                "value": 678
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 43
+              },
+              "end_location": {
+                "lat": -27.6411029,
+                "lng": 153.1416437
+              },
+              "html_instructions": "Take the ramp to u003cbu003eM1u003c/bu003e",
+              "polyline": {
+                "points": "jqvgDm~uea@D]EI?M@OFQNUJODS@Q?SAQCOIOGSQe@s@YMWGUAc@?Q@UFQLwEbHkAbBm@t@a@f@{@hASD"
+              },
+              "start_location": {
+                "lat": -27.645817,
+                "lng": 153.1442255
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "7.1 km",
+                "value": 7138
+              },
+              "duration": {
+                "text": "5 mins",
+                "value": 284
+              },
+              "end_location": {
+                "lat": -27.5859555,
+                "lng": 153.1060565
+              },
+              "html_instructions": "Merge onto u003cbu003eM1u003c/bu003e",
+              "maneuver": "merge",
+              "polyline": {
+                "points": "zsugDgnueW`@Yb@eCxDYZa@f@yIjJYA@IHCDGFYuCbDeGtGaCfCkAtAkFrFgApAsBtBmAbAu@f@cAr@sAp@qBz@mAd@G@oHrBcMrDsIrCG@IBgHdCsE|AeDlAcExAmDhAiAf@gC|@oAd@sAp@mB~@eB~@w@m@c@Ru@Xg@LQDG@OFE@c@L{Cj@C?{Bd@mAXq@RC@_AZaA^C@_A^s@XmAl@q@gBdACBKHGBKFKDA@IBaCnAc@VC@iAn@{@f@{Ax@gE`CmKbGuFvCuRvKcJdFkGlDiAn@mK~FsEfCm@`@EB_@R]PsGpDcHzD_EvBu@b@wIvEoJnF"
+              },
+              "start_location": {
+                "lat": -27.6411029,
+                "lng": 153.1416437
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "15.5 km",
+                "value": 15538
+              },
+              "duration": {
+                "text": "11 mins",
+                "value": 635
+              },
+              "end_location": {
+                "lat": -27.4744584,
+                "lng": 153.0242509
+              },
+              "html_instructions": "Continue onto u003cbu003ePacific Motorwayu003c/bu003e/u003cbu003eM3u003c/bu003e (signs for u003cbu003eCityu003c/bu003e)",
+              "polyline": {
+                "points": "f{jgD{one_B|@uQfKiC|Aq@^OHC@ULMHSJA@MH[P_B|@OFQJs@^y@f@cAj@q@}I|Eq@b@kAx@A?IFMJy@j@}@v@uAlAk@l@iAjAyBlCq@~@wA~B}@dB{@dBaAtBsCnGq@|AqD~HeAdCmAnCYp@ABEJGJMZo@vAoBhEaBpDQgAbCuBbEeAlBsA~BgCrEoC|E{AjCcBxCCD_BxCs@nAq@hAkAjBcBdCwAlBWZu@`AW^e@n@ED?@KLEFe@j@k@p@wC~CmAjAk@j@cA~@oAjAuExDqAbAsCxBm@f@e@MLOLgCpBcCjBaHxFwExDi@`@KJWTEDA@OLQL_Ar@SNQLKLg@`@kBzAIDGFIFIFKFWR}AhAa@Xi@b@}BlBmCpB_CjBq@f@g@`@gClB}@x@oDnCoBxAGFIFUNKFCBQLUNsAx@g@X}@d@cAd@{@^}B`A}Ah@{Ab@uA`@mAX}AgB_ANgBXo@HuAP{ATa@FaALeBVI@o@Hw@H_@BaAJQBA?OBC@OBSBiGv@sGx@uFr@yBZy@HcBT[DA@C?KBUBwAT{@NcAR{@Ts@NuCz@cA^UHG@A@[J?@_@NE@aA`@k@VaB|@iAp@{@j@a@ZOJMHA@QLCBq@d@i@`@OJuIlGwAfAmA|@m@d@SNeBnA]Xy@p@uAxAa@h@MLk@x@W^Wd@c@r@i@fAo@xAYp@Ul@gAlCm@`B}@|BwBzF{@xBUn@Yt@KVe@pAO^m@|Ao@pAu@jAm@v@]`@iAdA]XMJUN_Ah@EBaAd@i@T{FfCC@YLSHKDMF_@PSF]NWJGBI@o@RcARo@Hk@Hk@DU@G?y@@kAAs@GkEa@{JgASEE?kAMMCuHw@KASC]COAiAK]EsAKgAGc@Bk@@sAFqALkATa@HIBq@Pw@Xg@VYNSLA@GBEBMJOHC@OHc@ZWVi@^_@TcAh@IFg@QLIFQLkAn@w@n@GDm@b@_Ap@oApA{@|@m@v@y@nAs@`BKRINEJKNIN?@EFW[^_@b@_@c@Xc@Va@Te@Pw@Rk@HiAHg@B_@@_ADqADs@H[Du@LYHcCd@iCf@aGnA_@HC@[FUDYDi@N]HC@SDG@C@_@HkCl@a@JKBIB[FQDMD}@Xc@N]Pi@X_@T_@XOHCBIDUNA@IHwAdAoA~@yAdAcAr@}B`BeAt@c@Z_@Va@ZoA|@MHg@^w@h@WPgAz@c@ZqA~@mClB[T_@V}@n@YRCBg@^s@d@g@^YVC@i@`@"
+              },
+              "start_location": {
+                "lat": -27.5859555,
+                "lng": 153.1060565
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.3 km",
+                "value": 294
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 35
+              },
+              "end_location": {
+                "lat": -27.472343,
+                "lng": 153.0235508
+              },
+              "html_instructions": "Take exit u003cbu003eElizabeth Stu003c/bu003e toward u003cbu003eWilliam Stu003c/bu003e",
+              "maneuver": "ramp-left",
+              "polyline": {
+                "points": "jbufDqp~dETWPk@b@o@d@q@f@o@b@YTIDGDKBIDK@E?M?GAGAGCKGECCCCCIKMOAAMSOQ"
+              },
+              "start_location": {
+                "lat": -27.4744584,
+                "lng": 153.0242509
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.1 km",
+                "value": 113
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 43
+              },
+              "end_location": {
+                "lat": -27.4729823,
+                "lng": 153.0242965
+              },
+              "html_instructions": "Turn u003cbu003erightu003c/bu003e onto u003cbu003eWilliam Stu003c/bu003e",
+              "maneuver": "turn-right",
+              "polyline": {
+                "points": "butfDel~dCGGGFGJKF?v@y@VW^_@"
+              },
+              "start_location": {
+                "lat": -27.472343,
+                "lng": 153.0235508
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "7 m",
+                "value": 7
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 3
+              },
+              "end_location": {
+                "lat": -27.4729371,
+                "lng": 153.0243493
+              },
+              "html_instructions": "Turn u003cbu003eleftu003c/bu003e",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "bytfD{p~dGI"
+              },
+              "start_location": {
+                "lat": -27.4729823,
+                "lng": 153.0242965
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        }
+      ],
+      "overview_polyline": {
+        "points": "rxehD}okejBwSf@{Bz@_B^o@b@e@tFwEjFmE_AyBoC}Gi@uBo@cDq@{ByCqImCeHc@mAi@eAwC}EsAmBgQkWqDwFmI_Ms@y@m@i@aBW{Go@IDuCY}Ei@aI{@kf@yEa^kD{AKuA@}Ip@qABy@G{@OeBk@gAe@qGcCgCg@{CYuFa@CHEFK@KICMFMJEfBkWH}AEiCaB{RYe@KKQKs@MrAoRh@kJ~@oMHoAFo@cAMuBUeCQ_Hm@wGs@_D]oHs@yAM{@CyAFaBXgARkALuCDcBKgHs@eIq@{I{@mKaAmEKgBMkBW{CYeFo@eFi@mIy@mE_@cGq@kBMqAGuBY}BUqMuAeC[y@QeA]g@UeC_Bs@g@gCgBkBgAgCgBqA{AeC}Dg@k@o@q@m@c@_@Ug@SkAYiAGaABgCb@iBb@_Cj@{DhAkKxB_BVwBFuCUoC[kASa@Dg@E]Hg@Zc@Fe@Aa@Mc@Ye@s@YMm@Iu@@g@TcHfKoA|A{@hASDq@dA_DtEwKrLo@t@{KxLmE|EsHdIsBtBmAbAyBzAeElBuAf@sVfHmS~GkVnIqEdBcDvAyHzDyAl@y@RaAXiJjBwDpAeEhBiDpBa@RsDlBiLrGcSzKy]|RwdR_tQgUfMuTdMoEhCsEfCcE~BoKzF}B|AYRwBbBaCzBcExEiC~DyBjEuEdKcF|KsCtGi@lAoGnNyA`D{DpHgM|T{FhK}BtD{DrFkClDWiF|FmGbGiN~KcAx@kG|EyNrLsAhAcBpAaF~DkClBwI|GaJbH}@x@oDnCwB`Bk@^_CzAeB~@_CdA{EjBqDdAkDv@gDl@iIjAsEn@iEb@uIhAcYpDuDl@_Ch@iEjAcBl@aA^mBx@kDnB{B|AqP|LuFbEwAjAwBbCiBlCmAzBiAjCiEzKcFzMoBfFo@pAu@jAkAxAgB~Ac@ZeAl@kBz@mH`DmAf@gA`@sBf@{ARaAFaA@_CIgQiBsBWsJaAkE_@kBC_CH}Cb@k@LiBj@aAf@]Rg@ZkA|@wCfBuA`AkAn@w@n@u@h@_Ap@oApAiBtBy@nAs@`BUb@[l@y@dA_A`AgAp@gAf@cBqETqADs@HqARiPfDuAXeDt@cE`AyBl@aA`@iAn@}@l@yB`BkJzGiJvG}MtJiFxDETWP{AhAeCfBi@Pc@C]S]a@i@u@RSF?v@y@v@w@GI"
+      },
+      "summary": "M3",
+      "warnings": [],
+      "waypoint_order": []
+    }
+  ],
+  "status": "OK"
+}

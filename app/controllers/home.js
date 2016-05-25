@@ -17,7 +17,3 @@ router.get('/map/:startAddressLat/:startAddressLong/:destAddressLat/:destAddress
     res.json(response);
   });
 });
-
-// router.post('/directions', function (req, res, next) {
-//     res.render('map');
-// });
