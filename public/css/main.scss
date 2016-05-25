@@ -47,7 +47,11 @@ body {
 		    margin-left:-13px;
 		}
 		
-		.journey-details{
+		#journey-details.done{
+    		border-left: thick solid $text-color;
+		}
+
+		#journey-details{
 			
 			padding:30px 0 80px 50px;
     		border-left: thick solid $separator-color;

@@ -88,32 +88,34 @@ body {
       vertical-align: top;
       padding-right: 30px;
       margin-left: -13px; }
-    #main #journey .journey-details {
+    #main #journey #journey-details.done {
+      border-left: thick solid #FFFA32; }
+    #main #journey #journey-details {
       padding: 30px 0 80px 50px;
       border-left: thick solid #547CD4; }
-      #main #journey .journey-details .start-address, #main #journey .journey-details .dest-address {
+      #main #journey #journey-details .start-address, #main #journey #journey-details .dest-address {
         color: white;
         font-size: 12px;
         padding: 20px, 0;
         margin-top: 10px;
         text-transform: none; }
-        #main #journey .journey-details .start-address input, #main #journey .journey-details .dest-address input {
+        #main #journey #journey-details .start-address input, #main #journey #journey-details .dest-address input {
           display: block;
           padding: 5px,0;
           width: 60%;
           margin-top: 5px; }
-      #main #journey .journey-details .travel-comparison {
+      #main #journey #journey-details .travel-comparison {
         text-transform: none;
         color: white;
         font-size: 12px; }
-        #main #journey .journey-details .travel-comparison p {
+        #main #journey #journey-details .travel-comparison p {
           margin-bottom: 0;
           margin-top: 20px; }
-        #main #journey .journey-details .travel-comparison input {
+        #main #journey #journey-details .travel-comparison input {
           display: inline; }
-        #main #journey .journey-details .travel-comparison input.radiobutton.second {
+        #main #journey #journey-details .travel-comparison input.radiobutton.second {
           margin-left: 20px; }
-      #main #journey .journey-details .next-button {
+      #main #journey #journey-details .next-button {
         margin-top: 20px;
         padding: 5px;
         width: 10%; }

@@ -1,0 +1,52 @@
+<div id="nav">
+    <div class="gallery">
+        <img src="../assets/gallery.png"/>Gallery
+    </div>
+</div>
+<div id="main" ng-controller="MapController">
+    <div id="title">
+        <div class="first-line">Logan</div>
+        <div class="second-line">Bus Meme</div>
+        <div class="third-line">Generator</div>
+    </div>
+    <div id="journey">
+        <img src="../assets/step-1.gif"/>
+        <div class="instructions">Enter your start and end locations</div>
+
+        <div id="journey-details">
+            <div class="start-address">
+                Enter start address
+                <input name="startAddress" type="text" id="start-address" required="Start Address is required"/>
+                <input type="hidden" id="startPostCode" value="">
+                <input type="hidden" id="startAddressLat" value="">
+                <input type="hidden" id="startAddressLong" value="">
+            </div>
+            <div class="dest-address">
+                Enter destination address
+                <input name="destAddress" type="text" id="dest-address" required="Destination is required"/>
+                <input type="hidden" id="destPostCode" value="">
+                <input type="hidden" id="destAddressLat" value="">
+                <input type="hidden" id="destAddressLong" value="">
+            </div>
+            <div class="travel-comparison">
+                <p>Do you have a car?</p>
+                <input class="radiobutton" type="radio" ng-model="mode" name="hascar" value="driving" ng-checked="true"> Yes, I do
+                <input class="radiobutton second" type="radio" name="hascar" ng-model="mode" value="walking" ng-checked="false"> No, I rely on public
+                transport
+            </div>
+            <div id="validation-errors"></div>
+            <input class="button next-button" ng-click="getMapData()" type="submit" value="Next" />
+        </div>
+    </div>
+    <div ng-show="showMap">
+        <img id="googlemapbinary" />
+    </div>
+    <div id="map-results" ng-show="showMap">
+    	<div class="empty-space"></div>
+        <img src="../assets/step-2.gif"/>	
+        <div class="map-wrapper">
+	        <div id='gmap_canvas'>
+	        </div>
+        </div>
+    </div>
+</div>
