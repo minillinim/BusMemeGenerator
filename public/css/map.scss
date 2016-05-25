@@ -11,7 +11,7 @@
 	}
 }
 
-.map-results{
+#map-results{
 	display:none;
 	height:600px;
 	width:600px;
@@ -24,4 +24,7 @@
 	    padding-right: 30px;
 	    margin-left:-13px;
 	}
+}
+#map-results.showmap{
+	display:block;
 }

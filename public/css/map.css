@@ -5,16 +5,19 @@
     max-width: none !important;
     background: none !important; }
 
-.map-results {
+#map-results {
   display: none;
   height: 600px;
   width: 600px;
   margin-left: 20%; }
-  .map-results img {
+  #map-results img {
     width: 32px;
     display: inline-block;
     vertical-align: top;
     padding-right: 30px;
     margin-left: -13px; }
+
+#map-results.showmap {
+  display: block; }
 
 /*# sourceMappingURL=map.css.map */
