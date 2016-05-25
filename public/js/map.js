@@ -8,7 +8,8 @@ app.config(function($routeProvider){
 });
 
 app.controller('MapController', function($scope, MapService, $location){
-	var directionsDisplay;
+	var transitDirections;
+	var drivingOrWalkingDirections;
 	var map;
 	$scope.showMap = false;
 
@@ -22,47 +23,72 @@ app.controller('MapController', function($scope, MapService, $location){
 
 			document.getElementById('map-results').className = 'showmap';
 			initMap();
-			MapService.getDirections($scope.startAddressLat, $scope.startAddressLong, $scope.destAddressLat, $scope.destAddressLong, ($scope.mode === 'driving'), function(result, status) {
-				console.log('DirectionsService.rout', $scope.mode);
+			var travelOptions = {
+				startLat: document.getElementById('startAddressLat').value,
+				startLng: document.getElementById('startAddressLong').value,
+				destLat: document.getElementById('destAddressLat').value,
+				destLng: document.getElementById('destAddressLong').value,
+			};
+
+			MapService.getDirections(travelOptions, 'public', function(result, status) {
+				console.log('DirectionsService public', $scope.mode, result);
 				if (status == google.maps.DirectionsStatus.OK) {
-					directionsDisplay.setDirections(result);
+					transitDirections.setDirections(result);
 				}
 			});
-		}else{
+			MapService.getDirections(travelOptions, $scope.mode, function(result, status) {
+				console.log('DirectionsService.driving or walking', $scope.mode, result);
+				if (status == google.maps.DirectionsStatus.OK) {
+					drivingOrWalkingDirections.setDirections(result);
+				}
+			});
 
+		} else{
 			document.getElementById('map-results').className = "";
 		}
 	};
 
 	var initMap = function (){
-		directionsDisplay = new google.maps.DirectionsRenderer();
 		var logan = new google.maps.LatLng(-27.6410476,153.10750899999994);
-		var mapOptions = 			{
+		var mapOptions = {
 			zoom:11,
 			center:logan,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
-
 		map = new google.maps.Map(document.getElementById("gmap_canvas"), mapOptions);
-		directionsDisplay.setMap(map);
+
+		transitDirections = new google.maps.DirectionsRenderer({
+			map: map,
+			polylineOptions: {strokeColor: 'red'}
+		});
+		drivingOrWalkingDirections = new google.maps.DirectionsRenderer({
+			map: map,
+			polylineOptions: {strokeColor: 'blue'}
+		});
 	}
 });
 
-app.factory('MapService',function($http, $location){
+app.factory('MapService',function(){
 	return {
-		getDirections: function(startAddressLat, startAddressLong,destAddressLat, destAddressLong, driving, callback){
+		getDirections: function(travelOptions, mode, callback){
 			var directionsService = new google.maps.DirectionsService();
 
-			var start = new google.maps.LatLng(startAddressLat,startAddressLong);
-			var end =new google.maps.LatLng(destAddressLat,destAddressLong);
+			var start = new google.maps.LatLng(travelOptions.startLat,travelOptions.startLng);
+			var end =new google.maps.LatLng(travelOptions.destLat,travelOptions.destLng);
 			var request = {
 				origin:start,
 				destination:end
 			};
-			if (driving) {
-				request.travelMode = google.maps.TravelMode.DRIVING;
-			} else {
-				request.travelMode = google.maps.TravelMode.TRANSIT;
+
+			switch(mode) {
+				case 'driving':
+					request.travelMode = google.maps.TravelMode.DRIVING;
+					break;
+				case 'walking':
+					request.travelMode = google.maps.TravelMode.WALKING;
+					break;
+				default:
+					request.travelMode = google.maps.TravelMode.TRANSIT;
 			}
 			directionsService.route(request, callback);
 		}

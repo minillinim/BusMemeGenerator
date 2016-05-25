@@ -31,12 +31,15 @@
             <div class="travel-comparison">
                 <p>Do you have a car?</p>
                 <input class="radiobutton" type="radio" ng-model="mode" name="hascar" value="driving" checked="true"> Yes, I do
-                <input class="radiobutton second" type="radio" name="hascar" ng-model="mode" value="public"> No, I rely on public
+                <input class="radiobutton second" type="radio" name="hascar" ng-model="mode" value="walking"> No, I rely on public
                 transport
             </div>
             <div id="validation-errors"></div>
             <input class="button next-button" ng-click="getMapData()" type="submit" value="Next" />
         </div>
+    </div>
+    <div ng-show="showMap">
+        <img id="googlemapbinary" />
     </div>
     <div id="map-results" ng-show="showMap">
         <img src="../assets/step-2.gif"/>
