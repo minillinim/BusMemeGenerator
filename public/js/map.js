@@ -9,18 +9,17 @@ app.controller('MapController', function($scope, MapService){
 	$scope.destAddressLong = document.getElementById('destAddressLong').value;
 
 		MapService.getDirections($scope.startAddressLat, $scope.startAddressLong, $scope.destAddressLat, $scope.destAddressLong).then(function(response){
-			$scope.mapData = response
-			console.log("hhehhehe");
+			$scope.mapData = response.data;
 			console.log($scope.mapData);
 		});
 
 	}
 });
 
-app.factory('MapService',function($http){
+app.factory('MapService',function($http, $location){
 	return {
 		getDirections: function(startAddressLat, startAddressLong,destAddressLat, destAddressLong ){
-			return $http.get('http://localhost:3000/map/'+startAddressLat +'/'+ startAddressLong+'/'+destAddressLat + '/'+ destAddressLong)
+			return $http.get($location.$$absUrl+'map/'+startAddressLat +'/'+ startAddressLong+'/'+destAddressLat + '/'+ destAddressLong)
 		}
 	};
 })
