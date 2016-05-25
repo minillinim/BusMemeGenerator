@@ -1,4 +1,6 @@
-
+@import 'variables';
+@import 'common';
+@import 'nav';
 #gmap_canvas 
 {
  	height:600px;
@@ -23,6 +25,12 @@
 	    vertical-align: top;
 	    padding-right: 30px;
 	    margin-left:-13px;
+	}
+
+	.map-wrapper{
+	
+		padding:30px 0 80px 50px;
+		border-left: thick solid $separator-color;
 	}
 }
 #map-results.showmap{
