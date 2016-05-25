@@ -10,45 +10,44 @@ app.config(function($routeProvider){
 app.controller('MapController', function($scope, MapService, $location){
 
 	$scope.getMapData = function(){
-	init_map()
-	validateAddresses();
-	$scope.startAddressLat = document.getElementById('startAddressLat').value;
-	$scope.startAddressLong= document.getElementById('startAddressLong').value;
-	$scope.destAddressLat = document.getElementById('destAddressLat').value;
-	$scope.destAddressLong = document.getElementById('destAddressLong').value;
+		MapService.initMap();
+		validateAddresses();
+		$scope.startAddressLat = document.getElementById('startAddressLat').value;
+		$scope.startAddressLong= document.getElementById('startAddressLong').value;
+		$scope.destAddressLat = document.getElementById('destAddressLat').value;
+		$scope.destAddressLong = document.getElementById('destAddressLong').value;
 
-		// MapService.getDirections($scope.startAddressLat, $scope.startAddressLong, $scope.destAddressLat, $scope.destAddressLong).then(function(response){
-		// 	$scope.mapData = response.data;
-		// });
+		MapService.getDirections($scope.startAddressLat, $scope.startAddressLong, $scope.destAddressLat, $scope.destAddressLong).then(function(response){
+			$scope.mapData = response.data;
+		});
 	}
 	
 });
-
-function init_map(){
-	var myOptions = 
-	{
-		zoom:11,
-		center:new google.maps.LatLng(-27.6410476,153.10750899999994),
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-	};
-
-	map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
-	marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-27.6410476,153.10750899999994)});
-
-	infowindow = new google.maps.InfoWindow(
-		{content:'<strong>Bus Meme Generator</strong><br>Logan, QLD<br>'});
-
-	google.maps.event.addListener(marker, 'click', function(){
-		infowindow.open(map,marker);
-	});
-
-	infowindow.open(map,marker);
-}
 
 app.factory('MapService',function($http, $location){
 	return {
 		getDirections: function(startAddressLat, startAddressLong,destAddressLat, destAddressLong ){
 			return $http.get($location.$$absUrl+'map/'+startAddressLat +'/'+ startAddressLong+'/'+destAddressLat + '/'+ destAddressLong)
+		},
+		initMap: function (){
+			var myOptions = 
+			{
+				zoom:11,
+				center:new google.maps.LatLng(-27.6410476,153.10750899999994),
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+
+			map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+			marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-27.6410476,153.10750899999994)});
+
+			infowindow = new google.maps.InfoWindow(
+				{content:'<strong>Bus Meme Generator</strong><br>Logan, QLD<br>'});
+
+			google.maps.event.addListener(marker, 'click', function(){
+				infowindow.open(map,marker);
+			});
+
+			infowindow.open(map,marker);
 		}
 	};
 })
