@@ -7,6 +7,13 @@ Install [mongodb](https://docs.mongodb.com/manual/installation/) (Make sure you 
 
 Run *npm install*
 
+To use the translink API you need to authenticate. NPM looks for env variables to avoid putting creds into the repo. 
+
+Please set the following:
+
+export TL_USER="uSERnAME"
+export TL_PASSWORD="pASSwORD"
+
 You are good to go now.
 
 ###To start the server
