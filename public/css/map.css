@@ -57,13 +57,6 @@ input {
       padding-top: 1px;
       vertical-align: top; }
 
-#gmap_canvas {
-  height: 600px;
-  width: 600px; }
-  #gmap_canvas img {
-    max-width: none !important;
-    background: none !important; }
-
 #map-results {
   display: none; }
   #map-results img {
@@ -78,23 +71,47 @@ input {
     font-size: 18px;
     display: inline-block;
     padding-top: 5px; }
-  #map-results .journey-summary {
-    color: white;
-    text-transform: none;
-    padding-left: 50px; }
-    #map-results .journey-summary .summary-label {
-      text-decoration: none;
-      display: inline-block;
-      width: 60px; }
-    #map-results .journey-summary .summary-content {
-      display: inline-block;
-      border-bottom: 1px solid #547CD4;
-      padding-bottom: 2px;
-      width: 535px;
-      padding-top: 8px;
-      font-size: 12px; }
-  #map-results .map-wrapper {
-    padding: 30px 0 80px 50px; }
+  #map-results #map-results-content {
+    display: table;
+    width: 95%;
+    table-layout: fixed; }
+    #map-results #map-results-content .left-panel {
+      width: 45%;
+      display: table-cell; }
+      #map-results #map-results-content .left-panel .journey-summary {
+        color: white;
+        text-transform: none;
+        padding-left: 50px; }
+        #map-results #map-results-content .left-panel .journey-summary .summary-label {
+          text-decoration: none;
+          display: inline-block;
+          width: 10%; }
+        #map-results #map-results-content .left-panel .journey-summary .summary-content {
+          display: inline-block;
+          border-bottom: 1px solid #547CD4;
+          padding-bottom: 2px;
+          width: 79%;
+          padding-top: 8px;
+          font-size: 12px; }
+      #map-results #map-results-content .left-panel .map-wrapper {
+        padding: 30px 0 80px 50px;
+        height: 600px; }
+        #map-results #map-results-content .left-panel .map-wrapper #gmap_canvas {
+          height: 100%;
+          width: 90%; }
+          #map-results #map-results-content .left-panel .map-wrapper #gmap_canvas img {
+            max-width: none !important;
+            background: none !important; }
+    #map-results #map-results-content .right-panel {
+      width: 20%;
+      display: table-cell; }
+      #map-results #map-results-content .right-panel .traveltime-comparison {
+        display: table; }
+        #map-results #map-results-content .right-panel .traveltime-comparison .traveltime-row {
+          display: table-row; }
+        #map-results #map-results-content .right-panel .traveltime-comparison .traveltime-column {
+          display: table-cell;
+          padding-right: 15px; }
 
 #map-results.showmap {
   display: block;

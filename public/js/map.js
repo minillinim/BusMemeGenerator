@@ -19,6 +19,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
 	  		$anchorScroll('map-results');
 			document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
 			document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
+			document.getElementById('other-travelMethod').innerText = $scope.mode;
 	}
 
 	$scope.getMapData = function(){
@@ -27,6 +28,10 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
 
             initMap();
 
+			if (!$scope.mode){
+				$scope.mode = 'Driving';
+			}
+			
             var travelOptions = {
                 startLat: document.getElementById('startAddressLat').value,
                 startLng: document.getElementById('startAddressLong').value,

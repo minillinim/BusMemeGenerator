@@ -30,8 +30,8 @@
             </div>
             <div class="travel-comparison">
                 <p>Do you have a car?</p>
-                <input class="radiobutton" type="radio" ng-model="mode" name="hascar" value="driving" ng-checked="true"> Yes, I do
-                <input class="radiobutton second" type="radio" name="hascar" ng-model="mode" value="walking" ng-checked="false"> No, I rely on public
+                <input class="radiobutton" type="radio" ng-model="mode" name="hascar" value="Driving" ng-checked="true"> Yes, I do
+                <input class="radiobutton second" type="radio" name="hascar" ng-model="mode" value="Walking" ng-checked="false"> No, I rely on public
                 transport
             </div>
             <div id="validation-errors"></div>
@@ -41,19 +41,40 @@
     <div id="map-results" ng-show="showMap">
         <img src="../assets/step-2.gif"/>
         <div class="instructions">Design your meme</div>
-        <div class="journey-summary">
-        	<div class="summary-line">
-        		<span class="summary-label">From:</span>
-        		<span id="summary-from" class="summary-content"></span>
-    		</div>
-        	<div class="summary-line">
-        		<span class="summary-label">To:</span>
-        		<span id="summary-to" class="summary-content"></span>
-    		</div>
-        </div>
-        <div class="map-wrapper">
-	        <div id='gmap_canvas'>
+        
+        <div id="map-results-content">
+        	
+	        <div class="left-panel">
+
+		        <div class="journey-summary">
+		        	<div class="summary-line">
+		        		<span class="summary-label">From:</span>
+		        		<span id="summary-from" class="summary-content"></span>
+		    		</div>
+		        	<div class="summary-line">
+		        		<span class="summary-label">To:</span>
+		        		<span id="summary-to" class="summary-content"></span>
+		    		</div>
+		        </div>
+		        <div class="map-wrapper">
+			        <div id='gmap_canvas'>
+			        </div>
+		        </div>
+	        	
+	        </div>
+	        <div class="right-panel">
+	        	<div class="traveltime-comparison">
+		        	<div class="traveltime-row">
+		        		<span class="traveltime-column">Public Transport</span>
+		        		<span id="other-travelMethod" class="traveltime-column"></span>
+	        		</div>
+		        	<div class="traveltime-row">
+		        		<span class="traveltime-column">{{public}}</span>
+		        		<span class="traveltime-column">{{other}}</span>
+	        		</div>	
+	        	</div>
 	        </div>
         </div>
+
     </div>
 </div>

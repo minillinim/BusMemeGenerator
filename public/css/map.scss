@@ -1,17 +1,6 @@
 @import 'variables';
 @import 'common';
 @import 'nav';
-#gmap_canvas 
-{
- 	height:600px;
- 	width:600px;
-
-	img 
-	{
-		max-width:none!important;
-		background:none!important;
-	}
-}
 
 #map-results{
 	display:none;
@@ -32,30 +21,73 @@
 		padding-top:5px;
 	}
 
-	.journey-summary{
+	#map-results-content{
 
-		color: $input-color;
-		text-transform: none;
-    	padding-left: 50px;
+	    display: table;
+	    width: 95%;
+	    table-layout: fixed;
 
-		.summary-label{
-			text-decoration: none;
-			display:inline-block;	
-			width: 60px;
+		.left-panel{
+
+			width: 45%;
+			display: table-cell;
+
+			.journey-summary{
+
+				color: $input-color;
+				text-transform: none;
+		    	padding-left: 50px;
+
+				.summary-label{
+					text-decoration: none;
+					display:inline-block;	
+					width: 10%;
+				}
+
+				.summary-content{
+					display:inline-block;			
+				    border-bottom: 1px solid $separator-color;
+				    padding-bottom: 2px;	
+					width: 79%;
+					padding-top: 8px;
+		    		font-size: 12px;
+				}
+			}
+			
+			.map-wrapper{
+				padding:30px 0 80px 50px;
+				height: 600px;
+
+				#gmap_canvas 
+				{
+				 	height:100%;
+				 	width:90%;
+
+					img 
+					{
+						max-width:none!important;
+						background:none!important;
+					}
+				}
+			}
 		}
 
-		.summary-content{
-			display:inline-block;			
-		    border-bottom: 1px solid $separator-color;
-		    padding-bottom: 2px;	
-			width: 535px;
-			padding-top: 8px;
-    		font-size: 12px;
+		.right-panel{
+			width: 20%;
+			display: table-cell;
+
+			.traveltime-comparison{
+				display: table;
+
+				.traveltime-row{
+					display: table-row;
+				}
+				.traveltime-column{
+					display: table-cell;
+					padding-right: 15px;
+				}
+			}
 		}
-	}
-	
-	.map-wrapper{
-		padding:30px 0 80px 50px;
 	}
 }
 #map-results.showmap{
