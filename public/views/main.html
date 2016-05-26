@@ -30,8 +30,8 @@
             </div>
             <div class="travel-comparison">
                 <p>Do you have a car?</p>
-                <input class="radiobutton" type="radio" ng-model="mode" name="hascar" value="Driving" ng-checked="true"> Yes, I do
-                <input class="radiobutton second" type="radio" name="hascar" ng-model="mode" value="Walking" ng-checked="false"> No, I rely on public
+                <input class="radiobutton" type="radio" ng-model="transport.mode" value="driving" ng-checked="true"> Yes, I do
+                <input class="radiobutton second" type="radio" ng-model="transport.mode" value="walking" ng-checked="false"> No, I rely on public
                 transport
             </div>
             <div id="validation-errors"></div>
@@ -66,7 +66,7 @@
 	        	<div class="traveltime-comparison">
 		        	<div class="traveltime-row">
 		        		<span class="traveltime-column">Public Transport</span>
-		        		<span class="traveltime-column">{{mode}}</span>
+		        		<span class="traveltime-column">{{transport.mode}}</span>
 	        		</div>
 		        	<div class="traveltime-row">
 		        		<span id="public-duration" class="traveltime-column">{{public.duration}}</span>

@@ -11,25 +11,25 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
     var transitDirections;
     var drivingOrWalkingDirections;
     var map;
+    $scope.transport = {
+        mode: 'driving'
+    };
     $scope.showMap = false;
 
-	function initStep2() {
-			document.getElementById('map-results').className = 'showmap';
-			document.getElementById('journey-details').className = 'done';
-	  		$anchorScroll('map-results');
-			document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
-			document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
-	}
+    function initStep2() {
+        document.getElementById('map-results').className = 'showmap';
+        document.getElementById('journey-details').className = 'done';
+        $anchorScroll('map-results');
+        document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
+        document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
+        document.getElementById('other-travelMethod').innerText = $scope.transport.mode;
+    }
 
-	$scope.getMapData = function(){
-		if (validateAddresses()){
-			$scope.showMap = true;
+    $scope.getMapData = function () {
+        if (validateAddresses()) {
+            $scope.showMap = true;
 
             initMap();
-
-			if (!$scope.mode){
-				$scope.mode = 'Driving';
-			}
 
             var travelOptions = {
                 startLat: document.getElementById('startAddressLat').value,
@@ -39,36 +39,40 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
             };
 
             MapService.getDirections(travelOptions, 'public', function (result, status) {
-                $scope.public = {
-                    distance: result.routes[0].legs[0].distance.text,
-                    duration: result.routes[0].legs[0].duration.text
-                };
-                console.log($scope.public);
-				document.getElementById('public-duration').innerText = $scope.public.duration;
+                $scope.$apply(function () {
+                    $scope.public = {
+                        distance: result.routes[0].legs[0].distance.text,
+                        duration: result.routes[0].legs[0].duration.text
+                    };
+                });
+                document.getElementById('public-duration').innerText = $scope.public.duration;
 
                 if (status == google.maps.DirectionsStatus.OK) {
                     transitDirections.setDirections(result);
                 }
             });
-            MapService.getDirections(travelOptions, $scope.mode, function (result, status) {
-                $scope.other = {
-                    distance: result.routes[0].legs[0].distance.text,
-                    duration: result.routes[0].legs[0].duration.text
-                };
 
-				document.getElementById('other-duration').innerText = $scope.other.duration;
-				
+            MapService.getDirections(travelOptions, $scope.transport.mode, function (result, status) {
+                $scope.$apply(function () {
+                    $scope.other = {
+                        distance: result.routes[0].legs[0].distance.text,
+                        duration: result.routes[0].legs[0].duration.text
+                    };
+                });
+
+                document.getElementById('other-duration').innerText = $scope.other.duration;
                 if (status == google.maps.DirectionsStatus.OK) {
                     drivingOrWalkingDirections.setDirections(result);
                 }
             });
 
             initStep2();
-		} else{
-			document.getElementById('map-results').className = "";
-			document.getElementById('journey-details').className = "";
-		}
-	};
+        } else {
+            document.getElementById('map-results').className = "";
+            document.getElementById('journey-details').className = "";
+        }
+    };
+
 
     var initMap = function () {
         var logan = new google.maps.LatLng(-27.6410476, 153.10750899999994);
@@ -93,6 +97,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
 app.factory('MapService', function () {
     return {
         getDirections: function (travelOptions, mode, callback) {
+            console.log('service', mode);
             var directionsService = new google.maps.DirectionsService();
 
             var start = new google.maps.LatLng(travelOptions.startLat, travelOptions.startLng);
