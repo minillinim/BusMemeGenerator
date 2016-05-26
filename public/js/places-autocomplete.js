@@ -1,11 +1,18 @@
 google.maps.event.addDomListener(window, 'load', function () {
 
         setTimeout(function() {
-                var startAddress = new google.maps.places.Autocomplete(
-                document.getElementById('start-address'));
+
+            // default autoComplete bounds to Logan city area
+            var defaultBounds = new google.maps.LatLngBounds(
+              new google.maps.LatLng(-27.641505, 153.106308));
+
+            var options = { bounds: defaultBounds };
+
+            var startAddress = new google.maps.places.Autocomplete(
+                document.getElementById('start-address'), options);
 
             var destAddress = new google.maps.places.Autocomplete(
-                document.getElementById('dest-address'));
+                document.getElementById('dest-address'), options);
 
             google.maps.event.addListener(startAddress, 'place_changed', function () {
                 var place = startAddress.getPlace();
