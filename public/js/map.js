@@ -22,6 +22,8 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
         $anchorScroll('map-results');
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
+    
+        $scope.memeTemplates = getMemeTemplates();
     }
 
     $scope.getMapData = function () {
@@ -96,7 +98,6 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
 app.factory('MapService', function () {
     return {
         getDirections: function (travelOptions, mode, callback) {
-            console.log('service', mode);
             var directionsService = new google.maps.DirectionsService();
 
             var start = new google.maps.LatLng(travelOptions.startLat, travelOptions.startLng);
