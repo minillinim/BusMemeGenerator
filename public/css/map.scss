@@ -73,6 +73,7 @@
 		}
 
 		.right-panel{
+			color: $input-color;
 			width: 20%;
 			display: table-cell;
 
@@ -85,6 +86,19 @@
 				.traveltime-column{
 					display: table-cell;
 					padding-right: 15px;
+				}
+			}
+
+			.template-selection{
+
+    			padding-top: 15%;
+
+				.message-header {
+				    padding-bottom: 10px;
+				}
+
+				.message-template {
+				    padding: 10px 5px;
 				}
 			}
 		}

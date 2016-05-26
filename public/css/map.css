@@ -103,6 +103,7 @@ input {
             max-width: none !important;
             background: none !important; }
     #map-results #map-results-content .right-panel {
+      color: white;
       width: 20%;
       display: table-cell; }
       #map-results #map-results-content .right-panel .traveltime-comparison {
@@ -112,6 +113,12 @@ input {
         #map-results #map-results-content .right-panel .traveltime-comparison .traveltime-column {
           display: table-cell;
           padding-right: 15px; }
+      #map-results #map-results-content .right-panel .template-selection {
+        padding-top: 15%; }
+        #map-results #map-results-content .right-panel .template-selection .message-header {
+          padding-bottom: 10px; }
+        #map-results #map-results-content .right-panel .template-selection .message-template {
+          padding: 10px 5px; }
 
 #map-results.showmap {
   display: block;
