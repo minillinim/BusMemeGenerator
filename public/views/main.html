@@ -33,13 +33,13 @@
             	<select id="date-of-travel" ng-model="selectedDate" ng-options="day as day.label for day in days"></select>
 
 				<div class="time-options">
-	            	<input class="radiobutton" type="radio" ng-model="transport.timeOption" value="LeaveAfter" ng-checked="true">Leave After</input>
-	            	<input class="radiobutton" type="radio" ng-model="transport.timeOption" value="ArriveBefore" ng-checked="false">Arrive Before</input>
-	            	<input class="radiobutton" type="radio" ng-model="transport.timeOption" value="EarliestServices" ng-checked="false">Earliest Services</input>
-	            	<input class="radiobutton" type="radio" ng-model="transport.timeOption" value="LatestServices" ng-checked="false">LAtest Services</input>
+	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="1" ng-checked="timeOption==1">Leave After</input>
+	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="2" ng-checked="timeOption==2">Arrive Before</input>
+	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="3" ng-checked="timeOption==3">Earliest Services</input>
+	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="4" ng-checked="timeOption==4">Latest Services</input>
 				</div>
 
-            	<div class="time-spec">
+            	<div class="time-spec" ng-show="timeOption < 3">
 	            	<select id="time-spec-hour" ng-model="selectedHour" ng-options="hour for hour in hours"></select>
 	            	<select id="time-spec-minute" ng-model="selectedMinute" ng-options="minute for minute in minutes"></select>
 	            	<select id="time-spec-ampm" ng-model="selectedAmpm" ng-options="ampm for ampm in ampms"></select>

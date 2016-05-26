@@ -2,7 +2,7 @@ var app = angular.module('bus-meme');
 
 app.controller('TimeController', function ($scope) 
 {
-    var weekdays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+    var weekdays = ["","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
     var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     $scope.ampms = ["am", "pm"];
 
@@ -17,6 +17,8 @@ app.controller('TimeController', function ($scope)
     $scope.minutes = getMinutes();
     $scope.selectedMinute = $scope.minutes[0];
 
+    $scope.timeOption = 1;
+    
     $scope.showMap = false;
 
     function getSevenDays(){

@@ -112,8 +112,6 @@ body {
         #main #journey #journey-details .travel-options .time-spec {
           margin-left: 15px;
           margin-top: -5px; }
-        #main #journey #journey-details .travel-options .time-spec.hide {
-          display: none; }
       #main #journey #journey-details .travel-comparison {
         text-transform: none;
         color: white;
