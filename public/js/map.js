@@ -44,6 +44,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
                     distance: result.routes[0].legs[0].distance.text,
                     duration: result.routes[0].legs[0].duration.text
                 };
+                console.log($scope.public);
                 if (status == google.maps.DirectionsStatus.OK) {
                     transitDirections.setDirections(result);
                 }
