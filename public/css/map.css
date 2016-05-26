@@ -113,7 +113,7 @@ input {
         #map-results #map-results-content .right-panel .traveltime-comparison .traveltime-column {
           display: table-cell;
           padding-right: 15px;
-          text-transform: none; }
+          text-transform: capitalize; }
       #map-results #map-results-content .right-panel .template-selection {
         padding-top: 15%; }
         #map-results #map-results-content .right-panel .template-selection .message-header {
