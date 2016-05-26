@@ -44,6 +44,8 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
                     duration: result.routes[0].legs[0].duration.text
                 };
                 console.log($scope.public);
+				document.getElementById('public-duration').innerText = $scope.public.duration;
+
                 if (status == google.maps.DirectionsStatus.OK) {
                     transitDirections.setDirections(result);
                 }
@@ -53,13 +55,15 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
                     distance: result.routes[0].legs[0].distance.text,
                     duration: result.routes[0].legs[0].duration.text
                 };
+
+				document.getElementById('other-duration').innerText = $scope.other.duration;
+				
                 if (status == google.maps.DirectionsStatus.OK) {
                     drivingOrWalkingDirections.setDirections(result);
                 }
             });
 
-			initStep2();
-
+            initStep2();
 		} else{
 			document.getElementById('map-results').className = "";
 			document.getElementById('journey-details').className = "";
