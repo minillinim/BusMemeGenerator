@@ -22,7 +22,6 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
         $anchorScroll('map-results');
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
-        document.getElementById('other-travelMethod').innerText = $scope.transport.mode;
     }
 
     $scope.getMapData = function () {
