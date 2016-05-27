@@ -8,8 +8,8 @@ var config = {
     app: {
       name: 'app'
     },
-    port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/app-development'
+    port: process.env.BM_PORT || 3000,
+    db: process.env.BM_MONGODB_URI || 'mongodb://localhost/app-dev'
   },
 
   test: {
@@ -17,8 +17,8 @@ var config = {
     app: {
       name: 'app'
     },
-    port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/app-test'
+    port: process.env.BM_PORT || 3000,
+    db: process.env.BM_MONGODB_URI || 'mongodb://localhost/app-test'
   },
 
   production: {
@@ -26,8 +26,8 @@ var config = {
     app: {
       name: 'app'
     },
-    port: process.env.PORT || 3000,
-    db: process.env.MONGODB_URI
+    port: process.env.BM_PORT || 3000,
+    db: process.env.BM_MONGODB_URI
   }
 };
 
