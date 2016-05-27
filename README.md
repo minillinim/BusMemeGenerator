@@ -3,23 +3,24 @@ Code for the QCA / transport action group bus route meme project
 
 ##Project setup
 
-Install [mongodb](https://docs.mongodb.com/manual/installation/) (Make sure you start the mongodb instance)
+###Environment
 
-Run *npm install*
+Start MongoDB and the application environments by running this command:
 
-To use the translink API you need to authenticate. NPM looks for env variables to avoid putting creds into the repo. 
+```
+docker-compose up
+```
 
-Please set the following:
+###Development
 
-export TL_USER="uSERnAME"
-export TL_PASSWORD="pASSwORD"
+Use your grunt global installation or grunt  installed locally as a development dependency
 
-You are good to go now.
+* Local grunt installation: *./node_modules/grunt-cli/bin/grunt*
+* Global grunt installation: *grunt*
 
-###To start the server
+##Tests
 
-Run *grunt*
+Use your grunt global installation or grunt  installed locally as a development dependency
 
-###To run tests
-
-Run *grunt test*
+* Local grunt installation: *./node_modules/grunt-cli/bin/grunt test*
+* Global grunt installation: *grunt test*
