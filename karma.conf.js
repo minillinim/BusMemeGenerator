@@ -10,8 +10,6 @@ module.exports = function (config) {
         exclude: [
             'public/js/output.min.js',
             'public/js/places-autocomplete.js'
-            //'public/js/address-validation.js',
-            //'public/js/jquery.js'
         ],
         reporters: ['progress'],
         port: 9876,
