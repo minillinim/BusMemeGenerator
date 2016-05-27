@@ -3,13 +3,16 @@ services:
   web:
     build: .
     ports:
-    - "5000:5000"
-    volumes:
-    - .:/code
-    - logvolume01:/var/log
+    - "3000:3000"
+    expose:
+    - "3000"
     links:
-    - mongodb
-  mongodb:
-    image: mongo-express
-volumes:
-  logvolume01: {}
+    - db
+    env_file:
+    - ./app.env
+  db:
+    image: mongo
+    ports:
+        - "27017:27017"
+    expose:
+        - "27017"
