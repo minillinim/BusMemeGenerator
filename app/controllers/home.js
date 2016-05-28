@@ -27,11 +27,23 @@ router.get('/map/:startAddressLat/:startAddressLong/:destAddressLat/:destAddress
 
 router.get('/getMemeTemplates', function(req, res, next){
   var templates = [];
+
     MemeTemplate.find().stream().on('data', function(data){
         templates.push(data);
     }).on('error', function (err) {
       console.log('error', err);
     }).on('close', function () {
+
+      if (templates){
+        if (templates.length < 1){
+           templates = [
+                  {firstLine:'Public Transport', secondLine:'FAIL!!!'}, 
+                  {firstLine:'Logan City Council', secondLine:'Needs to invest in Public Transport!'}, 
+                  {firstLine:'Public Transport', secondLine:'Couldnt get much worse...'}, 
+                  {firstLine:'And then you wonder why', secondLine:'everyone owns a car..'}];
+        }
+      }
+
       res.json(templates);
     });
 });
