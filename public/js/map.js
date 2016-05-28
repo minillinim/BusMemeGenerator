@@ -16,16 +16,6 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
     };
     $scope.showMap = false;
 
-    function initStep2() {
-        document.getElementById('map-results').className = 'showmap';
-        document.getElementById('journey-details').className = 'done';
-        $anchorScroll('map-results');
-        document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
-        document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
-    
-        $scope.memeTemplates = getMemeTemplates();
-    }
-
     $scope.getMapData = function () {
         if (validateAddresses()) {
             $scope.showMap = true;
@@ -74,6 +64,15 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
         }
     };
 
+    function initStep2() {
+        document.getElementById('map-results').className = 'showmap';
+        document.getElementById('journey-details').className = 'done';
+        $anchorScroll('map-results');
+        document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
+        document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
+    
+        $scope.memeTemplates = getMemeTemplates();
+    }
 
     var initMap = function () {
         var logan = new google.maps.LatLng(-27.6410476, 153.10750899999994);

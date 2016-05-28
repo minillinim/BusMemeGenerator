@@ -3,7 +3,9 @@ var express = require('express'),
   directions = require('./map')
   tlapi = require('./translinkapi')
   mongoose = require('mongoose'),
+  MemeTemplate = mongoose.model('MemeTemplate'),
   Location = mongoose.model('Location');
+
 
 module.exports = function (app) {
   app.use('/', router);
@@ -23,6 +25,17 @@ router.get('/map/:startAddressLat/:startAddressLong/:destAddressLat/:destAddress
   });
 });
 
+router.get('/getMemeTemplates', function(req, res, next){
+  var templates = [];
+    MemeTemplate.find().stream().on('data', function(data){
+        templates.push(data);
+    }).on('error', function (err) {
+      console.log('error', err);
+    }).on('close', function () {
+      res.json(templates);
+    });
+});
+
 router.get('/tl/:startAddressLat/:startAddressLong/:destAddressLat/:destAddressLong', function(req, res, next) {
   tlapi().getJourneysBetween(req.params.startAddressLat,
                              req.params.startAddressLong,
@@ -32,7 +45,3 @@ router.get('/tl/:startAddressLat/:startAddressLong/:destAddressLat/:destAddressL
     console.log(journeys);
   });
 });
-
-// router.post('/directions', function (req, res, next) {
-//     res.render('map');
-// });

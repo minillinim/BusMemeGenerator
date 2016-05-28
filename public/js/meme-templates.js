@@ -1,3 +1,4 @@
+
 var memeTemplates = [
 	{firstLine:'Public Transport', secondLine:'FAIL!!!'}, 
 	{firstLine:'Logan City Council', secondLine:'Needs to invest in Public Transport!'}, 
@@ -7,3 +8,11 @@ var memeTemplates = [
 function getMemeTemplates(){
 	return memeTemplates;
 }
+
+// app.factory('MemeTemplateService', function () {
+//     return {
+//         getMemeTemplates: function (callback) {
+            
+//         }
+//     };
+// });
