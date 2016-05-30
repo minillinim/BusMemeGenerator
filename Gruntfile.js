@@ -66,7 +66,7 @@ module.exports = function (grunt) {
                     'config/*.js',
                     'public/js/*.js'
                 ],
-                tasks: ['develop', 'delayed-livereload']
+                tasks: ['build', 'delayed-livereload']
             },
             css: {
                 files: [
@@ -105,10 +105,13 @@ module.exports = function (grunt) {
         }, 500);
     });
 
-    grunt.registerTask('default', [
+    grunt.registerTask('build', [
         'scss',
         'develop',
-        'uglify',
+        'uglify'
+    ]);
+    grunt.registerTask('default', [
+        'build',
         'watch'
     ]);
     grunt.registerTask('scss', ['sass']);
