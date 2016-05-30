@@ -65,25 +65,27 @@ body {
 			}
 
 			.travel-options{
-				padding: 30px 3px;
+				padding: 30px 3px 0 0;
 			    text-transform: none;
 		    	color:$input-color;
 		    	font-size:12px;
 
+		    	.travel-date{
+		    		width:150px;
+		    	}
+		    	
 		    	.time-options{
 		    		padding:5px;
+		    		padding-left:3px;
 
 		    		input.radiobutton{
 		    		    margin-left: 10px;
     					margin-right: 10px;
 		    		}
+		    		input.radiobutton.first{
+		    		    margin-left: 0;
+		    		}
 		    	}
-
-		    	.time-spec{
-				    margin-left: 15px;
-				    margin-top: -5px;
-		    	}
-
 			}
 
 			.travel-comparison{

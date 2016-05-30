@@ -30,10 +30,10 @@
             </div>
             <div class="travel-options" ng-controller="TimeController">
             	
-            	<select id="date-of-travel" ng-model="selectedDate" ng-options="day as day.label for day in days"></select>
+            	<select class="travel-date" ng-model="selectedDate" ng-options="day as day.label for day in days"></select>
 
 				<div class="time-options">
-	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="1" ng-checked="timeOption==1">Leave After</input>
+	            	<input class="radiobutton first" type="radio" ng-model="timeOption" name="timeOption" value="1" ng-checked="timeOption==1">Leave After</input>
 	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="2" ng-checked="timeOption==2">Arrive Before</input>
 	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="3" ng-checked="timeOption==3">Earliest Services</input>
 	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="4" ng-checked="timeOption==4">Latest Services</input>

@@ -16,6 +16,19 @@ input {
   color: white;
   opacity: 0.8; }
 
+select {
+  font-size: 12px;
+  border-radius: 3px;
+  border: none;
+  line-height: 20px;
+  margin: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  background-color: #4769B3;
+  color: white;
+  opacity: 0.8; }
+
 .button {
   font-size: 16px;
   height: 32px;
