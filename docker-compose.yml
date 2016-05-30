@@ -10,6 +10,8 @@ services:
     - db
     env_file:
     - ./app.env
+    volumes:
+    - .:/app
   db:
     image: mongo
     ports:
