@@ -28,6 +28,29 @@
                 <input type="hidden" id="destAddressLat" value="">
                 <input type="hidden" id="destAddressLong" value="">
             </div>
+            <div class="travel-options" ng-controller="TimeController">
+            	
+            	<select class="travel-date" ng-model="selectedDate" ng-options="day as day.label for day in days"></select>
+
+				<div class="time-options">
+	            	<input class="radiobutton first" type="radio" ng-model="timeOption" name="timeOption" value="1" ng-checked="timeOption==1">Leave After</input>
+	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="2" ng-checked="timeOption==2">Arrive Before</input>
+	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="3" ng-checked="timeOption==3">Earliest Services</input>
+	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="4" ng-checked="timeOption==4">Latest Services</input>
+				</div>
+
+            	<div class="time-spec" ng-show="timeOption < 3">
+	            	<select id="time-spec-hour" ng-model="selectedHour" ng-options="hour for hour in hours"></select>
+	            	<select id="time-spec-minute" ng-model="selectedMinute" ng-options="minute for minute in minutes"></select>
+	            	<select id="time-spec-ampm" ng-model="selectedAmpm" ng-options="ampm for ampm in ampms"></select>
+				</div>
+
+				<div class="walking-options">
+					Maximum walk:
+            		<select class="max-walk" ng-model="selectedMaxWalk" ng-options="wo as wo.label for wo in walkingOptions track by wo.value"></select>
+				</div>
+
+            </div>
             <div class="travel-comparison">
                 <p>Do you have a car?</p>
                 <input class="radiobutton" type="radio" ng-model="transport.mode" value="driving" ng-checked="true"> Yes, I do
@@ -73,7 +96,7 @@
 		        		<span id="other-duration" class="traveltime-column">{{other.duration}}</span>
 	        		</div>	
 	        	</div>
-	        	<div class="template-selection">
+	        	<div class="template-selection" ng-controller="MemeController">
 	        		<div class="templates-header">
 	        			Choose message template
 	        		</div>

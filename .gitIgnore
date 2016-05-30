@@ -1,3 +1,5 @@
+npm-debug.log
+app.env
 node_modules/
 *.DS_Store
 .idea/
