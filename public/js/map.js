@@ -1,4 +1,4 @@
-var app = angular.module('bus-meme', ['ngRoute', 'meme-service']);
+var app = angular.module('bus-meme', ['ngRoute']);
 
 app.config(function ($routeProvider) {
     $routeProvider.when('/', {
@@ -11,10 +11,10 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
     var transitDirections;
     var drivingOrWalkingDirections;
     var map;
+    
     $scope.transport = {
         mode: 'driving'
     };
-    $scope.showMap = false;
 
     $scope.getMapData = function () {
         if (validateAddresses()) {

@@ -64,6 +64,31 @@ body {
 				}
 			}
 
+			.travel-options{
+				padding: 30px 3px;
+			    text-transform: none;
+		    	color:$input-color;
+		    	font-size:12px;
+
+		    	.time-options{
+		    		padding:5px;
+
+		    		input.radiobutton{
+		    		    margin-left: 10px;
+    					margin-right: 10px;
+		    		}
+		    	}
+
+		    	.time-spec{
+				    margin-left: 15px;
+				    margin-top: -5px;
+		    	}
+		    	.time-spec.hide{
+		    		display:none;
+		    	}
+
+			}
+
 			.travel-comparison{
 			    text-transform: none;
 		    	color:$input-color;

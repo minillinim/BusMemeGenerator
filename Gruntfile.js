@@ -38,7 +38,8 @@ module.exports = function (grunt) {
                     ['public/js/places-autocomplete.js', 
                     'public/js/address-validation.js', 
                     'public/js/map.js',
-                    'public/js/meme-templates.js'
+                    'public/js/meme-templates.js',
+                    'public/js/time-options.js'
                     ]
                 }
             }

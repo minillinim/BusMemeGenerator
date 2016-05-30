@@ -1,4 +1,4 @@
-var app = angular.module('meme-service', []);
+var app = angular.module('bus-meme');
 
 app.controller('MemeController', function ($scope, MemeFactory, $anchorScroll) {
    MemeFactory.getMemeTemplates().then(function(response){

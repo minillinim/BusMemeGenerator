@@ -99,6 +99,21 @@ body {
           padding: 5px,0;
           width: 60%;
           margin-top: 5px; }
+      #main #journey #journey-details .travel-options {
+        padding: 30px 3px;
+        text-transform: none;
+        color: white;
+        font-size: 12px; }
+        #main #journey #journey-details .travel-options .time-options {
+          padding: 5px; }
+          #main #journey #journey-details .travel-options .time-options input.radiobutton {
+            margin-left: 10px;
+            margin-right: 10px; }
+        #main #journey #journey-details .travel-options .time-spec {
+          margin-left: 15px;
+          margin-top: -5px; }
+        #main #journey #journey-details .travel-options .time-spec.hide {
+          display: none; }
       #main #journey #journey-details .travel-comparison {
         text-transform: none;
         color: white;
