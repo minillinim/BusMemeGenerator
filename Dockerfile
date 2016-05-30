@@ -6,8 +6,11 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY . /app
 RUN npm install
-RUN ./node_modules/grunt-cli/bin/grunt scss
-RUN ./node_modules/grunt-cli/bin/grunt uglify
+RUN npm install grunt-cli -g
+RUN npm install load-grunt-tasks -g
+
+RUN grunt scss
+RUN grunt uglify
 
 EXPOSE 3000
 
