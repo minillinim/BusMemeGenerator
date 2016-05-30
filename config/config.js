@@ -9,7 +9,7 @@ var config = {
       name: 'app'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://' + process.env.BM_MONGODB_HOST + '/' + process.env.BM_MONGODB_NAME || 'mongodb://localhost/app-dev'
+    db: process.env.BM_MONGODB_HOST && 'mongodb://' + process.env.BM_MONGODB_HOST + '/' + process.env.BM_MONGODB_NAME || 'mongodb://localhost/app-dev'
   },
 
   test: {
@@ -18,7 +18,7 @@ var config = {
       name: 'app'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://' + process.env.BM_MONGODB_HOST + '/' + process.env.BM_MONGODB_NAME || 'mongodb://localhost/app-test'
+    db: process.env.BM_MONGODB_HOST && 'mongodb://' + process.env.BM_MONGODB_HOST + '/' + process.env.BM_MONGODB_NAME || 'mongodb://localhost/app-test'
   },
 
   production: {
@@ -27,7 +27,7 @@ var config = {
       name: 'app'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://' + process.env.BM_MONGODB_HOST + '/' + process.env.BM_MONGODB_NAME
+    db: process.env.BM_MONGODB_HOST && 'mongodb://' + process.env.BM_MONGODB_HOST + '/' + process.env.BM_MONGODB_NAME
     
   }
 };
