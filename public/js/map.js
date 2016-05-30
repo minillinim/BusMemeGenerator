@@ -16,6 +16,8 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
         mode: 'driving'
     };
 
+    $scope.showMap = false;
+    
     $scope.getMapData = function () {
         if (validateAddresses()) {
             $scope.showMap = true;

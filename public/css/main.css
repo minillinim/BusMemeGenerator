@@ -121,12 +121,14 @@ body {
           width: 150px; }
         #main #journey #journey-details .travel-options .time-options {
           padding: 5px;
-          padding-left: 2px; }
+          padding-left: 3px; }
           #main #journey #journey-details .travel-options .time-options input.radiobutton {
             margin-left: 10px;
             margin-right: 10px; }
           #main #journey #journey-details .travel-options .time-options input.radiobutton.first {
             margin-left: 0; }
+        #main #journey #journey-details .travel-options .time-spec {
+          padding-bottom: 15px; }
       #main #journey #journey-details .travel-comparison {
         text-transform: none;
         color: white;

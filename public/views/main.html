@@ -44,6 +44,12 @@
 	            	<select id="time-spec-minute" ng-model="selectedMinute" ng-options="minute for minute in minutes"></select>
 	            	<select id="time-spec-ampm" ng-model="selectedAmpm" ng-options="ampm for ampm in ampms"></select>
 				</div>
+
+				<div class="walking-options">
+					Maximum walk:
+            		<select class="max-walk" ng-model="selectedMaxWalk" ng-options="wo as wo.label for wo in walkingOptions track by wo.value"></select>
+				</div>
+
             </div>
             <div class="travel-comparison">
                 <p>Do you have a car?</p>
