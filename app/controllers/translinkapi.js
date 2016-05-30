@@ -50,36 +50,72 @@ function getLocation(lat, lng) {
   }
 }
 
-function getJourneysBetween(startLat, startLng, endLat, endLng) {
-  //localhost:3000/tl/-27.415458/153.050513/-27.465918/153.025939
+function _convertTime(timeStamp) {
+  var date = new Date(timeStamp*1000);
+  var year = date.getFullYear();
+  var month = "0" + (date.getMonth() + 1);
+  var day = "0" + date.getDate();
+  var hours = date.getHours();
+  var minutes = "0" + date.getMinutes();
+  var seconds = "0" + date.getSeconds();
+
+  return month.substr(-2) + "/" + 
+         day.substr(-2) + "/" + 
+         year + " " + 
+         hours + ':' + 
+         minutes.substr(-2) + ':' + 
+         seconds.substr(-2);
+}
+
+function getJourneysBetween(startLat, startLng, endLat, endLng, mode, at, walkMax) {
+  //localhost:3000/tl/-27.415458/153.050513/-27.465918/153.025939/after/1464608939/1200/
   tripInfo = {
     "startLat": startLat,
     "startLng": startLng,
     "endLat": endLat,
     "endLng": endLng,
-    "at": default_time,
-    "timeMode": leave_after,
     "walkSpeed": default_walk_speed,
-    "walkMax": default_walk_max
+    "walkMax": walkMax,
+    "at": _convertTime(at)
   };
 
+  switch(mode) {
+    case "after":
+      tripInfo["timeMode"] = leave_after;
+      break;
+    case "before":
+      tripInfo["timeMode"] = arrive_before;
+      break;
+    case "first":
+      tripInfo["timeMode"] = first_services;
+      break;
+    case "last":
+      tripInfo["timeMode"] = last_services;
+      break;
+  }
   console.log(tripInfo);
 
-  return getLocation(startLat, startLng)
-    .then(function(startLoc) {
+  var d = Q.defer();
+  getLocation(startLat, startLng)
+  .then(
+    function(startLoc) {
       if(startLoc) {
-        return getLocation(endLat, endLng).then(function(endLoc) {
-          if(endLoc) {
-            return _getJourneysBetween(tripInfo, startLoc, endLoc);  
+        return getLocation(endLat, endLng)
+        .then(
+          function(endLoc) {
+            if(endLoc) {
+              d.resolve(_getJourneysBetween(tripInfo, startLoc, endLoc));
+            } else {
+              d.resolve(null);
+            }
           }
-        }, function(err) {
-          //console.log(err);
-          return undefined;
-        });
+        );
+      } else {
+        d.resolve(null);
       }
-      return undefined;
     }
   );
+  return d.promise;
 }
 
 function _getJourneysBetween(tripInfo, startLoc, endLoc) {

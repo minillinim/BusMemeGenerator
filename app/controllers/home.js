@@ -48,11 +48,14 @@ router.get('/getMemeTemplates', function(req, res, next){
     });
 });
 
-router.get('/tl/:startAddressLat/:startAddressLong/:destAddressLat/:destAddressLong', function(req, res, next) {
-  tlapi().getJourneysBetween(req.params.startAddressLat,
-                             req.params.startAddressLong,
-                             req.params.destAddressLat,
-                             req.params.destAddressLong)
+router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', function(req, res, next) {
+  tlapi().getJourneysBetween(req.params.startLat,
+                             req.params.startLng,
+                             req.params.endLat,
+                             req.params.endLng,
+                             req.params.mode,
+                             req.params.at,
+                             req.params.walkMax)
   .then(function(journeys) {
     console.log(JSON.stringify(journeys), undefined, 2);
   });
