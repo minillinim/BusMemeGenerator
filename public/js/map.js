@@ -1,4 +1,4 @@
-var app = angular.module('bus-meme', ['ngRoute']);
+var app = angular.module('bus-meme', ['ngRoute', 'meme-service']);
 
 app.config(function ($routeProvider) {
     $routeProvider.when('/', {
@@ -7,7 +7,7 @@ app.config(function ($routeProvider) {
     })
 });
 
-app.controller('MapController', function ($scope, MapService, MemeFactory, $anchorScroll) {
+app.controller('MapController', function ($scope, MapService, $anchorScroll) {
     var transitDirections;
     var drivingOrWalkingDirections;
     var map;
@@ -71,12 +71,7 @@ app.controller('MapController', function ($scope, MapService, MemeFactory, $anch
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
     
-        MemeFactory.getMemeTemplates(setMemeTemplates);
-    }
-
-    var setMemeTemplates = function(templates){
-        $scope.memeTemplates = templates;
-        console.log($scope.memeTemplates);
+        
     }
 
     var initMap = function () {
@@ -125,15 +120,4 @@ app.factory('MapService', function () {
         }
     };
 });
-
-app.factory('MemeFactory', ['$http', function ($http) {
-    return {
-        getMemeTemplates: function(callback){
-
-            $http.get('/getMemeTemplates').then(function(response) {
-                callback(response.data);
-            });
-        }
-    }
-}])
 
