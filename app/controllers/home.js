@@ -54,6 +54,6 @@ router.get('/tl/:startAddressLat/:startAddressLong/:destAddressLat/:destAddressL
                              req.params.destAddressLat,
                              req.params.destAddressLong)
   .then(function(journeys) {
-    console.log(journeys);
+    console.log(JSON.stringify(journeys), undefined, 2);
   });
 });
