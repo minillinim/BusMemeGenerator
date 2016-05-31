@@ -65,10 +65,21 @@ select {
     display: inline-block; }
     #nav .gallery img {
       display: inline-block;
-      width: 16px;
       padding-right: 5px;
       padding-top: 1px;
       vertical-align: top; }
+      @media screen and (max-device-width: 480px) and (orientation: portrait) {
+        #nav .gallery img {
+          width: 32px; } }
+      @media screen and (min-width: 480px) {
+        #nav .gallery img {
+          width: 16px; } }
+    @media screen and (max-device-width: 480px) and (orientation: portrait) {
+      #nav .gallery {
+        left: -17px;
+        padding-top: 15px; }
+        #nav .gallery span {
+          visibility: hidden; } }
 
 #map-results {
   margin-left: 20%;
@@ -99,8 +110,13 @@ select {
       display: table-cell; }
       #map-results #map-results-content .left-panel .journey-summary {
         color: white;
-        text-transform: none;
-        padding-left: 50px; }
+        text-transform: none; }
+        @media screen and (max-device-width: 480px) and (orientation: portrait) {
+          #map-results #map-results-content .left-panel .journey-summary {
+            padding-left: 5px; } }
+        @media screen and (min-width: 480px) {
+          #map-results #map-results-content .left-panel .journey-summary {
+            padding-left: 50px; } }
         #map-results #map-results-content .left-panel .journey-summary .summary-label {
           text-decoration: none;
           display: inline-block;
@@ -113,8 +129,13 @@ select {
           padding-top: 8px;
           font-size: 12px; }
       #map-results #map-results-content .left-panel .map-wrapper {
-        padding: 30px 0 80px 50px;
         height: 600px; }
+        @media screen and (max-device-width: 480px) and (orientation: portrait) {
+          #map-results #map-results-content .left-panel .map-wrapper {
+            padding: 30px 0 80px 10px; } }
+        @media screen and (min-width: 480px) {
+          #map-results #map-results-content .left-panel .map-wrapper {
+            padding: 30px 0 80px 50px; } }
         #map-results #map-results-content .left-panel .map-wrapper #gmap_canvas {
           height: 100%;
           width: 90%; }

@@ -16,10 +16,24 @@
 	    
 	    img{
 	    	display:inline-block;
-	    	width:16px;
+			@media screen and (max-device-width: $max-device-width) and (orientation: portrait) {
+		    	width:32px;
+			}
+			@media screen and (min-width: $max-device-width){
+				width:16px;
+			}
+			
 		    padding-right: 5px;
 		    padding-top: 1px;
 		    vertical-align: top;
 	    }
+		
+		@media screen and (max-device-width: $max-device-width) and (orientation: portrait) {
+		    left: -17px;
+    		padding-top: 15px;
+			span {
+				visibility: hidden;
+			}
+		}
     }
 }
