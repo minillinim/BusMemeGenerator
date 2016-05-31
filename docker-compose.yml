@@ -18,3 +18,9 @@ services:
         - "27017:27017"
     expose:
         - "27017"
+#  db_backup:
+#    image: tutum/mongodb-backup
+#    links:
+#    - db
+#    volumes:
+#    - /data/db:/backup
