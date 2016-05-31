@@ -13,7 +13,7 @@
 		margin-left: -5px;
 	}
 
-	img{
+	.step-img {
 		width:32px;
 		display: inline-block;
 	    vertical-align: top;
@@ -114,6 +114,11 @@
 	}
 }
 
-#map-image {
+.map-canvas {
 	padding: 50px;
+}
+
+.map-image {
+	width: 600px !important;
+	height: 600px !important;
 }

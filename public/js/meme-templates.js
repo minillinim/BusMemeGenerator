@@ -30,24 +30,24 @@ app.controller('MemeController', function ($scope, MemeFactory, $anchorScroll) {
 	    context.fillStyle = "white";
 	    context.strokeStyle = "black";
 	    context.lineWidth = 2;
-	    writeTextOnImage(topText, canvas.width / 2, 70);
-	    writeTextOnImage(bottomText, canvas.width / 2, canvas.height - 30);
+	    writeTextOnImage(context, topText, canvas.width / 2, 70);
+	    writeTextOnImage(context, bottomText, canvas.width / 2, canvas.height - 30);
 	    // downloadLink.href = canvas.toDataURL("image/jpeg");
-	    $scope.memeReady = true;
-
-	    function writeTextOnImage (text, x, y) {
-	        var f = 36; 
-	        for (; f >= 0; f -=1) {
-	            context.font = "bold 42pt Impact, Charcoal, sans-serif";
-	            if (context.measureText(text).width < canvas.width - 10) {
-	                context.fillText(text, x, y);
-	                context.strokeText(text, x, y);
-
-	                break;
-	            }
-	        }
-	    };
+		$('#img-out').hide();
 	};
+
+	function writeTextOnImage (context, text, x, y) {
+		var f = 36;
+		for (; f >= 0; f -=1) {
+			context.font = "bold 42pt Impact, Charcoal, sans-serif";
+			if (context.measureText(text).width < canvas.width - 10) {
+				context.fillText(text, x, y);
+				context.strokeText(text, x, y);
+
+				break;
+			}
+		}
+	}
 });
 
 app.factory('MemeFactory', ['$http', function ($http) {
@@ -56,4 +56,4 @@ app.factory('MemeFactory', ['$http', function ($http) {
            return $http.get('/getMemeTemplates');
         }
     }
-}])
+}]);

@@ -62,7 +62,7 @@
         </div>
     </div>
     <div id="map-results" ng-show="showMap">
-        <img src="../assets/step-2.gif"/>
+        <img class="step-img" src="../assets/step-2.gif"/>
         <div class="instructions">Design your meme</div>
         
         <div id="map-results-content">
@@ -79,11 +79,13 @@
 		        		<span id="summary-to" class="summary-content"></span>
 		    		</div>
 		        </div>
-		        <div class="map-wrapper">
-			        <div id='gmap_canvas'>
-			        </div>
-		        </div>
-                <input class="button next-button" ng-click="exportAsImage()" type="submit" value="Export map as image" />
+                <div id="map-image">
+                    <div class="map-canvas" ng-controller="MemeController">
+                        <canvas id="canvas" width="0" height="0"></canvas>
+                        <img id="img-out" class="map-image" src="" />
+                    </div>
+                    <img id="img-out-2" class="map-image" src="" />
+                </div>
 	        </div>
 	        <div class="right-panel">
 	        	<div class="traveltime-comparison">
@@ -108,16 +110,6 @@
 	        	</div>	
 	        </div>
         </div>
-        <div id="map-image" ng-show="showImage">
 
-        	<div ng-controller="MemeController">
-			    <canvas id="canvas" width="0" height="0"></canvas>
-
-	            <img id="img-out" ng-show="!memeReady" style="width: 600px; height: 600px" src="" />
-
-	            <button ng-click="renderMeme()"> Click Me!</button>
-
-        	</div>
-        </div>
     </div>
 </div>

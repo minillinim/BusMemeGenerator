@@ -1,18 +1,18 @@
 exports.memeTemplates = [
     {   
-        "firstLine":"Public Transport",
+        "firstLine":"Public transport",
         "secondLine":"Fail!!!"
     },
     {   
-        "firstLine":"LOGAN CITY COUNCIL",
-        "secondLine":"INVEST IN BETTER BUSES!"
+        "firstLine":"Logan city council",
+        "secondLine":"Invest in better buses!"
     },
     {   
         "firstLine":"And then they wonder",
         "secondLine":"Why everyone owns a car"
     },
     {   
-        "firstLine":"LOGAN CITY COUNCIL",
-        "secondLine":"INVEST IN BETTER BUSES!"
+        "firstLine":"Logan city council",
+        "secondLine":"Think there's no problem"
     }
 ];
