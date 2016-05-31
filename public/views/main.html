@@ -30,7 +30,7 @@
             </div>
             <div class="travel-options" ng-controller="TimeController">
             	
-            	<select class="travel-date" ng-model="selectedDate" ng-options="day as day.label for day in days"></select>
+            	<select class="travel-date" ng-model="selectedDate" ng-options="day as day.label for day in days track by day.dateValue"></select>
 
 				<div class="time-options">
 	            	<input class="radiobutton first" type="radio" ng-model="timeOption" name="timeOption" value="after" ng-checked="timeOption=='after'">Leave After</input>
@@ -113,6 +113,15 @@
 	        </div>
         </div>
         <div id="map-image" ng-show="showImage">
+
+		    <input id="topline" placeholder="TOP LINE">
+		    <br><br>
+		    <input id="bottomline" placeholder="BOTTOM LINE">
+		    <br><br>
+		    <canvas id="canvas" width="0" height="0"></canvas>
+		    <br><br>
+
+
             <img id="img-out" style="width: 600px; height: 600px" src="" />
         </div>
     </div>

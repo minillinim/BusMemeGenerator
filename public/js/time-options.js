@@ -19,15 +19,29 @@ app.controller('TimeController', function ($scope)
 
     $scope.selectedMaxWalk = $scope.walkingOptions[4];
 
+    $scope.getSelectedTime = function(){
+
+        var hour = $scope.selectedHour;
+        if ($scope.selectedAmpm == 'pm')
+            hour += 12;
+
+        var date = new Date($scope.selectedDate.dateValue.getFullYear(), 
+                        $scope.selectedDate.dateValue.getMonth(),
+                        $scope.selectedDate.dateValue.getDate(),
+                        hour,
+                        $scope.selectedMinute,
+                        0,0);
+
+        return date;
+    }
     function getSevenDays(){
         days = [];
 
         var date = new Date();
-        days.push({label:'Today (' + weekdays[date.getDay()] + ')', dateValue:date})
-        
-        for (var i = 0; i <= 6; i++) {
+        days.push({label:'Today (' + weekdays[date.getDay()] + ')', dateValue:new Date(date)})
+        for (var i = 0; i < 6; i++) {
             date.setDate(date.getDate() + 1);
-            days.push({label:getDateDisplayLabel(date), dateValue:date});
+            days.push({label:getDateDisplayLabel(date), dateValue:new Date(date)});
         }
 
         return days;
@@ -79,10 +93,10 @@ app.controller('TimeController', function ($scope)
         $scope.selectedMinute = $scope.minutes[roundedMinute / 5];
         $scope.selectedHour = $scope.hours[hour - 1];
     }
-    function twoDigits(minute){
-        if (minute < 10)
-            return '0' + minute.toString();
-        return minute.toString();
+    function twoDigits(digit){
+        if (digit < 10)
+            return '0' + digit.toString();
+        return digit.toString();
     }
     function getDateDisplayLabel(date){
         return weekdays[date.getDay()].substr(0,3) + ' ' + 
