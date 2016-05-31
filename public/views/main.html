@@ -114,15 +114,14 @@
         </div>
         <div id="map-image" ng-show="showImage">
 
-		    <input id="topline" placeholder="TOP LINE">
-		    <br><br>
-		    <input id="bottomline" placeholder="BOTTOM LINE">
-		    <br><br>
-		    <canvas id="canvas" width="0" height="0"></canvas>
-		    <br><br>
+        	<div ng-controller="MemeController">
+			    <canvas id="canvas" width="0" height="0"></canvas>
 
+	            <img id="img-out" ng-show="!memeReady" style="width: 600px; height: 600px" src="" />
 
-            <img id="img-out" style="width: 600px; height: 600px" src="" />
+	            <button ng-click="renderMeme()"> Click Me!</button>
+
+        	</div>
         </div>
     </div>
 </div>
