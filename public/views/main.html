@@ -83,7 +83,7 @@
 			        <div id='gmap_canvas'>
 			        </div>
 		        </div>
-	        	
+                <input class="button next-button" ng-click="exportAsImage()" type="submit" value="Export map as image" />
 	        </div>
 	        <div class="right-panel">
 	        	<div class="traveltime-comparison">
@@ -112,6 +112,8 @@
 	        	</div>	
 	        </div>
         </div>
-
+        <div id="map-image" ng-show="showImage">
+            <img id="img-out" style="width: 600px; height: 600px" src="" />
+        </div>
     </div>
 </div>
