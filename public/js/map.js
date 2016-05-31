@@ -17,19 +17,31 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
     };
 
     $scope.showMap = false;
-    
+    $scope.transitDirectionsPolyline = '';
+    $scope.drivingOrWalkingDirectionsPolyline = '';
+    $scope.origin='';
+    $scope.destination='';
+    $scope.showImage = false;
+
     $scope.getMapData = function () {
         if (validateAddresses()) {
             $scope.showMap = true;
 
             initMap();
+            var startLat = document.getElementById('startAddressLat').value,
+                startLng = document.getElementById('startAddressLong').value,
+                destLat = document.getElementById('destAddressLat').value,
+                destLng = document.getElementById('destAddressLong').value;
 
             var travelOptions = {
-                startLat: document.getElementById('startAddressLat').value,
-                startLng: document.getElementById('startAddressLong').value,
-                destLat: document.getElementById('destAddressLat').value,
-                destLng: document.getElementById('destAddressLong').value
+                startLat: startLat,
+                startLng: startLng,
+                destLat: destLat,
+                destLng: destLng
             };
+
+            $scope.origin = startLat + ',' + startLng;
+            $scope.destination =  destLat + ',' + destLng;
 
             MapService.getDirections(travelOptions, 'public', function (result, status) {
                 $scope.$apply(function () {
@@ -41,6 +53,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
                 document.getElementById('public-duration').innerText = $scope.public.duration;
 
                 if (status == google.maps.DirectionsStatus.OK) {
+                    $scope.transitDirectionsPolyline = result.routes[0].overview_polyline;
                     transitDirections.setDirections(result);
                 }
             });
@@ -55,6 +68,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
 
                 document.getElementById('other-duration').innerText = $scope.other.duration;
                 if (status == google.maps.DirectionsStatus.OK) {
+                    $scope.drivingOrWalkingDirectionsPolyline = result.routes[0].overview_polyline;
                     drivingOrWalkingDirections.setDirections(result);
                 }
             });
@@ -64,6 +78,16 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
             document.getElementById('map-results').className = "";
             document.getElementById('journey-details').className = "";
         }
+    };
+    $scope.exportAsImage = function() {
+        var staticMapsUrl = 'https://maps.googleapis.com/maps/api/staticmap?';
+        var startMarker = 'markers=color:0x80da40ff|label:A|' + $scope.origin;
+        var endMarker = 'markers=color:0xf76255ff|label:B|' + $scope.destination;
+        var transitPath = 'path=color:0xff0000ff|weight:4|enc:' + $scope.transitDirectionsPolyline;
+        var drivingOrWalkingPath = 'path=color:0x0000ffff|weight:4|enc:' + $scope.drivingOrWalkingDirectionsPolyline;
+        staticMapsUrl += '&' + transitPath + '&' + drivingOrWalkingPath + '&size=600x600' + '&' + startMarker + '&' + endMarker;
+        document.getElementById('img-out').setAttribute('src', staticMapsUrl);
+        $scope.showImage = true;
     };
 
     function initStep2() {
