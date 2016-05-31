@@ -9,7 +9,7 @@ app.config(function ($routeProvider) {
 
 app.controller('MapController', function ($scope, MapService, $anchorScroll) {
     var map;
-    
+
     $scope.transport = {
         mode: 'driving'
     };
@@ -17,8 +17,8 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
     $scope.showMap = false;
     $scope.transitDirectionsPolyline = '';
     $scope.drivingOrWalkingDirectionsPolyline = '';
-    $scope.origin='';
-    $scope.destination='';
+    $scope.origin = '';
+    $scope.destination = '';
 
     var bothResultsFound = function () {
         return ($scope.transitDirectionsPolyline !== '') && ($scope.drivingOrWalkingDirectionsPolyline !== '');
@@ -41,7 +41,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
             };
 
             $scope.origin = startLat + ',' + startLng;
-            $scope.destination =  destLat + ',' + destLng;
+            $scope.destination = destLat + ',' + destLng;
 
             MapService.getDirections(travelOptions, 'public', function (result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
@@ -61,7 +61,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
             MapService.getDirections(travelOptions, $scope.transport.mode, function (result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     $scope.$apply(function () {
-                         $scope.other = {
+                        $scope.other = {
                             distance: result.routes[0].legs[0].distance.text,
                             duration: result.routes[0].legs[0].duration.text
                         };
@@ -77,7 +77,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
         }
     };
 
-    var getZoom = function(bounds, mapWidth) {
+    var getZoom = function (bounds, mapWidth) {
         //http://stackoverflow.com/a/6055653
         var GLOBE_WIDTH = 256; // a constant in Google's map projection
         var west = bounds.getSouthWest().lng();
@@ -89,7 +89,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
         return Math.round(Math.log(mapWidth * 360 / angle / GLOBE_WIDTH) / Math.LN2) - 1;
     };
 
-    $scope.exportAsImage = function() {
+    $scope.exportAsImage = function () {
         var mapWidth = 600;
         if (bothResultsFound()) {
             var bounds = getBoundsCoveringBoth($scope.transitBounds, $scope.drivingOrWalkingBounds),
@@ -99,7 +99,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
                 startMarker = 'markers=color:0x80da40ff|label:A|' + $scope.origin,
                 endMarker = 'markers=color:0xf76255ff|label:B|' + $scope.destination,
                 mapCenter = 'center=' + center.lat() + ',' + center.lng(),
-                zoomLevel =  + 'zoom=' + zoom,
+                zoomLevel = +'zoom=' + zoom,
                 mapSize = 'size=' + mapWidth + 'x' + mapWidth,
                 transitPath = 'path=color:0xff0000ff|weight:4|enc:' + $scope.transitDirectionsPolyline,
                 drivingOrWalkingPath = 'path=color:0x0000ffff|weight:4|enc:' + $scope.drivingOrWalkingDirectionsPolyline,
@@ -110,6 +110,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
             image1.setAttribute('crossorigin', 'anonymous');
             image1.setAttribute('src', commonUrl + '&' + drivingOrWalkingPath);
             document.getElementById('img-out-2').setAttribute('src', commonUrl + '&' + transitPath);
+
         }
     };
 
@@ -120,7 +121,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
     }
 
-    var getBoundsCoveringBoth = function(bounds1, bounds2) {
+    var getBoundsCoveringBoth = function (bounds1, bounds2) {
         bounds1.extend(bounds2.getNorthEast());
         bounds1.extend(bounds2.getSouthWest());
         return bounds1;
@@ -153,4 +154,3 @@ app.factory('MapService', function () {
         }
     };
 });
-
