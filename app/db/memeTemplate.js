@@ -12,10 +12,6 @@ exports.memeTemplates = [
         "secondLine":"Why everyone owns a car"
     },
     {   
-        "firstLine":"And this \"service\" costs",
-        "secondLine":"HOW MUCH??"
-    },
-    {   
         "firstLine":"LOGAN CITY COUNCIL",
         "secondLine":"INVEST IN BETTER BUSES!"
     }
