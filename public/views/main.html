@@ -83,7 +83,7 @@
 			        <div id='gmap_canvas'>
 			        </div>
 		        </div>
-                <input class="button next-button" ng-click="exportAsImage()" type="submit" value="Export map as image" />
+                <input class="button next-button" ng-click="exportAsImage();memeReady=false;" type="submit" value="Export map as image" />
 	        </div>
 	        <div class="right-panel">
 	        	<div class="traveltime-comparison">
@@ -100,13 +100,9 @@
 	        		<div class="templates-header">
 	        			Choose message template
 	        		</div>
-	        		<ul class="message-template-list" >
-					    <li class="message-template" ng-repeat="template in memeTemplates">
-					      <!-- [{{$templa + 1}}] {{friend.name}} who is {{friend.age}} years old. -->
-					      {{template.firstLine}} {{template.secondLine}}
-					    </li>
-					    <li class="message-template" ng-if="results.length == 0">
-		        			Public Transport Fail!!!!
+	        		<ul class="message-template-list">
+					    <li class="message-template" ng-repeat="template in memeTemplates" ng-click="setSelectedTemplate(template)" >
+					      {{template.firstLine}} | {{template.secondLine}}
 					    </li>
 					  </ul>
 	        	</div>	
