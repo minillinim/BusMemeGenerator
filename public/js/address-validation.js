@@ -6,20 +6,17 @@ function validateAddresses(){
 	var startLan = document.getElementById("startAddressLat").value;
 	var startLong = document.getElementById("startAddressLong").value;
 	var destPC = document.getElementById("destPostCode").value;
-	var destLan = document.getElementById("destAddressLat").value;
+	var destLat = document.getElementById("destAddressLat").value;
 	var destLong = document.getElementById("destAddressLong").value;
 
-	if (startLan && startLong && destLan && destLong){
-		if (addressWithinLoganRegion(startPC) || addressWithinLoganRegion(destPC))
-		{
+	if (startLan && startLong && destLat && destLong) {
+		if (addressWithinLoganRegion(startPC) || addressWithinLoganRegion(destPC)) {
 			document.getElementById("validation-errors").innerText = "";
 			return true;
-		}
-		else{
+		} else {
 			document.getElementById("validation-errors").innerText = "At this point we require at least one address to be within the Logan city bounds.";
 		}
-	}
-	else{
+	} else {
 		document.getElementById("validation-errors").innerText = "Both addresses required";
 	}
 
