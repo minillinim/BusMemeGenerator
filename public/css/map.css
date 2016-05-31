@@ -139,6 +139,14 @@ select {
           padding-bottom: 10px; }
         #map-results #map-results-content .right-panel .template-selection .message-template {
           padding: 10px 5px; }
+        #map-results #map-results-content .right-panel .template-selection .message-template-list {
+          cursor: pointer;
+          background-color: #547CD4;
+          color: white;
+          border-radius: 3px; }
+        #map-results #map-results-content .right-panel .template-selection .message-template-list.selected {
+          color: #547CD4;
+          background-color: white; }
 
 .map-canvas {
   padding: 50px; }

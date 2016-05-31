@@ -109,6 +109,17 @@
 				.message-template {
 				    padding: 10px 5px;
 				}
+
+				.message-template-list {
+				    cursor: pointer;
+				    background-color: $separator-color;
+				    color: $input-color;
+				    border-radius:3px;
+				}
+				.message-template-list.selected {
+				    color: $separator-color;
+				    background-color: $input-color;
+				}
 			}
 		}
 	}
