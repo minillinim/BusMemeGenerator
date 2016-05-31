@@ -108,8 +108,8 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
             $('#img-out').show();
             var image1 = document.getElementById('img-out');
             image1.setAttribute('crossorigin', 'anonymous');
-            image1.setAttribute('src', commonUrl + '&' + transitPath);
-            document.getElementById('img-out-2').setAttribute('src', commonUrl + '&' + drivingOrWalkingPath);
+            image1.setAttribute('src', commonUrl + '&' + drivingOrWalkingPath);
+            document.getElementById('img-out-2').setAttribute('src', commonUrl + '&' + transitPath);
         }
     };
 
