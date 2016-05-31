@@ -65,91 +65,173 @@ select {
     display: inline-block; }
     #nav .gallery img {
       display: inline-block;
-      width: 16px;
       padding-right: 5px;
       padding-top: 1px;
       vertical-align: top; }
+      @media screen and (max-device-width: 480px) and (orientation: portrait) {
+        #nav .gallery img {
+          width: 32px; } }
+      @media screen and (min-width: 480px) {
+        #nav .gallery img {
+          width: 16px; } }
+    @media screen and (max-device-width: 480px) and (orientation: portrait) {
+      #nav .gallery {
+        left: -17px;
+        padding-top: 15px; }
+        #nav .gallery span {
+          visibility: hidden; } }
 
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   height: 100%;
   background-color: #6595FC;
   color: #FFFA32; }
+  @media screen and (max-device-width: 480px) and (orientation: portrait) {
+    body {
+      padding: 25px; } }
+  @media screen and (min-width: 480px) {
+    body {
+      padding: 50px; } }
 
 #main {
   text-transform: uppercase; }
   #main #title {
     text-align: center; }
-    #main #title .first-line {
-      font-size: 56px; }
-    #main #title .second-line {
-      font-size: 40px; }
-    #main #title .third-line {
-      font-size: 32px; }
-  #main #journey {
-    padding-top: 50px;
-    margin-left: 20%; }
-    #main #journey img {
-      width: 32px;
-      display: inline-block;
-      vertical-align: top;
-      padding-right: 30px;
-      margin-left: -13px; }
-    #main #journey #journey-details.done {
-      border-left: thick solid #FFFA32; }
-    #main #journey #journey-details {
-      padding: 30px 0 80px 50px;
-      border-left: thick solid #547CD4; }
-      #main #journey #journey-details .start-address, #main #journey #journey-details .dest-address {
-        color: white;
-        font-size: 12px;
-        padding: 20px, 0;
-        margin-top: 10px;
-        text-transform: none; }
-        #main #journey #journey-details .start-address input, #main #journey #journey-details .dest-address input {
-          display: block;
-          padding: 5px,0;
-          width: 60%;
-          margin-top: 5px; }
-      #main #journey #journey-details .travel-options {
-        padding: 30px 3px 0 0;
-        text-transform: none;
-        color: white;
-        font-size: 12px; }
-        #main #journey #journey-details .travel-options .travel-date {
-          width: 150px; }
-        #main #journey #journey-details .travel-options .time-options {
-          padding: 5px;
-          padding-left: 3px; }
-          #main #journey #journey-details .travel-options .time-options input.radiobutton {
-            margin-left: 10px;
-            margin-right: 10px; }
-          #main #journey #journey-details .travel-options .time-options input.radiobutton.first {
-            margin-left: 0; }
-        #main #journey #journey-details .travel-options .time-spec {
-          padding-bottom: 15px; }
-      #main #journey #journey-details .travel-comparison {
-        text-transform: none;
-        color: white;
-        font-size: 12px; }
-        #main #journey #journey-details .travel-comparison p {
-          margin-bottom: 0;
-          margin-top: 20px; }
-        #main #journey #journey-details .travel-comparison input {
+    @media screen and (max-device-width: 480px) and (orientation: portrait) {
+      #main #title .first-line {
+        font-size: 28px; }
+      #main #title .second-line {
+        font-size: 20px; }
+      #main #title .third-line {
+        font-size: 16px; } }
+    @media screen and (min-width: 480px) {
+      #main #title .first-line {
+        font-size: 56px; }
+      #main #title .second-line {
+        font-size: 40px; }
+      #main #title .third-line {
+        font-size: 32px; } }
+  @media screen and (max-device-width: 480px) and (orientation: portrait) {
+    #main #map-results {
+      margin-left: 0; } }
+  #main #map-results #map-results-content {
+    display: table;
+    table-layout: fixed; }
+    @media screen and (max-device-width: 480px) and (orientation: portrait) {
+      #main #map-results #map-results-content {
+        width: 120%; }
+        #main #map-results #map-results-content .left-panel, #main #map-results #map-results-content .right-panel {
           display: inline; }
-        #main #journey #journey-details .travel-comparison input.radiobutton.second {
-          margin-left: 20px; }
-      #main #journey #journey-details .next-button {
-        margin-top: 20px;
+          #main #map-results #map-results-content .left-panel .journey-summary, #main #map-results #map-results-content .right-panel .journey-summary {
+            font-size: 0.7em; }
+          #main #map-results #map-results-content .left-panel .traveltime-comparison, #main #map-results #map-results-content .left-panel .templates-header, #main #map-results #map-results-content .right-panel .traveltime-comparison, #main #map-results #map-results-content .right-panel .templates-header {
+            padding-left: 20px; }
+        #main #map-results #map-results-content .summary-content {
+          font-size: 10px;
+          padding-left: 4px; } }
+  @media screen and (max-device-width: 480px) and (orientation: portrait) {
+    #main #journey {
+      padding-top: 30px;
+      margin-left: 0; } }
+  @media screen and (min-width: 480px) {
+    #main #journey {
+      padding-top: 50px;
+      margin-left: 20%; } }
+  #main #journey img {
+    width: 32px;
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 30px;
+    margin-left: -13px; }
+  #main #journey #journey-details.done {
+    border-left: thick solid #FFFA32; }
+  #main #journey #journey-details {
+    border-left: thick solid #547CD4; }
+    @media screen and (max-device-width: 480px) and (orientation: portrait) {
+      #main #journey #journey-details {
+        padding: 0px 0 80px 10px; } }
+    @media screen and (min-width: 480px) {
+      #main #journey #journey-details {
+        padding: 30px 0 80px 50px; } }
+    #main #journey #journey-details .start-address, #main #journey #journey-details .dest-address {
+      color: white;
+      font-size: 12px;
+      padding: 20px, 0;
+      margin-top: 10px;
+      text-transform: none; }
+      #main #journey #journey-details .start-address input, #main #journey #journey-details .dest-address input {
+        display: block;
+        padding: 5px,0;
+        margin-top: 5px; }
+        @media screen and (max-device-width: 480px) and (orientation: portrait) {
+          #main #journey #journey-details .start-address input, #main #journey #journey-details .dest-address input {
+            width: 100%; } }
+        @media screen and (min-width: 480px) {
+          #main #journey #journey-details .start-address input, #main #journey #journey-details .dest-address input {
+            width: 60%; } }
+    #main #journey #journey-details .travel-options {
+      padding: 30px 3px 0 0;
+      text-transform: none;
+      color: white;
+      font-size: 12px; }
+      #main #journey #journey-details .travel-options .travel-date {
+        width: 150px; }
+      #main #journey #journey-details .travel-options .time-options {
         padding: 5px;
-        width: 10%; }
+        padding-left: 3px; }
+        #main #journey #journey-details .travel-options .time-options input.radiobutton {
+          margin-right: 10px; }
+          @media screen and (max-device-width: 480px) and (orientation: portrait) {
+            #main #journey #journey-details .travel-options .time-options input.radiobutton {
+              margin-left: 0; } }
+          @media screen and (min-width: 480px) {
+            #main #journey #journey-details .travel-options .time-options input.radiobutton {
+              margin-left: 10px;
+              margin-top: 0; } }
+        @media screen and (min-width: 480px) {
+          #main #journey #journey-details .travel-options .time-options br {
+            display: none; } }
+      #main #journey #journey-details .travel-options .time-spec {
+        padding-bottom: 15px; }
+    #main #journey #journey-details .travel-comparison {
+      text-transform: none;
+      color: white;
+      font-size: 12px; }
+      #main #journey #journey-details .travel-comparison p {
+        margin-bottom: 0;
+        margin-top: 20px; }
+      #main #journey #journey-details .travel-comparison input {
+        display: inline; }
+        @media screen and (max-device-width: 480px) and (orientation: portrait) {
+          #main #journey #journey-details .travel-comparison input {
+            margin-left: 0;
+            margin-top: 0; } }
+        @media screen and (min-width: 480px) {
+          #main #journey #journey-details .travel-comparison input .radiobutton.second {
+            margin-left: 20px; } }
+      @media screen and (min-width: 480px) {
+        #main #journey #journey-details .travel-comparison br {
+          display: none; } }
+    #main #journey #journey-details .next-button {
+      margin-top: 20px;
+      padding: 5px; }
+      @media screen and (max-device-width: 480px) and (orientation: portrait) {
+        #main #journey #journey-details .next-button {
+          width: 30%; } }
+      @media screen and (min-width: 480px) {
+        #main #journey #journey-details .next-button {
+          width: 10%; } }
 
-.instructions {
+.instructions, #map-results .instructions {
   text-transform: uppercase;
-  font-size: 18px;
   display: inline-block;
   padding-top: 5px; }
+  @media screen and (max-device-width: 480px) and (orientation: portrait) {
+    .instructions, #map-results .instructions {
+      font-size: 10px; } }
+  @media screen and (min-width: 480px) {
+    .instructions, #map-results .instructions {
+      font-size: 18px; } }
 
 a {
   color: #00B7FF; }

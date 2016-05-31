@@ -3,9 +3,14 @@
 @import 'nav';
 
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  height:100%;
+	@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+		padding: 25px;
+	}
+  	@media screen and (min-width: $max-device-width){
+		padding: 50px;
+	}
+  	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  	height:100%;
 	background-color:$background-color;
 	color:$text-color;
 }
@@ -16,22 +21,70 @@ body {
 	#title{
 		text-align:center;	
 
-		.first-line{
-			font-size:56px;
+		@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+			.first-line{
+				font-size:28px;
+			}
+			.second-line{
+				font-size:20px;
+			}
+			.third-line{
+				font-size:16px;
+			} 
 		}
-		.second-line{
-			font-size:40px;
+		@media screen and (min-width: $max-device-width){
+			.first-line{
+				font-size:56px;
+			}
+			.second-line{
+				font-size:40px;
+			}
+			.third-line{
+				font-size:32px;
+			} 
 		}
-		.third-line{
-			font-size:32px;
-		} 
+	}
+	
+	#map-results {
+		@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+			margin-left: 0;
+		}
+		
+		
+		#map-results-content {
+			display: table;
+			table-layout: fixed;
+			@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+				width: 120%;
+				.left-panel, .right-panel {
+					display: inline;
+					.journey-summary {
+						font-size: 0.7em;
+					}
+					.traveltime-comparison, .templates-header {
+						padding-left: 20px;
+					}
+				}
+				.summary-content {
+				    font-size: 10px;
+					padding-left: 4px;
+				}
+			}	
+		}
 	}
 	
 	#journey{
 
-		padding-top:50px;
-		margin-left:20%;
-
+		@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+			padding-top:30px;
+			margin-left:0;
+		}
+		
+		@media screen and (min-width: $max-device-width){
+			padding-top:50px;
+			margin-left:20%;
+		}
+		
 		img{
 			width:32px;
 			display: inline-block;
@@ -46,7 +99,13 @@ body {
 
 		#journey-details{
 			
-			padding:30px 0 80px 50px;
+			@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+				padding:0px 0 80px 10px;
+			}
+			@media screen and (min-width: $max-device-width){
+				padding:30px 0 80px 50px;
+			}
+			
     		border-left: thick solid $separator-color;
 
 			.start-address, .dest-address{
@@ -59,8 +118,13 @@ body {
 				input{
 					display:block;
 					padding:5px,0;
-					width:60%;
 					margin-top:5px;
+					@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+							width:100%;
+					}
+					@media screen and (min-width: $max-device-width){
+							width:60%;
+					}
 				}
 			}
 
@@ -79,18 +143,27 @@ body {
 		    		padding-left:3px;
 
 		    		input.radiobutton{
-		    		    margin-left: 10px;
+						@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+							margin-left: 0;
+						}
+						@media screen and (min-width: $max-device-width){
+							margin-left: 10px;
+							margin-top: 0;
+						}
     					margin-right: 10px;
 		    		}
-		    		input.radiobutton.first{
-		    		    margin-left: 0;
-		    		}
+									
+					@media screen and (min-width: $max-device-width){
+						br {
+							display: none;
+						}
+					}
 		    	}
 		    	.time-spec {
 				    padding-bottom: 15px;
 				}
 			}
-
+			
 			.travel-comparison{
 			    text-transform: none;
 		    	color:$input-color;
@@ -102,28 +175,50 @@ body {
 		    	}
 			    input{
 			    	display:inline;
+					@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+						margin-left: 0;
+						margin-top: 0;
+					}
+					@media screen and (min-width: $max-device-width){
+						.radiobutton.second {
+							margin-left: 20px;
+						}
+					}
 			    }
-			    input.radiobutton.second {
-				    margin-left: 20px;
+			    
+				@media screen and (min-width: $max-device-width){
+					br {
+						display: none;
+					}
 				}
 			}
 
 			.next-button{
 				margin-top:20px;
 				padding:5px;
-				width:10%;
+				@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+					width:30%;
+				}
+				@media screen and (min-width: $max-device-width){
+					width:10%;
+				}
 			}
 		}
 	}
 }
 
-.instructions{
+.instructions, #map-results .instructions{
 	text-transform:uppercase;
-	font-size:18px;
 	display: inline-block;
 	padding-top:5px;
-}
 
+	@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+		font-size:10px;
+	}
+	@media screen and (min-width: $max-device-width){
+		font-size:18px;
+	}
+}
 
 a {
   color: $link-color;

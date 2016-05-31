@@ -1,15 +1,21 @@
+
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/map.css">
+
     <script src="js/jquery.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script type="text/javascript"
             src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.23&libraries=places"></script>
     <script src="js/output.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 <body ng-app="bus-meme">
-<div ng-view></div>
+  <div class="container">
+    <div ng-view></div>
+  </div>
 </body>
 </html>
