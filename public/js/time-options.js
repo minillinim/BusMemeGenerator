@@ -11,12 +11,12 @@ app.controller('TimeController', function ($scope)
 
     $scope.hours = getHours();
     $scope.minutes = getMinutes();
+    $scope.walkingOptions = getWalkingOptions();
 
     setSelectedTime();
        
-    $scope.timeOption = 1;
+    $scope.timeOption = 'after';
 
-    $scope.walkingOptions = getWalkingOptions();
     $scope.selectedMaxWalk = $scope.walkingOptions[4];
 
     function getSevenDays(){
