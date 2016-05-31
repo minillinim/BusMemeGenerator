@@ -23,52 +23,9 @@ var travel_by_walk = 16;
 var travel_by_tram = 32;
 
 var default_walk_speed = 1;
-var default_walk_max = 1000;
-
-var default_time = "05/31/16 16:27:00"
-
-function getLocation(lat, lng) {
-  if(lat) {
-    var url = base_url + location_url + lat + "%2C" + lng + "&filter=0&maxResults=1&api_key=special-key";
-    return request.get(
-      {
-        url: url,
-        headers: { 'Authorization': 'Basic ' + auth },
-        json: true
-      }
-    ).then(function(response) {
-      if(response) {
-        if(response.Suggestions.length > 0) {
-          return response.Suggestions[0].Id;
-        }
-      }
-      return undefined;
-    }, function(err) {
-      //console.log(err);
-      return undefined;
-    });
-  }
-}
-
-function _convertTime(timeStamp) {
-  var date = new Date(timeStamp*1000);
-  var year = date.getFullYear();
-  var month = "0" + (date.getMonth() + 1);
-  var day = "0" + date.getDate();
-  var hours = date.getHours();
-  var minutes = "0" + date.getMinutes();
-  var seconds = "0" + date.getSeconds();
-
-  return month.substr(-2) + "/" + 
-         day.substr(-2) + "/" + 
-         year + " " + 
-         hours + ':' + 
-         minutes.substr(-2) + ':' + 
-         seconds.substr(-2);
-}
 
 function getJourneysBetween(startLat, startLng, endLat, endLng, mode, at, walkMax) {
-  //localhost:3000/tl/-27.415458/153.050513/-27.465918/153.025939/after/1464608939/1200/
+  //localhost:3000/tl/-27.415458/153.050513/-27.465918/153.025939/after/1464668217/1200/
   tripInfo = {
     "startLat": startLat,
     "startLng": startLng,
@@ -96,11 +53,11 @@ function getJourneysBetween(startLat, startLng, endLat, endLng, mode, at, walkMa
   console.log(tripInfo);
 
   var d = Q.defer();
-  getLocation(startLat, startLng)
+  _getLocation(startLat, startLng)
   .then(
     function(startLoc) {
       if(startLoc) {
-        return getLocation(endLat, endLng)
+        return _getLocation(endLat, endLng)
         .then(
           function(endLoc) {
             if(endLoc) {
@@ -116,6 +73,23 @@ function getJourneysBetween(startLat, startLng, endLat, endLng, mode, at, walkMa
     }
   );
   return d.promise;
+}
+
+function _convertTime(timeStamp) {
+  var date = new Date(timeStamp*1000);
+  var year = date.getFullYear();
+  var month = "0" + (date.getMonth() + 1);
+  var day = "0" + date.getDate();
+  var hours = date.getHours();
+  var minutes = "0" + date.getMinutes();
+  var seconds = "0" + date.getSeconds();
+
+  return month.substr(-2) + "/" + 
+         day.substr(-2) + "/" + 
+         year + " " + 
+         hours + ':' + 
+         minutes.substr(-2) + ':' + 
+         seconds.substr(-2);
 }
 
 function _getJourneysBetween(tripInfo, startLoc, endLoc) {
@@ -137,14 +111,44 @@ function _getJourneysBetween(tripInfo, startLoc, endLoc) {
         headers: { 'Authorization': 'Basic ' + auth },
         json: true
       }
-    ).then(function(response) {
-      var itineraries = response.TravelOptions.Itineraries;
-      d.resolve(_processItineraries(tripInfo, [], itineraries));
-    });
+    ).then(
+      function(response) {
+        var itineraries = response.TravelOptions.Itineraries;
+        return _processItineraries(tripInfo, [], itineraries);
+      }
+    ).then(
+      function(processedItineraries) {
+        d.resolve(processedItineraries);
+      }
+    );
   } else {
     d.resolve(undefined);
   }
   return d.promise;    
+}
+
+function _getLocation(lat, lng) {
+  var d = Q.defer();
+  if(lat) {
+    var url = base_url + location_url + lat + "%2C" + lng + "&filter=0&maxResults=1&api_key=special-key";
+    request.get(
+      {
+        url: url,
+        headers: { 'Authorization': 'Basic ' + auth },
+        json: true
+      }
+    ).then(function(response) {
+      if(response) {
+        if(response.Suggestions.length > 0) {
+          d.resolve(response.Suggestions[0].Id);
+        }
+      }
+      d.resolve(null);
+    }, function(err) {
+      d.resolve(null);
+    });
+  }
+  return d.promise;
 }
 
 function _processItineraries(tripInfo, processedItineraries, itineraries) {
@@ -254,7 +258,6 @@ function _getStopLocationById(stopId, lat, lng) {
 
 module.exports = function() {
   return {
-    getLocation: getLocation,
     getJourneysBetween: getJourneysBetween
   }
 }
