@@ -1,8 +1,8 @@
 var app = angular.module('bus-meme');
 
 app.controller('MemeController', function ($scope, MemeFactory, $anchorScroll) {
-   
-    MemeFactory.getMemeTemplates().then(function(response){
+
+	MemeFactory.getMemeTemplates().then(function(response){
 
    		$scope.memeTemplates = response.data;
 	    $scope.selectedTemplate = $scope.memeTemplates[0];
@@ -12,6 +12,15 @@ app.controller('MemeController', function ($scope, MemeFactory, $anchorScroll) {
 	$scope.setSelectedTemplate = function (template) {
 	   	$scope.selectedTemplate = template;
    		$scope.renderMeme();
+	};
+
+	$scope.dlCanvas = function () {
+		var canvas = document.getElementById("canvas");
+		var dt = canvas.toDataURL('image/png');
+
+		var dl = document.getElementById('dl');
+		dl.setAttribute('download', 'map.png');
+		dl.setAttribute('href', dt.replace(/^data:image\/[^;]/, 'data:application/octet-stream'));
 	};
 
 	$scope.renderMeme = function () {

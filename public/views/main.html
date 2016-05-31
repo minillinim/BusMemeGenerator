@@ -79,11 +79,12 @@
 		        		<span id="summary-to" class="summary-content"></span>
 		    		</div>
 		        </div>
-                <div id="map-image">
-                    <div class="map-canvas" ng-controller="MemeController">
+                <div id="map-image" ng-controller="MemeController">
+                    <div class="map-canvas">
                         <canvas id="canvas" width="0" height="0"></canvas>
                         <img id="img-out" class="map-image" src="" />
                     </div>
+                    <a id="dl" ng-click="dlCanvas()">Download Canvas</a>
                     <img id="img-out-2" class="map-image" src="" />
                 </div>
 	        </div>
