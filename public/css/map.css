@@ -73,7 +73,8 @@ select {
 #map-results {
   margin-left: 20%;
   border-left: thick solid #547CD4;
-  height: 800px; }
+  height: 800px;
+  padding-bottom: 50px; }
   #map-results .empty-space {
     height: 50px;
     border-left: thick solid #FFFA32;
