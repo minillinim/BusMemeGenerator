@@ -55,7 +55,10 @@ body {
 
 .journey-details{
 
-	padding:30px 0 80px 50px;
+	#invisible-anchor{
+		width:0;height:0;
+	}
+	padding:30px 0 50px 50px;
 	border-left: thick solid $separator-color;
 
 	.start-address, .dest-address{

@@ -106,8 +106,11 @@ body {
       margin-left: -13px; }
 
 .journey-details {
-  padding: 30px 0 80px 50px;
+  padding: 30px 0 50px 50px;
   border-left: thick solid #547CD4; }
+  .journey-details #invisible-anchor {
+    width: 0;
+    height: 0; }
   .journey-details .start-address, .journey-details .dest-address {
     color: white;
     font-size: 12px;

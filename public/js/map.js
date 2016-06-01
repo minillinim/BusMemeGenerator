@@ -89,6 +89,7 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
             });
 
             initStep2();
+            scrollToMapResults();
         }
     };
 
@@ -143,11 +144,14 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
 
     function initStep2() {
         document.getElementById('step-1').classList.add('done');
-        $anchorScroll('map-results');
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
     }
-
+    function scrollToMapResults(){
+        setTimeout(function() {
+                    $anchorScroll('invisible-anchor');
+                }, 10);
+    }
     var getBoundsCoveringBoth = function (bounds1, bounds2) {
         bounds1.extend(bounds2.getNorthEast());
         bounds1.extend(bounds2.getSouthWest());
