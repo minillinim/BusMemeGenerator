@@ -4,6 +4,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     MemeTemplate = mongoose.model('MemeTemplate'),
     MemeDetails = mongoose.model('MemeDetails'),
+    Image = mongoose.model('Image'),
     Location = mongoose.model('Location'),
     MemeController = require('./MemeController');
 
@@ -18,9 +19,12 @@ router.get('/', function (req, res, next) {
 
 router.get('/getMemeTemplates', MemeController().getMemeTemplates);
 
-router.post('/saveImageToGallery', MemeController().saveImage);
-
 router.post('/saveMemeDetails', MemeController().saveMemeDetails);
+
+router.post('/saveImageUrl', MemeController().saveImageUrl);
+
+router.get('/image/:imageLink', MemeController().serveImage);
+
 
 router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', function (req, res, next) {
     tlapi().getJourneysBetween(req.params.startLat,
