@@ -40,81 +40,123 @@ body {
 		    margin-left:-13px;
 		}
 		
-		#journey-details.done{
-    		border-left: thick solid $text-color;
-		}
+	}
+}
 
-		#journey-details{
-			
-			padding:30px 0 80px 50px;
-    		border-left: thick solid $separator-color;
+.journey-details{
 
-			.start-address, .dest-address{
-				color:$input-color;
-				font-size:12px;
-				padding: 20px, 0;
-				margin-top:10px;
-				text-transform:none;
-			
-				input{
-					display:block;
-					padding:5px,0;
-					width:60%;
-					margin-top:5px;
-				}
-			}
+	padding:30px 0 80px 50px;
+	border-left: thick solid $separator-color;
 
-			.travel-options{
-				padding: 30px 3px 0 0;
-			    text-transform: none;
-		    	color:$input-color;
-		    	font-size:12px;
+	.start-address, .dest-address{
+		color:$input-color;
+		font-size:12px;
+		padding: 20px 0;
+		margin-top:10px;
+		text-transform:none;
 
-		    	.travel-date{
-		    		width:150px;
-		    	}
-		    	
-		    	.time-options{
-		    		padding:5px;
-		    		padding-left:3px;
-
-		    		input.radiobutton{
-		    		    margin-left: 10px;
-    					margin-right: 10px;
-		    		}
-		    		input.radiobutton.first{
-		    		    margin-left: 0;
-		    		}
-		    	}
-		    	.time-spec {
-				    padding-bottom: 15px;
-				}
-			}
-
-			.travel-comparison{
-			    text-transform: none;
-		    	color:$input-color;
-		    	font-size:12px;
-
-		    	p{
-		    		margin-bottom:0;
-		    		margin-top: 20px;
-		    	}
-			    input{
-			    	display:inline;
-			    }
-			    input.radiobutton.second {
-				    margin-left: 20px;
-				}
-			}
-
-			.next-button{
-				margin-top:20px;
-				padding:5px;
-				width:10%;
-			}
+		input{
+			display:block;
+			padding:5px 0;
+			width:60%;
+			margin-top:5px;
 		}
 	}
+
+	.travel-options{
+		padding: 30px 3px 0 0;
+		text-transform: none;
+		color:$input-color;
+		font-size:12px;
+
+		.travel-date{
+			width:150px;
+		}
+
+		.time-options{
+			padding:5px;
+			padding-left:3px;
+
+			input.radiobutton{
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+			input.radiobutton.first{
+				margin-left: 0;
+			}
+		}
+		.time-spec {
+			padding-bottom: 15px;
+		}
+	}
+
+	.travel-comparison{
+		text-transform: none;
+		color:$input-color;
+		font-size:12px;
+
+		p{
+			margin-bottom:0;
+			margin-top: 20px;
+		}
+		input{
+			display:inline;
+		}
+		input.radiobutton.second {
+			margin-left: 20px;
+		}
+	}
+
+	.next-button{
+		margin-top:20px;
+		padding:5px;
+		width:10%;
+	}
+}
+
+.step-content {
+
+	display: table;
+	width: 95%;
+	table-layout: fixed;
+
+	.step-left-panel {
+		padding: 50px;
+		width: 70%;
+		display: table-cell;
+	}
+}
+
+.step-img {
+	width:32px;
+	display: inline-block;
+	vertical-align: top;
+	padding-right: 30px;
+	margin-left:-18px;
+	margin-top:-1px;
+}
+
+.done {
+	border-left: thick solid $text-color !important;
+}
+
+#share-image-button {
+	margin-left:50px;
+	padding:5px;
+}
+
+.share-map-panel {
+	margin-left:20%;
+	border-left: thick solid $separator-color;
+	height: 750px;
+}
+
+.fb-share {
+	background: url(../assets/facebook-white.svg) no-repeat 6px center;
+	width: 70px;
+	height: 60px;
+	display: block;
+	cursor: pointer;
 }
 
 .instructions{

@@ -5,21 +5,12 @@
 #map-results{
 	margin-left:20%;
 	border-left: thick solid $separator-color;
-	height: 800px;
+	height: 850px;
 
 	.empty-space{
 		height:50px;
 		border-left: thick solid $text-color;
 		margin-left: -5px;
-	}
-
-	.step-img {
-		width:32px;
-		display: inline-block;
-	    vertical-align: top;
-	    padding-right: 30px;
-	    margin-left:-18px;
-	    margin-top:-1px;
 	}
 
 	.instructions{
