@@ -1,0 +1,52 @@
+<div id="map-results" ng-show="showMap">
+    <img class="step-img" src="../assets/step-2.gif"/>
+    <div class="instructions">Design your meme</div>
+
+    <div id="map-results-content">
+
+        <div class="left-panel">
+
+            <div class="journey-summary">
+                <div class="summary-line">
+                    <span class="summary-label">From:</span>
+                    <span id="summary-from" class="summary-content"></span>
+                </div>
+                <div class="summary-line">
+                    <span class="summary-label">To:</span>
+                    <span id="summary-to" class="summary-content"></span>
+                </div>
+            </div>
+            <div id="map-image" ng-controller="MemeController">
+                <div class="map-canvas">
+                    <canvas id="canvas" width="0" height="0"></canvas>
+                    <img id="img-out" class="map-image" src="" />
+                </div>
+                <a id="dl" ng-click="dlCanvas()">Download Canvas</a>
+                <img id="img-out-2" class="map-image" src="" />
+            </div>
+        </div>
+        <div class="right-panel">
+            <div class="traveltime-comparison">
+                <div class="traveltime-row">
+                    <span class="traveltime-column">Public Transport</span>
+                    <span class="traveltime-column">{{transport.mode}}</span>
+                </div>
+                <div class="traveltime-row">
+                    <span id="public-duration" class="traveltime-column">{{public.duration}}</span>
+                    <span id="other-duration" class="traveltime-column">{{other.duration}}</span>
+                </div>
+            </div>
+            <div class="template-selection" ng-controller="MemeController">
+                <div class="templates-header">
+                    Choose message template
+                </div>
+                <ul class="message-template-list" ng-repeat="template in memeTemplates" ng-click="setSelectedTemplate(template)" ng-class="{selected: template === selectedTemplate}">
+                    <li class="message-template" >
+                        {{template.firstLine}} <br/>{{template.secondLine}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
