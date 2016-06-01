@@ -25,6 +25,8 @@ router.post('/saveImageUrl', MemeController().saveImageUrl);
 
 router.get('/image/:imageLink', MemeController().serveImage);
 
+router.get('/getImages', MemeController().getImages);
+
 
 router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', function (req, res, next) {
     tlapi().getJourneysBetween(req.params.startLat,

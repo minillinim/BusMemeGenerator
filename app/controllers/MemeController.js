@@ -76,6 +76,18 @@ var getMemeTemplates = function (req, res, next) {
     });
 };
 
+var getImages = function (req, res, next) {
+    var images = [];
+
+    Image.find().stream().on('data', function (data) {
+        images.push(data);
+    }).on('error', function (err) {
+        console.log('error', err);
+    }).on('close', function () {
+        res.json(images);
+    });
+}
+
 var getImage = function (req, res, next) {
     res.sendFile(path.join(__dirname, '../../gallery/' + req.params['imageLink'] + '.png'));
 }
@@ -85,6 +97,7 @@ module.exports = function () {
         getMemeTemplates: getMemeTemplates,
         saveMemeDetails: saveMemeDetails,
         saveImageUrl: saveImageUrl,
-        serveImage: getImage
+        serveImage: getImage,
+        getImages: getImages
     }
 };

@@ -2,125 +2,138 @@
 @import 'common';
 @import 'nav';
 
-#map-results{
-	margin-left:20%;
-	border-left: thick solid $separator-color;
-	height: 850px;
+#map-results {
+  margin-left: 20%;
+  border-left: thick solid $separator-color;
+  height: 800px;
 
-	.empty-space{
-		height:50px;
-		border-left: thick solid $text-color;
-		margin-left: -5px;
-	}
+  .empty-space {
+    height: 50px;
+    border-left: thick solid $text-color;
+    margin-left: -5px;
+  }
 
-	.instructions{
-		text-transform:uppercase;
-		font-size:18px;
-		display: inline-block;
-		padding-top:5px;
-	}
+  .step-img {
+    width: 32px;
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 30px;
+    margin-left: -18px;
+    margin-top: -1px;
+  }
 
-	#map-results-content{
+  .instructions {
+    text-transform: uppercase;
+    font-size: 18px;
+    display: inline-block;
+    padding-top: 5px;
+  }
 
-	    display: table;
-	    width: 95%;
-	    table-layout: fixed;
+  #map-results-content {
 
-		.left-panel{
+    display: table;
+    width: 95%;
+    table-layout: fixed;
 
-			width: 45%;
-			display: table-cell;
+    .left-panel {
 
-			.journey-summary{
+      width: 45%;
+      display: table-cell;
 
-				color: $input-color;
-				text-transform: none;
-		    	padding-left: 50px;
+      .journey-summary {
 
-				.summary-label{
-					text-decoration: none;
-					display:inline-block;	
-					width: 10%;
-				}
+        color: $input-color;
+        text-transform: none;
+        padding-left: 50px;
 
-				.summary-content{
-					display:inline-block;			
-				    border-bottom: 1px solid $separator-color;
-				    padding-bottom: 2px;	
-					width: 79%;
-					padding-top: 8px;
-		    		font-size: 12px;
-				}
-			}
-			
-			.map-wrapper{
-				padding:30px 0 80px 50px;
-				height: 600px;
+        .summary-label {
+          text-decoration: none;
+          display: inline-block;
+          width: 10%;
+        }
 
-				#gmap_canvas 
-				{
-				 	height:100%;
-				 	width:90%;
+        .summary-content {
+          display: inline-block;
+          border-bottom: 1px solid $separator-color;
+          padding-bottom: 2px;
+          width: 79%;
+          padding-top: 8px;
+          font-size: 12px;
+        }
+      }
 
-					img 
-					{
-						max-width:none!important;
-						background:none!important;
-					}
-				}
-			}
-		}
+      .map-wrapper {
+        padding: 30px 0 80px 50px;
+        height: 600px;
 
-		.right-panel{
-			color: $input-color;
-			width: 20%;
-			display: table-cell;
+        #gmap_canvas {
+          height: 100%;
+          width: 90%;
 
-			.traveltime-comparison{
-				display: table;
+          img {
+            max-width: none !important;
+            background: none !important;
+          }
+        }
+      }
+    }
 
-				.traveltime-row{
-					display: table-row;
-				}
-				.traveltime-column{
-					display: table-cell;
-					padding-right: 15px;
-					text-transform:capitalize;
-				}
-			}
+    .right-panel {
+      color: $input-color;
+      width: 20%;
+      display: table-cell;
 
-			.template-selection{
+      .traveltime-comparison {
+        display: table;
 
-    			padding-top: 15%;
+        .traveltime-row {
+          display: table-row;
+        }
+        .traveltime-column {
+          display: table-cell;
+          padding-right: 15px;
+          text-transform: capitalize;
+        }
+      }
 
-				.message-header {
-				    padding-bottom: 10px;
-				}
+      .template-selection {
 
-				.message-template {
-				    padding: 10px 5px;
-				}
+        padding-top: 15%;
 
-				.message-template-list {
-				    cursor: pointer;
-				    background-color: $separator-color;
-				    color: $input-color;
-				    border-radius:3px;
-				}
-				.message-template-list.selected {
-				    color: $separator-color;
-				    background-color: $input-color;
-				}
-			}
-		}
-	}
+        .message-header {
+          padding-bottom: 10px;
+        }
+
+        .message-template {
+          padding: 10px 5px;
+        }
+
+        .message-template-list {
+          cursor: pointer;
+          background-color: $separator-color;
+          color: $input-color;
+          border-radius: 3px;
+        }
+        .message-template-list.selected {
+          color: $separator-color;
+          background-color: $input-color;
+        }
+      }
+    }
+  }
 }
 
 .map-canvas {
-	padding: 50px;
+  padding: 50px;
 }
 
 .map-image {
-	width: 600px !important;
-	height: 600px !important;
+  width: 600px !important;
+  height: 600px !important;
+}
+
+#gallery-image {
+  height: 300px;
+  width: 320px;
+  padding-bottom: 20px;
 }

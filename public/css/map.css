@@ -73,11 +73,18 @@ select {
 #map-results {
   margin-left: 20%;
   border-left: thick solid #547CD4;
-  height: 850px; }
+  height: 800px; }
   #map-results .empty-space {
     height: 50px;
     border-left: thick solid #FFFA32;
     margin-left: -5px; }
+  #map-results .step-img {
+    width: 32px;
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 30px;
+    margin-left: -18px;
+    margin-top: -1px; }
   #map-results .instructions {
     text-transform: uppercase;
     font-size: 18px;
@@ -147,5 +154,10 @@ select {
 .map-image {
   width: 600px !important;
   height: 600px !important; }
+
+#gallery-image {
+  height: 300px;
+  width: 320px;
+  padding-bottom: 20px; }
 
 /*# sourceMappingURL=map.css.map */

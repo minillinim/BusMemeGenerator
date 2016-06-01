@@ -1,0 +1,9 @@
+<div id="gallery-display" ng-controller="GalleryController">
+    <table>
+        <tr ng-repeat="imageLink in images">
+            <td ng-show="$first">
+                <img id="gallery-image" ng-src="{{imageLink.imageUrl}}" alt="">
+            </td>
+        </tr>
+    </table>
+</div>

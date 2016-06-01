@@ -4,11 +4,26 @@ app.config(function ($routeProvider) {
     $routeProvider.when('/', {
         templateUrl: 'views/main.html',
         controller: 'MapController'
+    }).when('/galleries', {
+        templateUrl: 'views/gallery.html',
+        controller: 'GalleryController'
     })
 });
 
-app.controller('MapController', function ($scope, MapService, $anchorScroll) {
+app.controller('GalleryController', function ($scope, MemeFactory) {
+
+    MemeFactory.getImages().then(function (response) {
+        $scope.images = response.data
+    });
+
+})
+
+app.controller('MapController', function ($scope, $location,$rootScope,MapService, $anchorScroll) {
     var map;
+
+    $rootScope.showGallery = function(){
+        $location.path('/galleries');
+    }
 
     $scope.transport = {
         mode: 'driving'
