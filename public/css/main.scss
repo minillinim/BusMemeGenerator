@@ -14,16 +14,26 @@ body {
 	text-transform:uppercase;
  
 	#title{
+		text-transform:none;
 		text-align:center;	
 
-		.first-line{
-			font-size:56px;
+		.busmeme-logo{
+			margin-right: 20px;
+			width: 130px;
+			display:inline;
 		}
-		.second-line{
-			font-size:40px;
+		.busmeme-title{
+			width: 250px;
+			display:inline;
 		}
-		.third-line{
-			font-size:32px;
+		.description-line{
+			margin-top:15px;
+			color:$input-color;
+			font-size:18px;
+
+			.hashtag{
+				color:$text-color;
+			}
 		} 
 	}
 	
@@ -51,13 +61,12 @@ body {
 	.start-address, .dest-address{
 		color:$input-color;
 		font-size:12px;
-		padding: 20px 0;
-		margin-top:10px;
+    	padding-bottom: 10px;
 		text-transform:none;
 
 		input{
 			display:block;
-			padding:5px 0;
+			padding:5px 10px;
 			width:60%;
 			margin-top:5px;
 		}
