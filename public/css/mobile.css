@@ -1,141 +1,71 @@
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
   body {
-    padding: 25px; } }
-
-@media screen and (min-width: 480px) {
-  body {
-    padding: 50px; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
-  #main #title .first-line {
-    font-size: 28px; }
-  #main #title .second-line {
-    font-size: 20px; }
-  #main #title .third-line {
-    font-size: 16px; } }
-
-@media screen and (min-width: 480px) {
-  #main #title .first-line {
-    font-size: 56px; }
-  #main #title .second-line {
-    font-size: 40px; }
-  #main #title .third-line {
-    font-size: 32px; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
+    padding: 25px; }
+  #main #title {
+    margin-top: 50px; }
+    #main #title .first-line {
+      font-size: 28px; }
+    #main #title .second-line {
+      font-size: 20px; }
+    #main #title .third-line {
+      font-size: 16px; }
+    #main #title .description-line {
+      visibility: hidden; }
+    #main #title .busmeme-logo {
+      margin-left: -580px; }
+    #main #title .busmeme-title, #main #title .description-line {
+      display: none; }
   #main #map-results {
-    margin-left: 0; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
-  #main #map-results #map-results-content {
-    width: 120%; }
-    #main #map-results #map-results-content .left-panel, #main #map-results #map-results-content .right-panel {
-      display: inline; }
-      #main #map-results #map-results-content .left-panel .journey-summary, #main #map-results #map-results-content .right-panel .journey-summary {
-        font-size: 0.7em; }
-      #main #map-results #map-results-content .left-panel .traveltime-comparison, #main #map-results #map-results-content .left-panel .templates-header, #main #map-results #map-results-content .right-panel .traveltime-comparison, #main #map-results #map-results-content .right-panel .templates-header {
-        padding-left: 20px; }
-    #main #map-results #map-results-content .summary-content {
-      font-size: 10px;
-      padding-left: 4px; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
+    margin-left: 0; }
+    #main #map-results #map-results-content {
+      width: 120%; }
+      #main #map-results #map-results-content .left-panel, #main #map-results #map-results-content .right-panel {
+        display: inline; }
+        #main #map-results #map-results-content .left-panel .journey-summary, #main #map-results #map-results-content .right-panel .journey-summary {
+          font-size: 0.7em; }
+        #main #map-results #map-results-content .left-panel .traveltime-comparison, #main #map-results #map-results-content .left-panel .templates-header, #main #map-results #map-results-content .right-panel .traveltime-comparison, #main #map-results #map-results-content .right-panel .templates-header {
+          padding-left: 20px; }
+      #main #map-results #map-results-content .summary-content {
+        padding-left: 4px; }
   #main #journey {
     padding-top: 30px;
-    margin-left: 0; } }
-
-@media screen and (min-width: 480px) {
-  #main #journey {
-    padding-top: 50px;
-    margin-left: 20%; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
-  #main #journey #journey-details {
-    padding: 0px 0 80px 10px; } }
-
-@media screen and (min-width: 480px) {
-  #main #journey #journey-details {
-    padding: 30px 0 80px 50px; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
-  #main #journey #journey-details .start-address input, #main #journey #journey-details .dest-address input {
-    width: 100%; } }
-
-@media screen and (min-width: 480px) {
-  #main #journey #journey-details .start-address input, #main #journey #journey-details .dest-address input {
-    width: 60%; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
-  #main #journey #journey-details .travel-options .time-options input.radiobutton {
-    margin-left: 0; } }
-
-@media screen and (min-width: 480px) {
-  #main #journey #journey-details .travel-options .time-options input.radiobutton {
-    margin-left: 10px;
-    margin-top: 0; } }
-
-@media screen and (min-width: 480px) {
-  #main #journey #journey-details .travel-options .time-options br {
-    display: none; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
-  #main #journey #journey-details .travel-comparison input {
-    margin-left: 0;
-    margin-top: 0; } }
-
-@media screen and (min-width: 480px) {
-  #main #journey #journey-details .travel-comparison input .radiobutton.second {
-    margin-left: 20px; } }
-
-@media screen and (min-width: 480px) {
-  #main #journey #journey-details .travel-comparison br {
-    display: none; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
-  #main #journey #journey-details .next-button {
-    width: 30%; } }
-
-@media screen and (min-width: 480px) {
-  #main #journey #journey-details .next-button {
-    width: 10%; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
+    margin-left: 0; }
+    #main #journey .journey-details {
+      padding: 0px 0 80px 10px; }
+      #main #journey .journey-details .start-address input, #main #journey .journey-details .dest-address input {
+        width: 30%; }
+      #main #journey .journey-details .travel-options .time-options input.radiobutton {
+        margin-left: 0; }
+      #main #journey .journey-details .travel-options .time-options br {
+        display: block; }
+      #main #journey .journey-details .travel-comparison input {
+        margin-left: 0;
+        margin-top: 0; }
+      #main #journey .journey-details .travel-comparison br {
+        display: block; }
+      #main #journey .journey-details #validation-errors {
+        font-size: 0.8em; }
+  .map-image {
+    width: 300px !important;
+    height: 300px !important; }
+  .gallery-display .filters {
+    width: 35%; }
   .instructions, #map-results .instructions {
-    font-size: 10px; } }
-
-@media screen and (min-width: 480px) {
-  .instructions, #map-results .instructions {
-    font-size: 18px; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
-  #nav .gallery img {
-    width: 32px; } }
-
-@media screen and (min-width: 480px) {
-  #nav .gallery img {
-    width: 16px; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
+    font-size: 10px; }
   #nav .gallery {
     left: -17px;
     padding-top: 15px; }
+    #nav .gallery img {
+      width: 32px; }
     #nav .gallery span {
-      visibility: hidden; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
+      visibility: hidden; }
+  #nav .bus-meme-home {
+    font-size: 22px; }
   #map-results #map-results-content .left-panel .journey-summary {
-    padding-left: 5px; } }
-
-@media screen and (min-width: 480px) {
-  #map-results #map-results-content .left-panel .journey-summary {
-    padding-left: 50px; } }
-
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
+    padding-left: 5px; }
+    #map-results #map-results-content .left-panel .journey-summary .summary-label {
+      width: auto; }
   #map-results #map-results-content .left-panel .map-wrapper {
     padding: 30px 0 80px 10px; } }
-
-@media screen and (min-width: 480px) {
-  #map-results #map-results-content .left-panel .map-wrapper {
-    padding: 30px 0 80px 50px; } }
 
 /*# sourceMappingURL=mobile.css.map */

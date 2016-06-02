@@ -1,17 +1,14 @@
 @import 'variables';
 
-body {
-	@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+
+	body {
 		padding: 25px;
 	}
-  	@media screen and (min-width: $max-device-width){
-		padding: 50px;
-	}
-}
 
-#main{
-	#title{
-		@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+	#main{
+		#title {		
+		    margin-top: 50px;
 			.first-line{
 				font-size:28px;
 			}
@@ -20,28 +17,21 @@ body {
 			}
 			.third-line{
 				font-size:16px;
-			} 
-		}
-		@media screen and (min-width: $max-device-width){
-			.first-line{
-				font-size:56px;
 			}
-			.second-line{
-				font-size:40px;
+			.description-line {
+				visibility: hidden;
 			}
-			.third-line{
-				font-size:32px;
-			} 
-		}
-	}
-	
-	#map-results {
-		@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
-			margin-left: 0;
+			.busmeme-logo {
+			    margin-left: -580px;
+			}
+			.busmeme-title, .description-line {
+				display: none;
+			}
 		}
 		
-		#map-results-content {
-			@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+		#map-results {
+			margin-left: 0;		
+			#map-results-content {
 				width: 120%;
 				.left-panel, .right-panel {
 					display: inline;
@@ -53,143 +43,89 @@ body {
 					}
 				}
 				.summary-content {
-				    font-size: 10px;
 					padding-left: 4px;
 				}
-			}	
+			}
 		}
-	}
-	
-	#journey{
-
-		@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+		
+		#journey{
 			padding-top:30px;
-			margin-left:0;
-		}
-		
-		@media screen and (min-width: $max-device-width){
-			padding-top:50px;
-			margin-left:20%;
-		}
-		
-		#journey-details{
-			
-			@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+			margin-left:0;		
+			.journey-details{			
 				padding:0px 0 80px 10px;
-			}
-			@media screen and (min-width: $max-device-width){
-				padding:30px 0 80px 50px;
-			}
-			.start-address, .dest-address{	
-				input{
-					@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
-							width:100%;
-					}
-					@media screen and (min-width: $max-device-width){
-							width:60%;
+				.start-address, .dest-address{	
+					input{
+						width:30%;
 					}
 				}
-			}
 
-			.travel-options{
-		    	.time-options{
-		    		input.radiobutton{
-						@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+				.travel-options{
+					.time-options{
+						input.radiobutton{
 							margin-left: 0;
-						}
-						@media screen and (min-width: $max-device-width){
-							margin-left: 10px;
-							margin-top: 0;
-						}
-		    		}
-                    @media screen and (min-width: $max-device-width){
+						}						
 						br {
-							display: none;
+							display: block;
 						}
 					}
-		    	}
-			}
-			
-			.travel-comparison{
-			    input{
-					@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+				}
+				
+				.travel-comparison{
+					input{
 						margin-left: 0;
 						margin-top: 0;
 					}
-					@media screen and (min-width: $max-device-width){
-						.radiobutton.second {
-							margin-left: 20px;
-						}
-					}
-			    }
-			    
-				@media screen and (min-width: $max-device-width){
 					br {
-						display: none;
+						display: block;
 					}
 				}
-			}
 
-			.next-button{
-				@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
-					width:30%;
-				}
-				@media screen and (min-width: $max-device-width){
-					width:10%;
+				#validation-errors {
+					font-size: 0.8em;
 				}
 			}
 		}
 	}
-}
+	
+	.map-image {
+		width: 300px !important;
+		height: 300px !important;
+	}
 
-.instructions, #map-results .instructions{
-	@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+	.gallery-display .filters {
+		width: 35%;		
+	}
+
+	.instructions, #map-results .instructions{
 		font-size:10px;
 	}
-	@media screen and (min-width: $max-device-width){
-		font-size:18px;
-	}
-}
 
-#nav {
-    .gallery{
-	    img{
-			@media screen and (max-device-width: $max-device-width) and (orientation: portrait) {
-		    	width:32px;
-			}
-			@media screen and (min-width: $max-device-width){
-				width:16px;
-			}
-	    }
-		
-		@media screen and (max-device-width: $max-device-width) and (orientation: portrait) {
-		    left: -17px;
-    		padding-top: 15px;
+	#nav {
+		.gallery{
+			padding-top: 15px;
+			img{
+				width:32px;
+			}		
 			span {
 				visibility: hidden;
 			}
 		}
-    }
-}
+		.bus-meme-home {
+			font-size: 22px;
+		}
+	}
 
-#map-results{
-	#map-results-content{
-		.left-panel{
-			.journey-summary{
-				@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
-		    		padding-left: 5px;
+	#map-results{
+		#map-results-content{
+			.left-panel{
+				.journey-summary{
+					padding-left: 5px;
+					.summary-label {
+				    	width: auto;
+					}
 				}
-				@media screen and (min-width: $max-device-width){
-		    		padding-left: 50px;
-				}
-			}
-			
-			.map-wrapper{				
-				@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+				.map-wrapper{				
 					padding:30px 0 80px 10px;
-				}
-				@media screen and (min-width: $max-device-width){
-					padding:30px 0 80px 50px;
 				}
 			}
 		}

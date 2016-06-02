@@ -118,6 +118,12 @@ body {
       font-size: 18px; }
       #main #title .description-line .hashtag {
         color: #FFFA32; }
+    #main #title .first-line {
+      font-size: 56px; }
+    #main #title .second-line {
+      font-size: 40px; }
+    #main #title .third-line {
+      font-size: 32px; }
   #main #journey {
     padding-top: 50px;
     margin-left: 20%; }
@@ -157,6 +163,8 @@ body {
       .journey-details .travel-options .time-options input.radiobutton {
         margin-left: 10px;
         margin-right: 10px; }
+      .journey-details .travel-options .time-options br {
+        display: none; }
       .journey-details .travel-options .time-options input.radiobutton.first {
         margin-left: 0; }
     .journey-details .travel-options .time-spec {
@@ -172,6 +180,8 @@ body {
       display: inline; }
     .journey-details .travel-comparison input.radiobutton.second {
       margin-left: 20px; }
+    .journey-details .travel-comparison br {
+      display: none; }
   .journey-details .next-button {
     margin-top: 20px;
     padding: 5px;
