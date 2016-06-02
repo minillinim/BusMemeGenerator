@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 
 var ImageSchema = new Schema({
     imageUrl: String,
+    imageLink: String,
     otherMode: String,
     otherModeTravelTime: Number,
     otherModeTravelDistance: Number,

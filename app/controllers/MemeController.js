@@ -30,10 +30,9 @@ function createGalleryDirectory(filePath) {
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
     }
-    var fd = fs.openSync('./gallery/' + filePath, 'w');
 }
 
-var saveImage = function (data, filename) {
+var saveImageToFile = function (data, filename) {
     createGalleryDirectory(filename);
     fs.writeFile('./gallery/' + filename + '.png', data.replace(/^data:image\/png;base64,/, ''), 'base64', function (err) {
         if (err) {
@@ -43,16 +42,19 @@ var saveImage = function (data, filename) {
     });
 };
 
-var saveImageUrl = function (req, res, next) {
-    var imageUrl = JSON.parse(JSON.stringify(req.body));
-    if (imageUrl.data) {
-        var imageFromuser = new Image({imageUrl: imageUrl.data});
+var saveImage = function (req, res, next) {
+    var imageLink = generateImageFilename();
+    var imageDetails = (JSON.parse(JSON.stringify(req.body))).data;
+
+    imageDetails.imageLink = imageLink;
+
+    if (imageDetails) {
+        var imageFromuser = new Image(imageDetails);
         imageFromuser.save(function (err) {
             if (err) {
                 res.json(err);
             }
-            var imageLink = generateImageFilename();
-            saveImage(imageUrl.data, imageLink)
+            saveImageToFile(imageDetails.imageUrl, imageLink)
             res.status(201).json({imageLink: imageLink});
         });
     } else {
@@ -97,7 +99,7 @@ module.exports = function () {
     return {
         getMemeTemplates: getMemeTemplates,
         saveMemeDetails: saveMemeDetails,
-        saveImageUrl: saveImageUrl,
+        saveImage: saveImage,
         serveImage: getImage,
         getImages: getImages
     }

@@ -18,27 +18,9 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         $scope.renderMeme();
     };
 
-
-    function convertToTimeStamp(duration) {
-
-    }
-
     $scope.downloadCanvas = function () {
         var canvas = document.getElementById("canvas");
         $rootScope.imageUrl = canvas.toDataURL('image/png');
-
-        var imageDetails = {
-            imageUrl: imageUrl,
-            otherMode: $scope.other.mode,
-            otherModeTravelTime: convertToTimeStamp($scope.other.duration),
-            otherModeTravelDistance: $scope.other.distance * KM_TO_METER_FACTOR,
-            publicModeTravelTime: convertToTimeStamp($scope.public.duration),
-            publicModeTravelDistance: $scope.public.distance * KM_TO_METER_FACTOR
-        }
-
-        MemeFactory.saveImageDetails(imageDetails).then(function (response) {
-            console.log(response);
-        });
         var dl = document.getElementById('dl');
     };
 
@@ -67,6 +49,18 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
     };
 
 
+    function convertToTimeStamp(travelTime) {
+        return moment.duration({
+            hours: 2,
+            minutes: 2
+        }).asMilliseconds();
+    }
+
+    function convertToMeters(distance) {
+        return Number(distance.replace(' km', '')) * KM_TO_METER_FACTOR;
+    }
+
+
     $scope.shareImage = function () {
         document.getElementById('map-results').classList.add('done');
         $rootScope.showImage = true;
@@ -75,15 +69,22 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
     };
 
     $scope.saveImage = function (callback) {
-
         if ($rootScope.imageLink) {
             callback($rootScope.imageLink);
             console.log('I already have an image!');
         }
         else {
             $scope.downloadCanvas();
-            MemeFactory.saveImageUrl($rootScope.imageUrl).then(function (response) {
+            var imageDetails = {
+                imageUrl: $rootScope.imageUrl,
+                otherMode: $scope.other.mode,
+                otherModeTravelTime: convertToTimeStamp($scope.other.duration),
+                otherModeTravelDistance: convertToMeters($scope.other.distance),
+                publicModeTravelTime: convertToTimeStamp($scope.public.duration),
+                publicModeTravelDistance: convertToMeters($scope.public.distance)
+            };
 
+            MemeFactory.saveImageDetails(imageDetails).then(function (response) {
                 var baseUrl = $location.absUrl().replace('#/', '');
                 var imageLink = encodeURIComponent(response.data.imageLink);
                 $rootScope.imageLink = baseUrl + 'image/' + imageLink;
@@ -92,7 +93,6 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
             });
         }
     };
-
     $scope.facebookShare = function () {
 
         $scope.saveImage(function (imageLink) {
@@ -141,7 +141,7 @@ app.factory('MemeFactory', ['$http', function ($http) {
             return $http.get('/getMemeTemplates');
         },
         saveImageDetails: function (imageDetails) {
-            return $http.post('/saveImageUrl', {data: imageUrl});
+            return $http.post('/saveImage', {data: imageDetails});
         },
         getImages: function () {
             return $http.get('/getImages');

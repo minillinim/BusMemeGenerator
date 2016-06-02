@@ -21,7 +21,7 @@ router.get('/getMemeTemplates', MemeController().getMemeTemplates);
 
 router.post('/saveMemeDetails', MemeController().saveMemeDetails);
 
-router.post('/saveImageUrl', MemeController().saveImageUrl);
+router.post('/saveImage', MemeController().saveImage);
 
 router.get('/image/:imageLink', MemeController().serveImage);
 
