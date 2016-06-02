@@ -96,7 +96,7 @@ select {
 #map-results {
   margin-left: 20%;
   border-left: thick solid #547CD4;
-  height: 800px;
+  height: 600px;
   padding-bottom: 50px; }
   #map-results #invisible-map-anchor {
     width: 0;
@@ -144,10 +144,10 @@ select {
         padding: 30px 0 80px 50px;
         height: 600px;
         width: 600px; }
-        #map-results #map-results-content .left-panel .map-wrapper #gmap_canvas {
+        #map-results #map-results-content .left-panel .map-wrapper #gmap-canvas {
           height: 100%;
           width: 100%; }
-          #map-results #map-results-content .left-panel .map-wrapper #gmap_canvas img {
+          #map-results #map-results-content .left-panel .map-wrapper #gmap-canvas img {
             max-width: none !important;
             background: none !important; }
     #map-results #map-results-content .right-panel {

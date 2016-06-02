@@ -10,7 +10,7 @@
 
   margin-left: 20%;
   border-left: thick solid $separator-color;
-  height: 800px;
+  height: 600px;
   padding-bottom:50px;
 
   .empty-space {
@@ -73,7 +73,7 @@
         padding: 30px 0 80px 50px;
         height: 600px;
         width: 600px;
-        #gmap_canvas {
+        #gmap-canvas {
           height: 100%;
           width: 100%;
           img {
