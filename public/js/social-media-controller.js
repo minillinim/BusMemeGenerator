@@ -11,10 +11,11 @@ app.controller('SocialMediaController', function ($scope, $rootScope,$location, 
         var dl = document.getElementById('dl');
     };
 
-    function convertToTimeStamp(travelTime) {
+    function convertToMiliseconds(travelTime) {
+        var timeArray = travelTime.split(' ');
         return moment.duration({
-            hours: 2,
-            minutes: 2
+            hours: timeArray.length > 2 ? timeArray[0] : 0,
+            minutes: timeArray.length === 2 ? timeArray[0] : timeArray[0]
         }).asMilliseconds();
     }
 
@@ -25,16 +26,18 @@ app.controller('SocialMediaController', function ($scope, $rootScope,$location, 
     $scope.saveImage = function (callback) {
         if ($rootScope.imageLink) {
             callback($rootScope.imageLink);
-            console.log('I already have an image!');
         }
         else {
             $scope.downloadCanvas();
+
+            console.log($scope.other);
+
             var imageDetails = {
                 imageUrl: $rootScope.imageUrl,
                 otherMode: $scope.other.mode,
-                otherModeTravelTime: convertToTimeStamp($scope.other.duration),
+                otherModeTravelTime: convertToMiliseconds($scope.other.duration),
                 otherModeTravelDistance: convertToMeters($scope.other.distance),
-                publicModeTravelTime: convertToTimeStamp($scope.public.duration),
+                publicModeTravelTime: convertToMiliseconds($scope.public.duration),
                 publicModeTravelDistance: convertToMeters($scope.public.distance)
             };
 
@@ -42,8 +45,6 @@ app.controller('SocialMediaController', function ($scope, $rootScope,$location, 
                 var baseUrl = $location.absUrl().replace('#/', '');
                 var imageLink = encodeURIComponent(response.data.imageLink);
                 $rootScope.imageLink = baseUrl + 'image/' + imageLink;
-                console.log('saving image!');
-                callback($rootScope.imageLink);
             });
         }
     };

@@ -45,15 +45,11 @@ var saveImageToFile = function (data, filename) {
 var saveImage = function (req, res, next) {
     var imageLink = generateImageFilename();
     var imageDetails = (JSON.parse(JSON.stringify(req.body))).data;
-
     imageDetails.imageLink = imageLink;
     imageDetails.createDate = getDateDisplay();
     imageDetails.userName = '';
     imageDetails.userEmail = '';
 
-
-    console.log(imageDetails.createDate);
-    
     if (imageDetails) {
         var imageFromuser = new Image(imageDetails);
         imageFromuser.save(function (err) {
