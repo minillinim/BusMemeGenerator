@@ -2,17 +2,19 @@
     <div class="bus-meme-home" ng-click="showHomePage()">
         <img src="../assets/bus-meme-logo.svg"/>BUS MEME GENERATOR
     </div>
+    <div class="create-meme" ng-click="showHomePage()">
+    	<span ng-click="showHomePage()">+ Create Meme</span>
+    </div>
 </div>
 <div class="gallery-display" ng-controller="GalleryController">
     <div class="pure-g">
-        <div class="pure-u-1-5"
+        <div class="pure-u-1-4"
              ng-repeat="image in images | orderBy : (image.otherModeTravelTime - image.publicModeTravelTime)">
              <img class="gallery-image" ng-src="{{image.imageUrl}}" alt="">
              <div class="meme-info">
             	<span>{{image.userName}}</span>
             	<span ng-show="!image.UserName">Annonymous</span>
             	<span ng-show="image.createDate">Created on {{image.createDate}}</span>
-            	<span><b>Travel time difference: </b>{{image.otherModeTravelTime - image.publicModeTravelTime}}</span>
              </div>
         </div>
     </div>

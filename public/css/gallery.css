@@ -59,12 +59,22 @@ select {
   #nav .bus-meme-home {
     cursor: pointer;
     font-size: 28px;
-    font-weight: bold; }
+    font-weight: bold;
+    display: inline-block; }
     #nav .bus-meme-home img {
       width: 46px;
       margin: 10px;
       margin-left: 30px;
       vertical-align: middle; }
+  #nav .create-meme {
+    display: inline-block;
+    right: 10px;
+    position: fixed;
+    padding: 20px;
+    color: white;
+    text-transform: uppercase;
+    font-size: 18px;
+    cursor: pointer; }
   #nav .gallery {
     cursor: pointer;
     color: white;
@@ -88,14 +98,12 @@ select {
 
 .gallery-image {
   width: 85%;
-  padding-bottom: 20px;
   width: 80%; }
 
 .meme-info {
-  color: white; }
+  color: white;
+  margin-bottom: 10px; }
   .meme-info span {
     display: block; }
-  .meme-info .more-info {
-    margin-bottom: 10px; }
 
 /*# sourceMappingURL=gallery.css.map */

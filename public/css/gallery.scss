@@ -8,17 +8,13 @@
 
 .gallery-image {
   width: 85%;
-  padding-bottom: 20px; 
   width: 80%;
 }
 
 .meme-info{
 	color: $input-color;
-
+	margin-bottom:10px;
 	span{
 		display:block;
-	}
-	.more-info{
-		margin-bottom:10px;
 	}
 }
