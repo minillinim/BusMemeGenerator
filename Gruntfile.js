@@ -25,6 +25,7 @@ module.exports = function (grunt) {
                 files: {
                     'public/css/main.css': 'public/css/main.scss',
                     'public/css/share.css': 'public/css/share.scss',
+                    'public/css/gallery.css': 'public/css/gallery.scss',
                     'public/css/map.css': 'public/css/map.scss'
                 }
             }

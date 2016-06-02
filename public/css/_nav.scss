@@ -6,6 +6,18 @@
     z-index: 1300;
     height: 10px;
 
+    .bus-meme-home{
+    	cursor:pointer;
+	    font-size: 28px;
+	    font-weight: bold;
+
+    	img{
+		    width: 46px;
+		    margin: 10px;
+		    margin-left: 30px;
+    		vertical-align: middle;
+    	}
+    }
     .gallery{
     	cursor:pointer;
     	color: $input-color;
@@ -22,4 +34,9 @@
 		    vertical-align: top;
 	    }
     }
+}
+
+#nav.gallery-nav{
+	background-color:#4468DB;
+	height:65px;
 }

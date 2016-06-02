@@ -56,6 +56,15 @@ select {
   left: 0;
   z-index: 1300;
   height: 10px; }
+  #nav .bus-meme-home {
+    cursor: pointer;
+    font-size: 28px;
+    font-weight: bold; }
+    #nav .bus-meme-home img {
+      width: 46px;
+      margin: 10px;
+      margin-left: 30px;
+      vertical-align: middle; }
   #nav .gallery {
     cursor: pointer;
     color: white;
@@ -69,6 +78,10 @@ select {
       padding-right: 5px;
       padding-top: 1px;
       vertical-align: top; }
+
+#nav.gallery-nav {
+  background-color: #4468DB;
+  height: 65px; }
 
 #map-results {
   margin-left: 20%;
