@@ -2,8 +2,8 @@ var app = angular.module('bus-meme', ['ngRoute']);
 
 app.config(function ($routeProvider) {
     $routeProvider.when('/', {
-      templateUrl: 'views/main.html',
-      controller: 'MapController'
+        templateUrl: 'views/main.html',
+        controller: 'MapController'
     }).when('/galleries', {
         templateUrl: 'views/gallery.html',
         controller: 'GalleryController'
@@ -12,11 +12,11 @@ app.config(function ($routeProvider) {
 
 function getMapConversionInfo(_map) {
     var projection = _map.getProjection();
-    
+
     var bounds = _map.getBounds();
     var topRight = projection.fromLatLngToPoint(bounds.getNorthEast());
     var bottomLeft = projection.fromLatLngToPoint(bounds.getSouthWest());
-    
+
     var topLeft = new google.maps.Point(bottomLeft.x, topRight.y);
     var width_pr = topRight.x - bottomLeft.x;
     var height_pr = bottomLeft.y - topRight.y;
@@ -25,16 +25,16 @@ function getMapConversionInfo(_map) {
     var x_scale = parseInt(container.offsetWidth) / width_pr;
     var y_scale = parseInt(container.offsetHeight) / height_pr;
 
-    return {"xScale" : x_scale, "yScale" : y_scale, "origin": topLeft, "projection" : projection };    
+    return {"xScale": x_scale, "yScale": y_scale, "origin": topLeft, "projection": projection};
 }
 
 function getXYcoords(mapInfo, latLng) {
     var worldPoint = mapInfo.projection.fromLatLngToPoint(latLng);
-    return [(worldPoint.x-mapInfo.origin.x)*mapInfo.xScale, (worldPoint.y-mapInfo.origin.y)*mapInfo.yScale]
+    return [(worldPoint.x - mapInfo.origin.x) * mapInfo.xScale, (worldPoint.y - mapInfo.origin.y) * mapInfo.yScale]
 }
 
 function testPixelGettering(map) {
-    google.maps.event.addListenerOnce(map,"projection_changed", function() {
+    google.maps.event.addListenerOnce(map, "projection_changed", function () {
         var startLat = document.getElementById('startAddressLat').value,
             startLng = document.getElementById('startAddressLong').value,
             destLat = document.getElementById('destAddressLat').value,
@@ -52,14 +52,14 @@ function testPixelGettering(map) {
     });
 }
 
-app.controller('MapController', function ($scope, $location,$rootScope,MapService, $anchorScroll) {
- var transitDirections;
+app.controller('MapController', function ($scope, $location, $rootScope, MapService, $anchorScroll) {
+    var transitDirections;
     var map;
 
-    $rootScope.showGallery = function(){
+    $rootScope.showGallery = function () {
         $location.path('/galleries');
     }
-    
+
     loadGoogleAutocomplete();
 
     $scope.transport = {
@@ -100,6 +100,7 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
                 if (status == google.maps.DirectionsStatus.OK) {
                     $scope.$apply(function () {
                         $scope.public = {
+                            mode: 'public',
                             distance: result.routes[0].legs[0].distance.text,
                             duration: result.routes[0].legs[0].duration.text
                         };
@@ -115,6 +116,7 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
                 if (status == google.maps.DirectionsStatus.OK) {
                     $scope.$apply(function () {
                         $scope.other = {
+                            mode: $scope.transport.mode,
                             distance: result.routes[0].legs[0].distance.text,
                             duration: result.routes[0].legs[0].duration.text
                         };
@@ -173,18 +175,20 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
 
         }
     };
-
     function initStep2() {
         document.getElementById('step-1').classList.add('done');
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
     }
-    function scrollToElement(id){
-        setTimeout(function() {
+
+    function scrollToElement(id) {
+        setTimeout(function () {
             console.log('wth?');
-                    $anchorScroll(id);
-                }, 10);
+            $anchorScroll(id);
+        }, 10);
+
     }
+
     var getBoundsCoveringBoth = function (bounds1, bounds2) {
         bounds1.extend(bounds2.getNorthEast());
         bounds1.extend(bounds2.getSouthWest());
