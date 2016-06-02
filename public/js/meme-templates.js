@@ -97,6 +97,7 @@ app.controller('MemeController', function ($scope, $rootScope,$location, MemeFac
 
     function scrollToElement(id){
         setTimeout(function() {
+            console.log('wth');
                     $anchorScroll(id);
                 }, 10);
     }
@@ -104,7 +105,7 @@ app.controller('MemeController', function ($scope, $rootScope,$location, MemeFac
     function writeTextOnImage(context, text, x, y) {
         var f = 36;
         for (; f >= 0; f -= 1) {
-            context.font = "bold 42pt Impact, Charcoal, sans-serif";
+            context.font = "bold "+f+"pt Impact, Charcoal, sans-serif";
             if (context.measureText(text).width < canvas.width - 10) {
                 context.fillText(text, x, y);
                 context.strokeText(text, x, y);

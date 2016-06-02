@@ -127,13 +127,13 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
             });
 
             initStep2();
+            scrollToElement('invisible-anchor');
             // REMOVE!!!
             //testPixelGettering(map);
 
         } else {
             document.getElementById('map-results').className = "";
             document.getElementById('journey-details').className = "";
-            scrollToElement('invisible-anchor');
         }
     };
 
@@ -181,6 +181,7 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
     }
     function scrollToElement(id){
         setTimeout(function() {
+            console.log('wth?');
                     $anchorScroll(id);
                 }, 10);
     }
