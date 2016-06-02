@@ -1,0 +1,133 @@
+@import 'variables';
+
+@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+
+	body {
+		padding: 25px;
+	}
+
+	#main{
+		#title {		
+		    margin-top: 50px;
+			.first-line{
+				font-size:28px;
+			}
+			.second-line{
+				font-size:20px;
+			}
+			.third-line{
+				font-size:16px;
+			}
+			.description-line {
+				visibility: hidden;
+			}
+			.busmeme-logo {
+			    margin-left: -580px;
+			}
+			.busmeme-title, .description-line {
+				display: none;
+			}
+		}
+		
+		#map-results {
+			margin-left: 0;		
+			#map-results-content {
+				width: 120%;
+				.left-panel, .right-panel {
+					display: inline;
+					.journey-summary {
+						font-size: 0.7em;
+					}
+					.traveltime-comparison, .templates-header {
+						padding-left: 20px;
+					}
+				}
+				.summary-content {
+					padding-left: 4px;
+				}
+			}
+		}
+		
+		#journey{
+			padding-top:30px;
+			margin-left:0;		
+			.journey-details{			
+				padding:0px 0 80px 10px;
+				.start-address, .dest-address{	
+					input{
+						width:30%;
+					}
+				}
+
+				.travel-options{
+					.time-options{
+						input.radiobutton{
+							margin-left: 0;
+						}						
+						br {
+							display: block;
+						}
+					}
+				}
+				
+				.travel-comparison{
+					input{
+						margin-left: 0;
+						margin-top: 0;
+					}
+					br {
+						display: block;
+					}
+				}
+
+				#validation-errors {
+					font-size: 0.8em;
+				}
+			}
+		}
+	}
+	
+	.map-image {
+		width: 300px !important;
+		height: 300px !important;
+	}
+
+	.gallery-display .filters {
+		width: 35%;		
+	}
+
+	.instructions, #map-results .instructions{
+		font-size:10px;
+	}
+
+	#nav {
+		.gallery{
+			padding-top: 15px;
+			img{
+				width:32px;
+			}		
+			span {
+				visibility: hidden;
+			}
+		}
+		.bus-meme-home {
+			font-size: 22px;
+		}
+	}
+
+	#map-results{
+		#map-results-content{
+			.left-panel{
+				.journey-summary{
+					padding-left: 5px;
+					.summary-label {
+				    	width: auto;
+					}
+				}
+				.map-wrapper{				
+					padding:30px 0 80px 10px;
+				}
+			}
+		}
+	}
+}

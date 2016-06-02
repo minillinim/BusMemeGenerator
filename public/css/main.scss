@@ -34,7 +34,17 @@ body {
 			.hashtag{
 				color:$text-color;
 			}
+		}
+		.first-line{
+			font-size:56px;
+		}
+		.second-line{
+			font-size:40px;
+		}
+		.third-line{
+			font-size:32px;
 		} 
+
 	}
 	
 	#journey{
@@ -93,6 +103,9 @@ body {
 				margin-left: 10px;
 				margin-right: 10px;
 			}
+			br {
+				display: none;
+			}
 			input.radiobutton.first{
 				margin-left: 0;
 			}
@@ -116,6 +129,9 @@ body {
 		}
 		input.radiobutton.second {
 			margin-left: 20px;
+		}		
+		br {
+			display: none;
 		}
 	}
 
