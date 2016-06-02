@@ -55,7 +55,7 @@ select {
   right: 0;
   left: 0;
   z-index: 1300;
-  height: 90px; }
+  height: 10px; }
   #nav .gallery {
     cursor: pointer;
     color: white;
@@ -80,13 +80,21 @@ body {
 #main {
   text-transform: uppercase; }
   #main #title {
+    text-transform: none;
     text-align: center; }
-    #main #title .first-line {
-      font-size: 56px; }
-    #main #title .second-line {
-      font-size: 40px; }
-    #main #title .third-line {
-      font-size: 32px; }
+    #main #title .busmeme-logo {
+      margin-right: 20px;
+      width: 130px;
+      display: inline; }
+    #main #title .busmeme-title {
+      width: 250px;
+      display: inline; }
+    #main #title .description-line {
+      margin-top: 15px;
+      color: white;
+      font-size: 18px; }
+      #main #title .description-line .hashtag {
+        color: #FFFA32; }
   #main #journey {
     padding-top: 50px;
     margin-left: 20%; }
@@ -96,54 +104,91 @@ body {
       vertical-align: top;
       padding-right: 30px;
       margin-left: -13px; }
-    #main #journey #journey-details.done {
-      border-left: thick solid #FFFA32; }
-    #main #journey #journey-details {
-      padding: 30px 0 80px 50px;
-      border-left: thick solid #547CD4; }
-      #main #journey #journey-details .start-address, #main #journey #journey-details .dest-address {
-        color: white;
-        font-size: 12px;
-        padding: 20px, 0;
-        margin-top: 10px;
-        text-transform: none; }
-        #main #journey #journey-details .start-address input, #main #journey #journey-details .dest-address input {
-          display: block;
-          padding: 5px,0;
-          width: 60%;
-          margin-top: 5px; }
-      #main #journey #journey-details .travel-options {
-        padding: 30px 3px 0 0;
-        text-transform: none;
-        color: white;
-        font-size: 12px; }
-        #main #journey #journey-details .travel-options .travel-date {
-          width: 150px; }
-        #main #journey #journey-details .travel-options .time-options {
-          padding: 5px;
-          padding-left: 3px; }
-          #main #journey #journey-details .travel-options .time-options input.radiobutton {
-            margin-left: 10px;
-            margin-right: 10px; }
-          #main #journey #journey-details .travel-options .time-options input.radiobutton.first {
-            margin-left: 0; }
-        #main #journey #journey-details .travel-options .time-spec {
-          padding-bottom: 15px; }
-      #main #journey #journey-details .travel-comparison {
-        text-transform: none;
-        color: white;
-        font-size: 12px; }
-        #main #journey #journey-details .travel-comparison p {
-          margin-bottom: 0;
-          margin-top: 20px; }
-        #main #journey #journey-details .travel-comparison input {
-          display: inline; }
-        #main #journey #journey-details .travel-comparison input.radiobutton.second {
-          margin-left: 20px; }
-      #main #journey #journey-details .next-button {
-        margin-top: 20px;
-        padding: 5px;
-        width: 10%; }
+
+.journey-details {
+  padding: 30px 0 50px 50px;
+  border-left: thick solid #547CD4; }
+  .journey-details #invisible-anchor {
+    width: 0;
+    height: 0; }
+  .journey-details .start-address, .journey-details .dest-address {
+    color: white;
+    font-size: 12px;
+    padding-bottom: 10px;
+    text-transform: none; }
+    .journey-details .start-address input, .journey-details .dest-address input {
+      display: block;
+      padding: 5px 10px;
+      width: 60%;
+      margin-top: 5px; }
+  .journey-details .travel-options {
+    padding: 30px 3px 0 0;
+    text-transform: none;
+    color: white;
+    font-size: 12px; }
+    .journey-details .travel-options .travel-date {
+      width: 150px; }
+    .journey-details .travel-options .time-options {
+      padding: 5px;
+      padding-left: 3px; }
+      .journey-details .travel-options .time-options input.radiobutton {
+        margin-left: 10px;
+        margin-right: 10px; }
+      .journey-details .travel-options .time-options input.radiobutton.first {
+        margin-left: 0; }
+    .journey-details .travel-options .time-spec {
+      padding-bottom: 15px; }
+  .journey-details .travel-comparison {
+    text-transform: none;
+    color: white;
+    font-size: 12px; }
+    .journey-details .travel-comparison p {
+      margin-bottom: 0;
+      margin-top: 20px; }
+    .journey-details .travel-comparison input {
+      display: inline; }
+    .journey-details .travel-comparison input.radiobutton.second {
+      margin-left: 20px; }
+  .journey-details .next-button {
+    margin-top: 20px;
+    padding: 5px;
+    width: 10%; }
+
+.step-content {
+  display: table;
+  width: 95%;
+  table-layout: fixed; }
+  .step-content .step-left-panel {
+    padding: 50px;
+    width: 70%;
+    display: table-cell; }
+
+.step-img {
+  width: 32px;
+  display: inline-block;
+  vertical-align: top;
+  padding-right: 30px;
+  margin-left: -18px;
+  margin-top: -1px; }
+
+.done {
+  border-left: thick solid #FFFA32 !important; }
+
+#share-image-button {
+  margin-left: 50px;
+  padding: 5px; }
+
+.share-map-panel {
+  margin-left: 20%;
+  border-left: thick solid #547CD4;
+  height: 750px; }
+
+.fb-share {
+  background: url(../assets/facebook-white.svg) no-repeat 6px center;
+  width: 70px;
+  height: 60px;
+  display: block;
+  cursor: pointer; }
 
 .instructions {
   text-transform: uppercase;

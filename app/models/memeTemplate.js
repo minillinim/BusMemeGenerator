@@ -9,7 +9,3 @@ var MemeTemplateSchema = new Schema({
 });
 
 mongoose.model('MemeTemplate', MemeTemplateSchema, 'MemeTemplate');
-
-
-
-

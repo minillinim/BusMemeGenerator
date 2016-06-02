@@ -1,62 +1,41 @@
 var express = require('express'),
-  router = express.Router(),
-  directions = require('./map')
-  tlapi = require('./translinkapi')
-  mongoose = require('mongoose'),
-  MemeTemplate = mongoose.model('MemeTemplate'),
-  Location = mongoose.model('Location');
+    router = express.Router(),
+    tlapi = require('./translinkapi'),
+    mongoose = require('mongoose'),
+    MemeTemplate = mongoose.model('MemeTemplate'),
+    MemeDetails = mongoose.model('MemeDetails'),
+    Image = mongoose.model('Image'),
+    Location = mongoose.model('Location'),
+    MemeController = require('./MemeController');
 
 
 module.exports = function (app) {
-  app.use('/', router);
+    app.use('/', router);
 };
 
 router.get('/', function (req, res, next) {
     res.render('index', {title: 'Bus Meme Generator'});
 });
 
-router.get('/map/:startAddressLat/:startAddressLong/:destAddressLat/:destAddressLong', function(req, res, next) {
-  var responses = directions(req.params.startAddressLat,
-                             req.params.startAddressLong,
-                             req.params.destAddressLat,
-                             req.params.destAddressLong)
-  .then(function(response){
-    res.json(response);
-  });
-});
+router.get('/getMemeTemplates', MemeController().getMemeTemplates);
 
-router.get('/getMemeTemplates', function(req, res, next){
-  var templates = [];
+router.post('/saveMemeDetails', MemeController().saveMemeDetails);
 
-    MemeTemplate.find().stream().on('data', function(data){
-        templates.push(data);
-    }).on('error', function (err) {
-      console.log('error', err);
-    }).on('close', function () {
+router.post('/saveImageUrl', MemeController().saveImageUrl);
 
-      if (templates){
-        if (templates.length < 1){
-           templates = [
-                  {firstLine:'Public Transport', secondLine:'FAIL!!!'}, 
-                  {firstLine:'Logan City Council', secondLine:'Needs to invest in Public Transport!'}, 
-                  {firstLine:'Public Transport', secondLine:'Couldnt get much worse...'}, 
-                  {firstLine:'And then you wonder why', secondLine:'everyone owns a car..'}];
-        }
-      }
+router.get('/image/:imageLink', MemeController().serveImage);
 
-      res.json(templates);
-    });
-});
+router.get('/getImages', MemeController().getImages);
 
-router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', function(req, res, next) {
-  tlapi().getJourneysBetween(req.params.startLat,
-                             req.params.startLng,
-                             req.params.endLat,
-                             req.params.endLng,
-                             req.params.mode,
-                             req.params.at,
-                             req.params.walkMax)
-  .then(function(journeys) {
-    console.log(JSON.stringify(journeys), undefined, 2);
-  });
+
+router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', function (req, res, next) {
+    tlapi().getJourneysBetween(req.params.startLat,
+        req.params.startLng,
+        req.params.endLat,
+        req.params.endLng,
+        req.params.mode,
+        req.params.at,
+        req.params.walkMax)
+        .then(function (journeys) {
+        });
 });

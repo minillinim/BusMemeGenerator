@@ -1,0 +1,54 @@
+<div id="journey">
+    <img src="../assets/step-1.gif"/>
+    <div class="instructions">Enter your start and end locations</div>
+
+    <div id="step-1" class="journey-details">
+        <div class="start-address">
+            Enter start address
+            <input name="startAddress" type="text" id="start-address" required="Start Address is required"/>
+            <input type="hidden" id="startPostCode" value="">
+            <input type="hidden" id="startAddressLat" value="">
+            <input type="hidden" id="startAddressLong" value="">
+        </div>
+        <div class="dest-address">
+            Enter destination address
+            <input name="destAddress" type="text" id="dest-address" required="Destination is required"/>
+            <input type="hidden" id="destPostCode" value="">
+            <input type="hidden" id="destAddressLat" value="">
+            <input type="hidden" id="destAddressLong" value="">
+        </div>
+        <div class="travel-options" ng-controller="TimeController">
+
+            <select class="travel-date" ng-model="selectedDate" ng-options="day as day.label for day in days track by day.dateValue"></select>
+
+            <div class="time-options">
+                <input class="radiobutton first" type="radio" ng-model="timeOption" name="timeOption" value="after" ng-checked="timeOption=='after'">Leave After</input>
+                <input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="before" ng-checked="timeOption=='before'">Arrive Before</input>
+                <input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="first" ng-checked="timeOption=='first'">Earliest Services</input>
+                <input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="last" ng-checked="timeOption=='last'">Latest Services</input>
+            </div>
+
+            <div class="time-spec" ng-show="timeOption == 'before' || timeOption == 'after'">
+                <select id="time-spec-hour" ng-model="selectedHour" ng-options="hour for hour in hours"></select>
+                <select id="time-spec-minute" ng-model="selectedMinute" ng-options="minute for minute in minutes"></select>
+                <select id="time-spec-ampm" ng-model="selectedAmpm" ng-options="ampm for ampm in ampms"></select>
+            </div>
+
+            <div class="walking-options">
+                Maximum walk:
+                <select class="max-walk" ng-model="selectedMaxWalk" ng-options="wo as wo.label for wo in walkingOptions track by wo.value"></select>
+            </div>
+
+        </div>
+        <div class="travel-comparison">
+            <p>Do you have a car?</p>
+            <input class="radiobutton" type="radio" ng-model="transport.mode" value="driving" ng-checked="true"> Yes, I do
+            <input class="radiobutton second" type="radio" ng-model="transport.mode" value="walking" ng-checked="false"> No, I rely on public
+            transport
+        </div>
+        <div id="validation-errors"></div>
+        <input class="button next-button" ng-click="getMapData()" type="submit" value="Next" />
+
+        <div id="invisible-anchor"></div>
+    </div>
+</div>

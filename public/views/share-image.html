@@ -1,0 +1,13 @@
+<div id="share-map" class="share-map-panel" ng-show="showShare">
+    <img class="step-img" src="../assets/step-3.gif"/>
+    <div class="instructions">Share your meme on social media</div>
+
+    <div id="map-results-content" class="step-content">
+        <div class="step-left-panel">
+            <img id="image-to-share" class="map-image" src="{{imageUrl}}"/>
+        </div>
+        <div class="right-panel">
+            <a ng-click="fbshareCurrentImage()" class="fb-share" target="_blank" alt="Share on Facebook"></a>
+        </div>
+    </div>
+</div>

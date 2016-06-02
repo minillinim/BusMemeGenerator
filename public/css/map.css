@@ -55,7 +55,7 @@ select {
   right: 0;
   left: 0;
   z-index: 1300;
-  height: 90px; }
+  height: 10px; }
   #nav .gallery {
     cursor: pointer;
     color: white;
@@ -73,12 +73,16 @@ select {
 #map-results {
   margin-left: 20%;
   border-left: thick solid #547CD4;
-  height: 800px; }
+  height: 800px;
+  padding-bottom: 50px; }
+  #map-results #invisible-map-anchor {
+    width: 0;
+    height: 0; }
   #map-results .empty-space {
     height: 50px;
     border-left: thick solid #FFFA32;
     margin-left: -5px; }
-  #map-results img {
+  #map-results .step-img {
     width: 32px;
     display: inline-block;
     vertical-align: top;
@@ -139,8 +143,25 @@ select {
           padding-bottom: 10px; }
         #map-results #map-results-content .right-panel .template-selection .message-template {
           padding: 10px 5px; }
+        #map-results #map-results-content .right-panel .template-selection .message-template-list {
+          cursor: pointer;
+          background-color: #547CD4;
+          color: white;
+          border-radius: 3px; }
+        #map-results #map-results-content .right-panel .template-selection .message-template-list.selected {
+          color: #547CD4;
+          background-color: white; }
 
-#map-image {
+.map-canvas {
   padding: 50px; }
+
+.map-image {
+  width: 600px !important;
+  height: 600px !important; }
+
+#gallery-image {
+  height: 300px;
+  width: 320px;
+  padding-bottom: 20px; }
 
 /*# sourceMappingURL=map.css.map */

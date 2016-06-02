@@ -1,127 +1,15 @@
 <div id="nav">
-    <div class="gallery">
+    <div class="gallery" ng-click="showGallery()">
         <img src="../assets/gallery.png"/>Gallery
     </div>
 </div>
 <div id="main" ng-controller="MapController">
     <div id="title">
-        <div class="first-line">Logan</div>
-        <div class="second-line">Bus Meme</div>
-        <div class="third-line">Generator</div>
+    	<img class="busmeme-logo" src="../assets/bus-meme-logo.svg"/>
+    	<img class="busmeme-title" src="../assets/bus-meme-title.svg"/>
+        <div class="description-line">Find out if you have a <span class="hashtag">#publictransportfail</span> and spread the word.</div>
     </div>
-    <div id="journey">
-        <img src="../assets/step-1.gif"/>
-        <div class="instructions">Enter your start and end locations</div>
-
-        <div id="journey-details">
-            <div class="start-address">
-                Enter start address
-                <input name="startAddress" type="text" id="start-address" required="Start Address is required"/>
-                <input type="hidden" id="startPostCode" value="">
-                <input type="hidden" id="startAddressLat" value="">
-                <input type="hidden" id="startAddressLong" value="">
-            </div>
-            <div class="dest-address">
-                Enter destination address
-                <input name="destAddress" type="text" id="dest-address" required="Destination is required"/>
-                <input type="hidden" id="destPostCode" value="">
-                <input type="hidden" id="destAddressLat" value="">
-                <input type="hidden" id="destAddressLong" value="">
-            </div>
-            <div class="travel-options" ng-controller="TimeController">
-            	
-            	<select class="travel-date" ng-model="selectedDate" ng-options="day as day.label for day in days track by day.dateValue"></select>
-
-				<div class="time-options">
-	            	<input class="radiobutton first" type="radio" ng-model="timeOption" name="timeOption" value="after" ng-checked="timeOption=='after'">Leave After</input>
-	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="before" ng-checked="timeOption=='before'">Arrive Before</input>
-	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="first" ng-checked="timeOption=='first'">Earliest Services</input>
-	            	<input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="last" ng-checked="timeOption=='last'">Latest Services</input>
-				</div>
-
-            	<div class="time-spec" ng-show="timeOption == 'before' || timeOption == 'after'">
-	            	<select id="time-spec-hour" ng-model="selectedHour" ng-options="hour for hour in hours"></select>
-	            	<select id="time-spec-minute" ng-model="selectedMinute" ng-options="minute for minute in minutes"></select>
-	            	<select id="time-spec-ampm" ng-model="selectedAmpm" ng-options="ampm for ampm in ampms"></select>
-				</div>
-
-				<div class="walking-options">
-					Maximum walk:
-            		<select class="max-walk" ng-model="selectedMaxWalk" ng-options="wo as wo.label for wo in walkingOptions track by wo.value"></select>
-				</div>
-
-            </div>
-            <div class="travel-comparison">
-                <p>Do you have a car?</p>
-                <input class="radiobutton" type="radio" ng-model="transport.mode" value="driving" ng-checked="true"> Yes, I do
-                <input class="radiobutton second" type="radio" ng-model="transport.mode" value="walking" ng-checked="false"> No, I rely on public
-                transport
-            </div>
-            <div id="validation-errors"></div>
-            <input class="button next-button" ng-click="getMapData()" type="submit" value="Next" />
-        </div>
-    </div>
-    <div id="map-results" ng-show="showMap">
-        <img src="../assets/step-2.gif"/>
-        <div class="instructions">Design your meme</div>
-        
-        <div id="map-results-content">
-        	
-	        <div class="left-panel">
-
-		        <div class="journey-summary">
-		        	<div class="summary-line">
-		        		<span class="summary-label">From:</span>
-		        		<span id="summary-from" class="summary-content"></span>
-		    		</div>
-		        	<div class="summary-line">
-		        		<span class="summary-label">To:</span>
-		        		<span id="summary-to" class="summary-content"></span>
-		    		</div>
-		        </div>
-		        <div class="map-wrapper">
-			        <div id='gmap_canvas'>
-			        </div>
-		        </div>
-                <input class="button next-button" ng-click="exportAsImage()" type="submit" value="Export map as image" />
-	        </div>
-	        <div class="right-panel">
-	        	<div class="traveltime-comparison">
-		        	<div class="traveltime-row">
-		        		<span class="traveltime-column">Public Transport</span>
-		        		<span class="traveltime-column">{{transport.mode}}</span>
-	        		</div>
-		        	<div class="traveltime-row">
-		        		<span id="public-duration" class="traveltime-column">{{public.duration}}</span>
-		        		<span id="other-duration" class="traveltime-column">{{other.duration}}</span>
-	        		</div>	
-	        	</div>
-	        	<div class="template-selection" ng-controller="MemeController">
-	        		<div class="templates-header">
-	        			Choose message template
-	        		</div>
-	        		<ul class="message-template-list" >
-					    <li class="message-template" ng-repeat="template in memeTemplates">
-					      <!-- [{{$templa + 1}}] {{friend.name}} who is {{friend.age}} years old. -->
-					      {{template.firstLine}} {{template.secondLine}}
-					    </li>
-					    <li class="message-template" ng-if="results.length == 0">
-		        			Public Transport Fail!!!!
-					    </li>
-					  </ul>
-	        	</div>	
-	        </div>
-        </div>
-        <div id="map-image" ng-show="showImage">
-
-        	<div ng-controller="MemeController">
-			    <canvas id="canvas" width="0" height="0"></canvas>
-
-	            <img id="img-out" ng-show="!memeReady" style="width: 600px; height: 600px" src="" />
-
-	            <button ng-click="renderMeme()"> Click Me!</button>
-
-        	</div>
-        </div>
-    </div>
+    <div ng-include src="'views/journey-details.html'"></div>
+    <div ng-include src="'views/map-results.html'"></div>
+    <div ng-include src="'views/share-image.html'"></div>
 </div>
