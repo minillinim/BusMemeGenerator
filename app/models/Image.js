@@ -8,7 +8,10 @@ var ImageSchema = new Schema({
     otherModeTravelTime: Number,
     otherModeTravelDistance: Number,
     publicModeTravelTime: Number,
-    publicModeTravelDistance: Number
+    publicModeTravelDistance: Number,
+    createDate: String,
+    userName: String,
+    userEmail: String
 });
 
 mongoose.model('Image', ImageSchema, 'Image');

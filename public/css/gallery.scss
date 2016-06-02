@@ -1,3 +1,24 @@
+@import 'variables';
+@import 'common';
+@import 'nav';
+
 .gallery-display{
 	margin-top:80px;
+}
+
+.gallery-image {
+  width: 85%;
+  padding-bottom: 20px; 
+  width: 80%;
+}
+
+.meme-info{
+	color: $input-color;
+
+	span{
+		display:block;
+	}
+	.more-info{
+		margin-bottom:10px;
+	}
 }

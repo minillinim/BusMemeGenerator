@@ -5,12 +5,15 @@
 </div>
 <div class="gallery-display" ng-controller="GalleryController">
     <div class="pure-g">
-        <div class="pure-u-1-3"
-             ng-repeat="image in images | orderBy : (image.otherModeTravelTime - image.publicModeTravelTime)"><p><img
-                id="gallery-image"
-                ng-src="{{image.imageUrl}}"
-                alt=""></p>
-            <span><b>Travel time difference: </b>{{image.otherModeTravelTime - image.publicModeTravelTime}}</span>
+        <div class="pure-u-1-5"
+             ng-repeat="image in images | orderBy : (image.otherModeTravelTime - image.publicModeTravelTime)">
+             <img class="gallery-image" ng-src="{{image.imageUrl}}" alt="">
+             <div class="meme-info">
+            	<span>{{image.userName}}</span>
+            	<span ng-show="!image.UserName">Annonymous</span>
+            	<span ng-show="image.createDate">Created on {{image.createDate}}</span>
+            	<span><b>Travel time difference: </b>{{image.otherModeTravelTime - image.publicModeTravelTime}}</span>
+             </div>
         </div>
     </div>
 </div>
