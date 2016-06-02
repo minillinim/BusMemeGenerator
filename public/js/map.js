@@ -128,7 +128,7 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
 
             initStep2();
             // REMOVE!!!
-            testPixelGettering(map);
+            //testPixelGettering(map);
 
         } else {
             document.getElementById('map-results').className = "";
