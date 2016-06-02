@@ -1,0 +1,122 @@
+input {
+  height: 32px;
+  margin-right: 0;
+  vertical-align: middle;
+  font-size: 14px;
+  padding-left: 10px;
+  border-radius: 3px;
+  border: none;
+  line-height: 20px;
+  font-style: italic;
+  margin: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  background-color: #4769B3;
+  color: white;
+  opacity: 0.8; }
+
+select {
+  font-size: 12px;
+  border-radius: 3px;
+  border: none;
+  line-height: 20px;
+  margin: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  background-color: #4769B3;
+  color: white;
+  opacity: 0.8; }
+
+.button {
+  font-size: 16px;
+  height: 32px;
+  vertical-align: middle;
+  max-width: none;
+  min-width: 0;
+  padding: 0px 24px 0 10px;
+  margin: 2px;
+  background-color: #033054;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer; }
+
+.button:hover {
+  transform: scale(1.1); }
+
+.checkbox {
+  text-transform: none; }
+
+#nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1300;
+  height: 10px; }
+  #nav .gallery {
+    cursor: pointer;
+    color: white;
+    right: 10px;
+    position: fixed;
+    padding: 20px;
+    display: inline-block; }
+    #nav .gallery img {
+      display: inline-block;
+      width: 16px;
+      padding-right: 5px;
+      padding-top: 1px;
+      vertical-align: top; }
+
+.share-panel {
+  margin-left: 20%;
+  border-left: thick solid #547CD4;
+  height: 750px;
+  padding: 10px 0 50px 50px; }
+  .share-panel .instructions {
+    margin-top: -10px; }
+  .share-panel .share-content {
+    padding-top: 20px;
+    margin-left: 15%; }
+
+.share-icon {
+  width: 70px;
+  height: 80px;
+  display: inline-block;
+  padding-right: 50px;
+  cursor: pointer; }
+
+.share-icon.facebook {
+  background: url(../assets/facebook-white.svg) no-repeat 10% center; }
+
+.share-icon.instagram {
+  background: url(../assets/instagram-white.svg) no-repeat 10% center; }
+
+.share-icon.twitter {
+  background: url(../assets/twitter-white.svg) no-repeat 10% center; }
+
+.share-icon.facebook:hover {
+  background: url(../assets/facebook-blue.svg) no-repeat 10% center; }
+
+.share-icon.instagram:hover {
+  background: url(../assets/instagram-orange.svg) no-repeat 10% center; }
+
+.share-icon.twitter:hover {
+  background: url(../assets/twitter-blue.svg) no-repeat 10% center; }
+
+.meme-image-small {
+  padding-top: 30px;
+  width: 300px;
+  height: 300px; }
+
+.step-img {
+  width: 32px;
+  display: inline-block;
+  vertical-align: top;
+  padding-right: 30px;
+  margin-left: -69px;
+  margin-top: -10px; }
+
+/*# sourceMappingURL=share.css.map */

@@ -139,36 +139,8 @@ body {
 	}
 }
 
-.step-img {
-	width:32px;
-	display: inline-block;
-	vertical-align: top;
-	padding-right: 30px;
-	margin-left:-18px;
-	margin-top:-1px;
-}
-
 .done {
 	border-left: thick solid $text-color !important;
-}
-
-#share-image-button {
-	margin-left:50px;
-	padding:5px;
-}
-
-.share-map-panel {
-	margin-left:20%;
-	border-left: thick solid $separator-color;
-	height: 750px;
-}
-
-.fb-share {
-	background: url(../assets/facebook-white.svg) no-repeat 6px center;
-	width: 70px;
-	height: 60px;
-	display: block;
-	cursor: pointer;
 }
 
 .instructions{

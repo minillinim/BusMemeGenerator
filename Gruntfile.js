@@ -24,6 +24,7 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     'public/css/main.css': 'public/css/main.scss',
+                    'public/css/share.css': 'public/css/share.scss',
                     'public/css/map.css': 'public/css/map.scss'
                 }
             }
