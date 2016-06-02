@@ -1,6 +1,6 @@
 var app = angular.module('bus-meme');
 
-app.controller('MemeController', function ($scope, MemeFactory, $anchorScroll) {
+app.controller('MemeController', function ($scope, MemeFactory, $rootScope, $anchorScroll) {
 
     MemeFactory.getMemeTemplates().then(function (response) {
 
@@ -32,25 +32,20 @@ app.controller('MemeController', function ($scope, MemeFactory, $anchorScroll) {
     };
 
     $scope.renderMeme = function () {
-        var imageContainer = document.getElementById("map-image");
-        var image = document.getElementById("img-out");
-        var canvas = document.getElementById("canvas");
-        var context = canvas.getContext("2d");
+        var context = $rootScope.context;
+        var image = document.getElementById('img-out');
 
         var topText = $scope.selectedTemplate.firstLine;
         var bottomText = $scope.selectedTemplate.secondLine;
 
-        canvas.width = image.width;
-        canvas.height = image.height;
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        var width = image.width;
+        var height = image.height;
         context.textAlign = "center";
         context.fillStyle = "white";
         context.strokeStyle = "black";
         context.lineWidth = 2;
-        writeTextOnImage(context, topText, canvas.width / 2, 70);
-        writeTextOnImage(context, bottomText, canvas.width / 2, canvas.height - 30);
-        // downloadLink.href = canvas.toDataURL("image/jpeg");
-        $('#img-out').hide();
+        writeTextOnImage(context, topText, width / 2, 70);
+        writeTextOnImage(context, bottomText, width / 2, height - 30);
     };
 
     function writeTextOnImage(context, text, x, y) {
