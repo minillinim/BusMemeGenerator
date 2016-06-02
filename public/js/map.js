@@ -2,14 +2,55 @@ var app = angular.module('bus-meme', ['ngRoute']);
 
 app.config(function ($routeProvider) {
     $routeProvider.when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MapController'
+      templateUrl: 'views/main.html',
+      controller: 'MapController'
     })
 });
 
+function getMapConversionInfo(_map) {
+    var projection = _map.getProjection();
+    
+    var bounds = _map.getBounds();
+    var topRight = projection.fromLatLngToPoint(bounds.getNorthEast());
+    var bottomLeft = projection.fromLatLngToPoint(bounds.getSouthWest());
+    
+    var topLeft = new google.maps.Point(bottomLeft.x, topRight.y);
+    var width_pr = topRight.x - bottomLeft.x;
+    var height_pr = bottomLeft.y - topRight.y;
+
+    var container = document.getElementById('gmap_canvas');
+    var x_scale = parseInt(container.offsetWidth) / width_pr;
+    var y_scale = parseInt(container.offsetHeight) / height_pr;
+
+    return {"xScale" : x_scale, "yScale" : y_scale, "origin": topLeft, "projection" : projection };    
+}
+
+function getXYcoords(mapInfo, latLng) {
+    var worldPoint = mapInfo.projection.fromLatLngToPoint(latLng);
+    return [(worldPoint.x-mapInfo.origin.x)*mapInfo.xScale, (worldPoint.y-mapInfo.origin.y)*mapInfo.yScale]
+}
+
+function testPixelGettering(map) {
+    google.maps.event.addListenerOnce(map,"projection_changed", function() {
+        var startLat = document.getElementById('startAddressLat').value,
+            startLng = document.getElementById('startAddressLong').value,
+            destLat = document.getElementById('destAddressLat').value,
+            destLng = document.getElementById('destAddressLong').value;
+
+        var mapConversionInfo = getMapConversionInfo(map);
+        var bounds = map.getBounds();
+
+        var topRight = getXYcoords(mapConversionInfo, bounds.getNorthEast());
+        var bottomLeft = getXYcoords(mapConversionInfo, bounds.getSouthWest());
+        var origin_px = getXYcoords(mapConversionInfo, new google.maps.LatLng(startLat, startLng));
+        var destination_px = getXYcoords(mapConversionInfo, new google.maps.LatLng(destLat, destLng));
+
+        console.log("Origin:", origin_px, "Destination", destination_px, "TR:", topRight, "BL:", bottomLeft);
+    });
+}
+
 app.controller('MapController', function ($scope, MapService, $anchorScroll) {
     var transitDirections;
-    var drivingOrWalkingDirections;
     var map;
     
     $scope.transport = {
@@ -24,6 +65,7 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
     $scope.showImage = false;
 
     $scope.getMapData = function () {
+
         if (validateAddresses()) {
             $scope.showMap = true;
 
@@ -74,6 +116,10 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
             });
 
             initStep2();
+
+            // REMOVE!!!
+            testPixelGettering(map);
+
         } else {
             document.getElementById('map-results').className = "";
             document.getElementById('journey-details').className = "";
@@ -96,8 +142,6 @@ app.controller('MapController', function ($scope, MapService, $anchorScroll) {
         $anchorScroll('map-results');
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
-    
-        
     }
 
     var initMap = function () {
