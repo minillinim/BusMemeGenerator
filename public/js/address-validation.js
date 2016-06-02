@@ -16,9 +16,7 @@ function validateAddresses(){
 	if (!destLat || !destLong || !destPC) {
 		errors.push("<li>Destination address invalid or not found</li>");
 	}		
-			
-			console.log(startPC, destPC);
-			
+						
 	if (!addressWithinLoganRegion(startPC) && !addressWithinLoganRegion(destPC)) {
 		errors.push("<li>At this point we require at least one address to be within the Logan city bounds.</li>");
 	}

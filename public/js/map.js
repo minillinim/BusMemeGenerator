@@ -78,8 +78,15 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     };
 
     $scope.getMapData = function () {
+        
+        if (!isAddressChanged) {
+            if (document.getElementById('map-results')) document.getElementById('map-results').style.display = 'none';
+            document.getElementById("validation-errors").innerHTML = 'Invalid address';
+            return;
+        }
 
         if (validateAddresses()) {
+            if (document.getElementById('map-results')) document.getElementById('map-results').style.display = 'block';
             $scope.showMap = true;
 
             var startLat = document.getElementById('startAddressLat').value,
@@ -131,8 +138,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
             initStep2();
             scrollToElement('invisible-anchor');
-            // REMOVE!!!
-            //testPixelGettering(map);
+            isAddressChanged = false;                                                  
 
         } else {
             document.getElementById('map-results').className = "";
