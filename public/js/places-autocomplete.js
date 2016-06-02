@@ -13,52 +13,38 @@ function loadGoogleAutocomplete(){
 
             var options = { bounds: defaultBounds };
 
-            var startAddress = new google.maps.places.Autocomplete(
-                document.getElementById('start-address'), options);
+            var startAddress = new google.maps.places.Autocomplete(document.getElementById('start-address'), options);
+            var destAddress = new google.maps.places.Autocomplete(document.getElementById('dest-address'), options);
 
-            var destAddress = new google.maps.places.Autocomplete(
-                document.getElementById('dest-address'), options);
-
-            google.maps.event.addListener(startAddress, 'place_changed', function () {
-                var place = startAddress.getPlace();
-                var address = place.formatted_address;
-                
-                if (!place.geometry) {
-                    console.error("Google Maps API call returned an empty address, please try to provide an other place");
-                    return;
-                }
-                var latitude = place.geometry.location.lat();
-                var longitude = place.geometry.location.lng();
-                    
-                getPostalCode(  latitude, longitude).then(function (postcode) {
-                    document.getElementById("startPostCode").value = postcode;                        
-                    document.getElementById("startAddressLat").value = latitude;
-                    document.getElementById("startAddressLong").value = longitude;
-                }, function (err) {
-                    console.error('An error occurred during postcode resolution.', err);
-                });                                                   
-            });
-            google.maps.event.addListener(destAddress, 'place_changed', function () {
-                var place = destAddress.getPlace();
-                var address = place.formatted_address;
-
-                if (!place.geometry) {
-                    console.error("Google Maps API call returned an empty address, please try to provide an other place");
-                    return;
-                }
-                var latitude = place.geometry.location.lat();
-                var longitude = place.geometry.location.lng();
-                
-                getPostalCode(  latitude, longitude).then(function (postcode) {
-                    document.getElementById("destPostCode").value = postcode;
-                    document.getElementById("destAddressLat").value = latitude;
-                    document.getElementById("destAddressLong").value = longitude;
-                }, function (err) {
-                    console.error('An error occurred during postcode resolution.', err);
-                });                                                   
-            });
+            setGoogleListener(startAddress, 'start');
+            setGoogleListener(destAddress, 'dest');
 
     }, 1000);
+}
+
+function setGoogleListener(control, name){
+
+    google.maps.event.addListener(control, 'place_changed', function () {
+        var place = control.getPlace();
+        var address = place.formatted_address;
+        if (!place.geometry) {
+            console.error("Google Maps API call returned an empty address, please try to provide an other place");
+            return;
+        }
+        var latitude = place.geometry.location.lat();
+        var longitude = place.geometry.location.lng();
+            
+        getPostalCode(latitude, longitude).then(
+            function (postcode) {
+                document.getElementById(name + "PostCode").value = postcode;                        
+                document.getElementById(name + "AddressLat").value = latitude;
+                document.getElementById(name + "AddressLong").value = longitude;
+            }, 
+            function (err) {
+                console.error('An error occurred during postcode resolution.', err);
+            }
+        );                                                   
+    });
 }
 
 function readPostalCode(place) {
