@@ -24,6 +24,8 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
     $rootScope.showGallery = function(){
         $location.path('/galleries');
     }
+    
+    loadGoogleAutocomplete();
 
     $scope.transport = {
         mode: 'driving'

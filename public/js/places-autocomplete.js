@@ -1,5 +1,10 @@
 google.maps.event.addDomListener(window, 'load', function () {
 
+    loadGoogleAutocomplete();
+});
+
+function loadGoogleAutocomplete(){
+
         setTimeout(function() {
 
             // default autoComplete bounds to Logan city area
@@ -52,9 +57,9 @@ google.maps.event.addDomListener(window, 'load', function () {
                     console.error('An error occurred during postcode resolution.', err);
                 });                                                   
             });
-        }, 1000);
-    
-});
+
+    }, 1000);
+}
 
 function readPostalCode(place) {
     for (var i = 0; i < place.address_components.length; i++) {
