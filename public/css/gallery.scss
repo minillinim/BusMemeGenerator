@@ -29,6 +29,15 @@
 		margin-bottom:40px;
 	    padding: 10px;
 	    color: $nav-color;
+
+	    .expand{
+	    	width:20px;
+	    	vertical-align:middle;
+	    	cursor:pointer;
+	    }
+	    input.radiobutton {
+		    margin: 0 5px;
+		}
 	}
 }
 

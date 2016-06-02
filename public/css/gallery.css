@@ -111,6 +111,12 @@ select {
     margin-bottom: 40px;
     padding: 10px;
     color: #4468DB; }
+    .gallery-display .filters .expand {
+      width: 20px;
+      vertical-align: middle;
+      cursor: pointer; }
+    .gallery-display .filters input.radiobutton {
+      margin: 0 5px; }
 
 .gallery-image {
   width: 85%;
