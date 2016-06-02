@@ -62,7 +62,7 @@
           display: inline-block;
           border-bottom: 1px solid $separator-color;
           padding-bottom: 2px;
-          width: 79%;
+          width: 85%;
           padding-top: 8px;
           font-size: 12px;
         }
@@ -86,7 +86,7 @@
 
     .right-panel {
       color: $input-color;
-      width: 20%;
+      width: 17%;
       display: table-cell;
 
       .traveltime-comparison {
@@ -97,7 +97,7 @@
         }
         .traveltime-column {
           display: table-cell;
-          padding-right: 15px;
+          padding-right: 30px;
           text-transform: capitalize;
         }
       }
@@ -115,6 +115,8 @@
         }
 
         .message-template-list {
+
+          padding-left: 30px;
           cursor: pointer;
           background-color: $separator-color;
           color: $input-color;

@@ -5,10 +5,9 @@ app.controller('MemeController', function ($scope, $rootScope,$location, MemeFac
     MemeFactory.getMemeTemplates().then(function (response) {
 
         $scope.memeTemplates = response.data;
-        $scope.selectedTemplate = $scope.memeTemplates[0];
+        $scope.selectedTemplate = '';
 
    		$scope.memeTemplates = response.data;
-	    //$scope.selectedTemplate = $scope.memeTemplates[0];
 
     });
 

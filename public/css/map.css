@@ -113,7 +113,7 @@ select {
           display: inline-block;
           border-bottom: 1px solid #547CD4;
           padding-bottom: 2px;
-          width: 79%;
+          width: 85%;
           padding-top: 8px;
           font-size: 12px; }
       #map-results #map-results-content .left-panel .map-wrapper {
@@ -127,7 +127,7 @@ select {
             background: none !important; }
     #map-results #map-results-content .right-panel {
       color: white;
-      width: 20%;
+      width: 17%;
       display: table-cell; }
       #map-results #map-results-content .right-panel .traveltime-comparison {
         display: table; }
@@ -135,7 +135,7 @@ select {
           display: table-row; }
         #map-results #map-results-content .right-panel .traveltime-comparison .traveltime-column {
           display: table-cell;
-          padding-right: 15px;
+          padding-right: 30px;
           text-transform: capitalize; }
       #map-results #map-results-content .right-panel .template-selection {
         padding-top: 15%; }
@@ -144,6 +144,7 @@ select {
         #map-results #map-results-content .right-panel .template-selection .message-template {
           padding: 10px 5px; }
         #map-results #map-results-content .right-panel .template-selection .message-template-list {
+          padding-left: 30px;
           cursor: pointer;
           background-color: #547CD4;
           color: white;
