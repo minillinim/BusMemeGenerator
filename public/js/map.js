@@ -91,7 +91,7 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
             });
 
             initStep2();
-            scrollToMapResults();
+            scrollToElement('invisible-anchor');
         }
     };
 
@@ -137,6 +137,8 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
         $scope.showShare = true;
         // $scope.imageUrl = 'https://maps.googleapis.com/maps/api/staticmap?center=Logan,Queensland,Australia&zoom=11&size=600x600&maptype=roadmap';
         $scope.imageUrl = 'http://pmdvod.nationalgeographic.com/NG_Video/742/275/140715-baby-sloth-orphanage-rescue-vin_640x360_304699971673.jpg';
+    
+        scrollToElement('invisible-map-anchor');
     };
 
     $scope.fbshareCurrentImage = function() {
@@ -149,9 +151,9 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
     }
-    function scrollToMapResults(){
+    function scrollToElement(id){
         setTimeout(function() {
-                    $anchorScroll('invisible-anchor');
+                    $anchorScroll(id);
                 }, 10);
     }
     var getBoundsCoveringBoth = function (bounds1, bounds2) {
