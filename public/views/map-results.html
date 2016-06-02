@@ -23,7 +23,7 @@
                 </div>
                 <!--<a id="dl" ng-click="dlCanvas()">Download Canvas</a>-->
                 <img id="img-out-2" class="map-image" src="" style="display:none"/>
-                <input class="button" id="share-image-button" ng-click="shareImage()" type="submit" value="Next"/>
+                <input class="button" id="share-image-button" ng-click="$parent.shareImage()" type="submit" value="Next"/>
             </div>
 
         </div>
@@ -38,8 +38,8 @@
                     <span id="other-duration" class="traveltime-column">{{other.duration}}</span>
                 </div>
                 <div class="traveltime-row">
-                    <span id="public-duration" class="traveltime-column">{{public.distance}}</span>
-                    <span id="other-duration" class="traveltime-column">{{other.distance}}</span>
+                    <span id="public-distance" class="traveltime-column">{{public.distance}}</span>
+                    <span id="other-distance" class="traveltime-column">{{other.distance}}</span>
                 </div>
             </div>
             <div class="template-selection" ng-controller="MemeController">

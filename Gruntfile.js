@@ -42,7 +42,8 @@ module.exports = function (grunt) {
                     'public/js/map.js',
                     'public/js/meme-templates.js',
                     'public/js/time-options.js',
-                    'public/js/gallery.js'
+                    'public/js/gallery.js',
+                    'public/js/social-media-controller.js'
                     ]
                 }
             }

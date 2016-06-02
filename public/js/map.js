@@ -58,7 +58,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
     $rootScope.showGallery = function () {
         $location.path('/galleries');
-    }
+    };
 
     loadGoogleAutocomplete();
 
@@ -66,6 +66,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         mode: 'driving'
     };
 
+    $scope.showImage = false;
     $scope.showMap = false;
     $scope.transitDirectionsPolyline = '';
     $scope.drivingOrWalkingDirectionsPolyline = '';
@@ -175,18 +176,24 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
         }
     };
+
+    $scope.shareImage = function() {
+        document.getElementById('map-results').classList.add('done');
+        $scope.showImage = true;
+
+        scrollToElement('invisible-map-anchor');
+    };
+
     function initStep2() {
         document.getElementById('step-1').classList.add('done');
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
     }
-
+    
     function scrollToElement(id) {
         setTimeout(function () {
-            console.log('wth?');
-            $anchorScroll(id);
+                $anchorScroll(id);
         }, 10);
-
     }
 
     var getBoundsCoveringBoth = function (bounds1, bounds2) {
