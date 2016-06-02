@@ -36,13 +36,13 @@
                     <div class="more-details-content">
                         <div class="public-transport">
                             <div class="details-header">Public Transport: </div>
-                            <div class="travel-time">Travel time:{{image.publicModeTravelTime}}</div>
-                            <div class="travel-distance">Distance:{{image.publicModeTravelDistance}}m</div>
+                            <div class="travel-time">Travel time: {{formatTravelTime(image.publicModeTravelTime)}}</div>
+                            <div class="travel-distance">Distance: {{formatDistance(image.publicModeTravelDistance)}}</div>
                         </div>
                         <div class="other-mode">
                             <div class="details-header">{{image.otherMode}}:</div>
-                            <div class="travel-time">Travel time:{{image.otherModeTravelTime}}</div>
-                            <div class="travel-distance">Distance:{{image.otherModeTravelDistance}}m</div>
+                            <div class="travel-time">Travel time: {{formatTravelTime(image.otherModeTravelTime)}}</div>
+                            <div class="travel-distance">Distance: {{formatDistance(image.otherModeTravelDistance)}}</div>
                         </div>
                     </div>
                 </div>

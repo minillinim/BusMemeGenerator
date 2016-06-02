@@ -126,7 +126,8 @@ select {
   color: white;
   margin-bottom: 10px; }
   .meme-info span {
-    display: block; }
+    display: block;
+    width: 90%; }
   .meme-info .more-details-label {
     cursor: hand;
     text-decoration: underline; }
