@@ -152,6 +152,11 @@ select {
           color: #547CD4;
           background-color: white; }
 
+#share-image-button {
+  margin-left: 50px;
+  padding: 5px;
+  width: 15%; }
+
 .map-canvas {
   padding: 50px; }
 

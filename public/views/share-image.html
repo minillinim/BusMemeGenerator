@@ -1,13 +1,16 @@
-<div id="share-map" class="share-map-panel" ng-show="showShare">
+<div id="share-map" class="share-panel" ng-show="showShare">
     <img class="step-img" src="../assets/step-3.gif"/>
     <div class="instructions">Share your meme on social media</div>
 
-    <div id="map-results-content" class="step-content">
-        <div class="step-left-panel">
-            <img id="image-to-share" class="map-image" src="{{imageUrl}}"/>
+    <div class="share-content">
+        <div class="social-media-icons">
+            
+            <div ng-click="fbshareCurrentImage()" src="../assets/facebook-white.svg" class="share-icon facebook"></div>
+            <div ng-click="instagramShare()" src="../assets/instagram-white.svg" class="share-icon instagram"></div>
+            <div ng-click="twitterShare()" src="../assets/twitter-white.svg" class="share-icon twitter"></div>
+
         </div>
-        <div class="right-panel">
-            <a ng-click="fbshareCurrentImage()" class="fb-share" target="_blank" alt="Share on Facebook"></a>
-        </div>
+
+        <img id="image-to-share" class="meme-image-small" src="{{imageUrl}}"/> 
     </div>
 </div>

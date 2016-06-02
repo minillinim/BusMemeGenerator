@@ -1,0 +1,60 @@
+@import 'variables';
+@import 'common';
+@import 'nav';
+
+.share-panel {
+	margin-left:20%;
+	border-left: thick solid $separator-color;
+	height: 750px;
+    padding: 10px 0 50px 50px;
+
+    .instructions{
+    	margin-top:-10px;
+    }
+
+    .share-content{
+    	padding-top: 20px;
+    	margin-left: 15%;
+    }
+}
+
+.share-icon{
+	width: 70px;
+	height: 80px;
+	display: inline-block;
+	padding-right: 50px;
+	cursor: pointer;
+
+}
+.share-icon.facebook {
+	background: url(../assets/facebook-white.svg) no-repeat 10% center;
+}
+.share-icon.instagram {
+	background: url(../assets/instagram-white.svg) no-repeat 10% center;
+}
+.share-icon.twitter {
+	background: url(../assets/twitter-white.svg) no-repeat 10% center;
+}
+.share-icon.facebook:hover {
+	background: url(../assets/facebook-blue.svg) no-repeat 10% center;
+}
+.share-icon.instagram:hover {
+	background: url(../assets/instagram-orange.svg) no-repeat 10% center;
+}
+.share-icon.twitter:hover {
+	background: url(../assets/twitter-blue.svg) no-repeat 10% center;
+}
+.meme-image-small{
+	padding-top:30px;
+	width:300px;
+	height:300px;
+}
+
+.step-img {
+	width:32px;
+	display: inline-block;
+	vertical-align: top;
+	padding-right: 30px;
+    margin-left: -69px;
+    margin-top: -10px;
+}

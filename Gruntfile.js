@@ -24,6 +24,7 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     'public/css/main.css': 'public/css/main.scss',
+                    'public/css/share.css': 'public/css/share.scss',
                     'public/css/map.css': 'public/css/map.scss'
                 }
             }
@@ -39,7 +40,8 @@ module.exports = function (grunt) {
                     'public/js/address-validation.js', 
                     'public/js/map.js',
                     'public/js/meme-templates.js',
-                    'public/js/time-options.js'
+                    'public/js/time-options.js',
+                    'public/js/gallery.js'
                     ]
                 }
             }
