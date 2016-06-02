@@ -1,3 +1,5 @@
+var isAddressChanged = false;
+
 google.maps.event.addDomListener(window, 'load', function () {
 
     loadGoogleAutocomplete();
@@ -23,8 +25,9 @@ function loadGoogleAutocomplete(){
 }
 
 function setGoogleListener(control, name){
-
+    
     google.maps.event.addListener(control, 'place_changed', function () {
+                
         var place = control.getPlace();
         var address = place.formatted_address;
         if (!place.geometry) {
@@ -43,8 +46,17 @@ function setGoogleListener(control, name){
             function (err) {
                 console.error('An error occurred during postcode resolution.', err);
             }
-        );                                                   
+        ); 
+        isAddressChanged = true;                                                  
     });
+    
+    $("#dest-address").keydown(function () {
+        isAddressChanged = false;                                                  
+    });
+    $("#start-address").keydown(function () {
+        isAddressChanged = false;                                                  
+    });
+
 }
 
 function readPostalCode(place) {
