@@ -1,6 +1,6 @@
 var app = angular.module('bus-meme');
 
-app.controller('MemeController', function ($scope, MemeFactory, $anchorScroll) {
+app.controller('MemeController', function ($scope, $rootScope,$location, MemeFactory, $anchorScroll) {
 
     MemeFactory.getMemeTemplates().then(function (response) {
 
@@ -17,18 +17,12 @@ app.controller('MemeController', function ($scope, MemeFactory, $anchorScroll) {
         $scope.renderMeme();
     };
 
-    $scope.dlCanvas = function () {
+    $scope.downloadCanvas = function () {
         var canvas = document.getElementById("canvas");
-        var imageUrl = canvas.toDataURL('image/png');
-        console.log(imageUrl);
-
-        MemeFactory.saveImageUrl(imageUrl).then(function (response) {
-            console.log(response);
-        });
+        $rootScope.imageUrl = canvas.toDataURL('image/png');
+      
 
         var dl = document.getElementById('dl');
-        //dl.setAttribute('download', 'map.png');
-        //dl.setAttribute('href', imageUrl.replace(/^data:image\/[^;]/, 'data:application/octet-stream'));
     };
 
     $scope.renderMeme = function () {
@@ -52,6 +46,46 @@ app.controller('MemeController', function ($scope, MemeFactory, $anchorScroll) {
         // downloadLink.href = canvas.toDataURL("image/jpeg");
         $('#img-out').hide();
     };
+
+
+    $scope.shareImage = function() {
+        document.getElementById('map-results').classList.add('done');
+        $rootScope.showImage = true;
+
+        scrollToElement('invisible-map-anchor');
+    };
+
+    $scope.facebookShare = function() {
+
+        $scope.downloadCanvas();
+        MemeFactory.saveImageUrl($rootScope.imageUrl).then(function(response){
+            var baseUrl =$location.absUrl().replace('#/','');
+            var imageLink =encodeURIComponent(response.data.imageLink);
+            imageLink = baseUrl + '/image/' + imageLink;
+
+            window.open("https://www.facebook.com/sharer/sharer.php?u=" + 
+                imageLink +
+                "&t="+ document.title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+            
+        });
+
+        return false;
+    };
+    $scope.instagramShare = function() {
+        window.open("https://www.facebook.com/sharer/sharer.php?u="+ encodeURIComponent($rootScope.imageUrl) +"&t="+ document.title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+        return false;
+    };
+    $scope.twitterShare = function() {
+        window.open("https://www.facebook.com/sharer/sharer.php?u="+ encodeURIComponent($rootScope.imageUrl) +"&t="+ document.title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+        return false;
+    };
+
+
+    function scrollToElement(id){
+        setTimeout(function() {
+                    $anchorScroll(id);
+                }, 10);
+    }
 
     function writeTextOnImage(context, text, x, y) {
         var f = 36;

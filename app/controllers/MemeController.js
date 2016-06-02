@@ -34,6 +34,7 @@ function createGalleryDirectory(filePath) {
 }
 
 var saveImage = function (data, filename) {
+    createGalleryDirectory(filename);
     fs.writeFile('./gallery/' + filename + '.png', data.replace(/^data:image\/png;base64,/, ''), 'base64', function (err) {
         if (err) {
             console.log(err);
