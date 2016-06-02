@@ -14,29 +14,32 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
     $scope.setSelectedTemplate = function (template) {
         document.getElementById("meme-validation").innerText = '';
         $rootScope.selectedTemplate = template;
-        $scope.renderMeme();
+        $scope.renderMemeTmp();
     };
 
-    $scope.renderMeme = function () {
-        var context = $rootScope.context;
+    $scope.renderMemeTmp = function () {
+        $('#canvas2').remove();
+        $('<canvas>', {'id': 'canvas2'}).insertAfter($('#canvas'));
+
+        var canvas = document.getElementById("canvas2");
+        var context = canvas.getContext("2d");
         var image = document.getElementById('img-out');
+        canvas.width = image.width;
+        canvas.height = image.height;
 
         var topText = $rootScope.selectedTemplate.firstLine;
         var bottomText = $rootScope.selectedTemplate.secondLine;
 
-        var width = image.width;
-        var height = image.height;
         context.textAlign = "center";
         context.fillStyle = "white";
         context.strokeStyle = "black";
         context.lineWidth = 2;
-        writeTextOnImage(context, topText, width / 2, 70);
-        writeTextOnImage(context, bottomText, width / 2, height - 30);
+        writeTextOnImage(context, topText, canvas.width / 2, 70);
+        writeTextOnImage(context, bottomText, canvas.width / 2, canvas.height - 30);
     };
 
     function scrollToElement(id) {
         setTimeout(function () {
-            console.log('wth');
             $anchorScroll(id);
         }, 10);
     }

@@ -258,7 +258,7 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
             context.textAlign = "center";
             context.fillStyle = "white";
             context.strokeStyle = "black";
-            context.lineWidth = 5;
+            context.lineWidth = 4;
             
             drawPolyline(map, latlngPublic, context, "#FF0000", gmapsInfo);
             drawPolyline(map, latlngWalking, context, "#0000FF", gmapsInfo);
@@ -295,14 +295,47 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
         }
     };
 
+    var writeTextOnImage = function (context, text, x, y) {
+        var f = 36;
+        for (; f >= 0; f -= 1) {
+            context.font = "bold " + f + "pt Impact, Charcoal, sans-serif";
+            if (context.measureText(text).width < canvas.width - 10) {
+                context.fillText(text, x, y);
+                context.strokeText(text, x, y);
+
+                break;
+            }
+        }
+    }
+
+    $scope.renderMemeFinal = function () {
+        var context = $rootScope.context;
+        var image = document.getElementById('img-out');
+
+        var topText = $rootScope.selectedTemplate.firstLine;
+        var bottomText = $rootScope.selectedTemplate.secondLine;
+
+        var width = image.width;
+        var height = image.height;
+        context.textAlign = "center";
+        context.fillStyle = "white";
+        context.strokeStyle = "black";
+        context.lineWidth = 2;
+        writeTextOnImage(context, topText, width / 2, 70);
+        writeTextOnImage(context, bottomText, width / 2, height - 30);
+
+        $('canvas2').remove();
+        
+    };
+
     $scope.shareImage = function() {
         
         document.getElementById("meme-validation").innerText = '';
 
         if ($rootScope.selectedTemplate){
             document.getElementById('map-results').classList.add('done');
+            renderMemeFinal();
             $scope.showImage = true;
-
             scrollToElement('invisible-map-anchor');
         }
         else{

@@ -188,7 +188,13 @@ select {
   width: 15%; }
 
 .map-canvas {
-  padding: 50px; }
+  padding: 50px;
+  position: relative; }
+
+.map-canvas canvas {
+  position: absolute;
+  top: 0;
+  left: 0; }
 
 .map-image {
   width: 600px !important;
