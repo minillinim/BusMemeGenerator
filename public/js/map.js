@@ -178,10 +178,18 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     };
 
     $scope.shareImage = function() {
-        document.getElementById('map-results').classList.add('done');
-        $scope.showImage = true;
+        
+        document.getElementById("meme-validation").innerText = '';
 
-        scrollToElement('invisible-map-anchor');
+        if ($rootScope.selectedTemplate){
+            document.getElementById('map-results').classList.add('done');
+            $scope.showImage = true;
+
+            scrollToElement('invisible-map-anchor');
+        }
+        else{
+            document.getElementById("meme-validation").innerText = 'Select a meme template on the right hand side to create your meme';
+        }
     };
 
     function initStep2() {

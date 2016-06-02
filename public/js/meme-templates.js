@@ -5,14 +5,15 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
     MemeFactory.getMemeTemplates().then(function (response) {
 
         $scope.memeTemplates = response.data;
-        $scope.selectedTemplate = '';
+        $rootScope.selectedTemplate = '';
 
    		$scope.memeTemplates = response.data;
 
     });
 
     $scope.setSelectedTemplate = function (template) {
-        $scope.selectedTemplate = template;
+        document.getElementById("meme-validation").innerText = '';
+        $rootScope.selectedTemplate = template;
         $scope.renderMeme();
     };
 
@@ -21,8 +22,8 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
 
-        var topText = $scope.selectedTemplate.firstLine;
-        var bottomText = $scope.selectedTemplate.secondLine;
+        var topText = $rootScope.selectedTemplate.firstLine;
+        var bottomText = $rootScope.selectedTemplate.secondLine;
 
         canvas.width = image.width;
         canvas.height = image.height;
@@ -36,7 +37,7 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         // downloadLink.href = canvas.toDataURL("image/jpeg");
         $('#img-out').hide();
         $rootScope.imageLink = '';
-        $rootScope.memeText = $scope.selectedTemplate.firstLine + ' - ' + $scope.selectedTemplate.secondLine;
+        $rootScope.memeText = $rootScope.selectedTemplate.firstLine + ' - ' + $rootScope.selectedTemplate.secondLine;
     };
 
     function convertToTimeStamp(travelTime) {
@@ -50,14 +51,6 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
     function convertToMeters(distance) {
         return Number(distance.replace(' km', '')) * KM_TO_METER_FACTOR;
     }
-
-
-    $scope.shareImage = function () {
-        document.getElementById('map-results').classList.add('done');
-        $rootScope.showImage = true;
-
-        scrollToElement('invisible-map-anchor');
-    };
 
     $scope.saveImage = function (callback) {
         if ($rootScope.imageLink) {
