@@ -4,6 +4,9 @@ app.controller('SocialMediaController', function ($scope, $rootScope,$location, 
 
     var KM_TO_METER_FACTOR = 1000;
 
+    $scope.user = {};
+    $scope.invalidUserInput = false;
+
     $scope.downloadCanvas = function () {
         var canvas = document.getElementById("canvas");
         $rootScope.imageUrl = canvas.toDataURL('image/png');
@@ -68,4 +71,23 @@ app.controller('SocialMediaController', function ($scope, $rootScope,$location, 
                 '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         });
     };
+
+    function validEmail(email) {
+        return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+$/.test(email);
+    }
+
+    function validUser(user) {
+        if (user.fullName && user.email) {
+            return validEmail(user.email);
+        }
+    }
+
+    $scope.saveUserDetails = function () {
+        console.log('save user details');
+        $scope.invalidUserInput = !validUser($scope.user);
+        console.log($scope.invalidUserInput);
+        if (!$scope.invalidUserInput) {
+            console.log($scope.user);
+        }
+    }
 });

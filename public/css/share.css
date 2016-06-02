@@ -112,22 +112,25 @@ select {
 
 .stay-in-touch {
   margin-bottom: 30px; }
+  .stay-in-touch .validation-errors {
+    margin-top: 10px; }
   .stay-in-touch .stay-in-touch-content {
     color: white;
     text-transform: none;
     font-size: 12px;
     margin-top: 10px; }
-    .stay-in-touch .stay-in-touch-content .user-input {
-      margin-top: 20px; }
-      .stay-in-touch .stay-in-touch-content .user-input input {
-        display: inline-block; }
-      .stay-in-touch .stay-in-touch-content .user-input .subscribe {
-        text-align: center;
-        width: 120px; }
-      .stay-in-touch .stay-in-touch-content .user-input #email-address {
-        width: 350px; }
-      .stay-in-touch .stay-in-touch-content .user-input #full-name {
-        width: 180px; }
+  .stay-in-touch .user-input {
+    color: white;
+    margin-top: 20px; }
+    .stay-in-touch .user-input input {
+      display: inline-block; }
+    .stay-in-touch .user-input .subscribe {
+      text-align: center;
+      width: 120px; }
+    .stay-in-touch .user-input #email-address {
+      width: 350px; }
+    .stay-in-touch .user-input #full-name {
+      width: 180px; }
 
 .share-icon {
   width: 70px;

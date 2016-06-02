@@ -26,9 +26,10 @@
     }
 }
 .stay-in-touch{
-	
 	margin-bottom:30px;
-
+	.validation-errors {
+		margin-top:10px;
+	}
 	.stay-in-touch-title{
 	}
 	.stay-in-touch-content{
@@ -36,26 +37,25 @@
 		text-transform:none;
 		font-size:12px;
 		margin-top:10px;
+	}
+	.user-input{
+		color:$input-color;
+		margin-top:20px;
 
-		.user-input{
-			margin-top:20px;
-
-			input{
-				display:inline-block;
-			}
-
-			.subscribe{	
-			    text-align: center;
-			    width: 120px;
-			}
-			#email-address{
-			    width: 350px;
-			}
-			#full-name{
-				width:180px;
-			}
+		input{
+			display:inline-block;
 		}
-		
+
+		.subscribe{
+			text-align: center;
+			width: 120px;
+		}
+		#email-address{
+			width: 350px;
+		}
+		#full-name{
+			width:180px;
+		}
 	}
 }
 .share-icon{
