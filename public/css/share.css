@@ -100,11 +100,18 @@ select {
   padding: 10px 0 50px 50px; }
   .share-panel .instructions {
     margin-top: -10px; }
+  .share-panel .share-instructions {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 14px; }
+    .share-panel .share-instructions .hashtag {
+      text-transform: none;
+      color: white; }
   .share-panel .share-content {
     padding-top: 20px; }
 
 .stay-in-touch {
-  margin-top: 30px; }
+  margin-bottom: 30px; }
   .stay-in-touch .stay-in-touch-content {
     color: white;
     text-transform: none;

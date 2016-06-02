@@ -4,6 +4,32 @@
 
 .gallery-display{
 	margin-top:80px;
+
+	.gallery-header{
+
+		h2{
+			font-size:32px;
+			margin-bottom: 5px;
+		}
+		.description-line{
+			margin-bottom:15px;
+			color:$input-color;
+			font-size:18px;
+
+			.hashtag{
+				color:$text-color;
+			}
+		} 
+	}
+
+	.filters{
+		width:93%;
+		background-color:$secondary-color;
+		border-radius:3px;
+		margin-bottom:40px;
+	    padding: 10px;
+	    color: $nav-color;
+	}
 }
 
 .gallery-image {

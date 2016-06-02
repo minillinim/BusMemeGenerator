@@ -95,6 +95,22 @@ select {
 
 .gallery-display {
   margin-top: 80px; }
+  .gallery-display .gallery-header h2 {
+    font-size: 32px;
+    margin-bottom: 5px; }
+  .gallery-display .gallery-header .description-line {
+    margin-bottom: 15px;
+    color: white;
+    font-size: 18px; }
+    .gallery-display .gallery-header .description-line .hashtag {
+      color: #FFFA32; }
+  .gallery-display .filters {
+    width: 93%;
+    background-color: #D8E4E8;
+    border-radius: 3px;
+    margin-bottom: 40px;
+    padding: 10px;
+    color: #4468DB; }
 
 .gallery-image {
   width: 85%;

@@ -11,6 +11,15 @@
     .instructions{
     	margin-top:-10px;
     }
+    .share-instructions{
+    	display:block;
+	    margin-bottom: 20px;
+	    font-size: 14px;
+    	.hashtag{
+    		text-transform:none;
+    		color:$input-color;
+    	}
+    }
 
     .share-content{
     	padding-top: 20px;
@@ -18,7 +27,7 @@
 }
 .stay-in-touch{
 	
-	margin-top:30px;
+	margin-bottom:30px;
 
 	.stay-in-touch-title{
 	}

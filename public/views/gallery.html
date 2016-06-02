@@ -7,6 +7,14 @@
     </div>
 </div>
 <div class="gallery-display" ng-controller="GalleryController">
+	<div class="gallery-header">
+		<h2>Gallery</h2>
+		<div class="description-line">View other <span class="hashtag">#publictransportfail</span>s</div>
+	</div>
+	<div class="filters">
+		Filter Options
+	</div>
+
     <div class="pure-g">
         <div class="pure-u-1-4"
              ng-repeat="image in images | transportMode:travelMode |orderBy : (image.otherModeTravelTime - image.publicModeTravelTime)">
