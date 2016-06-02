@@ -1,0 +1,197 @@
+@import 'variables';
+
+body {
+	@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+		padding: 25px;
+	}
+  	@media screen and (min-width: $max-device-width){
+		padding: 50px;
+	}
+}
+
+#main{
+	#title{
+		@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+			.first-line{
+				font-size:28px;
+			}
+			.second-line{
+				font-size:20px;
+			}
+			.third-line{
+				font-size:16px;
+			} 
+		}
+		@media screen and (min-width: $max-device-width){
+			.first-line{
+				font-size:56px;
+			}
+			.second-line{
+				font-size:40px;
+			}
+			.third-line{
+				font-size:32px;
+			} 
+		}
+	}
+	
+	#map-results {
+		@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+			margin-left: 0;
+		}
+		
+		#map-results-content {
+			@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+				width: 120%;
+				.left-panel, .right-panel {
+					display: inline;
+					.journey-summary {
+						font-size: 0.7em;
+					}
+					.traveltime-comparison, .templates-header {
+						padding-left: 20px;
+					}
+				}
+				.summary-content {
+				    font-size: 10px;
+					padding-left: 4px;
+				}
+			}	
+		}
+	}
+	
+	#journey{
+
+		@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+			padding-top:30px;
+			margin-left:0;
+		}
+		
+		@media screen and (min-width: $max-device-width){
+			padding-top:50px;
+			margin-left:20%;
+		}
+		
+		#journey-details{
+			
+			@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+				padding:0px 0 80px 10px;
+			}
+			@media screen and (min-width: $max-device-width){
+				padding:30px 0 80px 50px;
+			}
+			.start-address, .dest-address{	
+				input{
+					@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+							width:100%;
+					}
+					@media screen and (min-width: $max-device-width){
+							width:60%;
+					}
+				}
+			}
+
+			.travel-options{
+		    	.time-options{
+		    		input.radiobutton{
+						@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+							margin-left: 0;
+						}
+						@media screen and (min-width: $max-device-width){
+							margin-left: 10px;
+							margin-top: 0;
+						}
+		    		}
+                    @media screen and (min-width: $max-device-width){
+						br {
+							display: none;
+						}
+					}
+		    	}
+			}
+			
+			.travel-comparison{
+			    input{
+					@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+						margin-left: 0;
+						margin-top: 0;
+					}
+					@media screen and (min-width: $max-device-width){
+						.radiobutton.second {
+							margin-left: 20px;
+						}
+					}
+			    }
+			    
+				@media screen and (min-width: $max-device-width){
+					br {
+						display: none;
+					}
+				}
+			}
+
+			.next-button{
+				@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+					width:30%;
+				}
+				@media screen and (min-width: $max-device-width){
+					width:10%;
+				}
+			}
+		}
+	}
+}
+
+.instructions, #map-results .instructions{
+	@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+		font-size:10px;
+	}
+	@media screen and (min-width: $max-device-width){
+		font-size:18px;
+	}
+}
+
+#nav {
+    .gallery{
+	    img{
+			@media screen and (max-device-width: $max-device-width) and (orientation: portrait) {
+		    	width:32px;
+			}
+			@media screen and (min-width: $max-device-width){
+				width:16px;
+			}
+	    }
+		
+		@media screen and (max-device-width: $max-device-width) and (orientation: portrait) {
+		    left: -17px;
+    		padding-top: 15px;
+			span {
+				visibility: hidden;
+			}
+		}
+    }
+}
+
+#map-results{
+	#map-results-content{
+		.left-panel{
+			.journey-summary{
+				@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+		    		padding-left: 5px;
+				}
+				@media screen and (min-width: $max-device-width){
+		    		padding-left: 50px;
+				}
+			}
+			
+			.map-wrapper{				
+				@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+					padding:30px 0 80px 10px;
+				}
+				@media screen and (min-width: $max-device-width){
+					padding:30px 0 80px 50px;
+				}
+			}
+		}
+	}
+}

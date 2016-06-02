@@ -22,9 +22,13 @@
             <select class="travel-date" ng-model="selectedDate" ng-options="day as day.label for day in days track by day.dateValue"></select>
 
             <div class="time-options">
+                <br class="input-break"/>
                 <input class="radiobutton first" type="radio" ng-model="timeOption" name="timeOption" value="after" ng-checked="timeOption=='after'">Leave After</input>
+                <br class="input-break"/>
                 <input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="before" ng-checked="timeOption=='before'">Arrive Before</input>
+                <br class="input-break"/>
                 <input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="first" ng-checked="timeOption=='first'">Earliest Services</input>
+                <br class="input-break"/>
                 <input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="last" ng-checked="timeOption=='last'">Latest Services</input>
             </div>
 
@@ -42,7 +46,9 @@
         </div>
         <div class="travel-comparison">
             <p>Do you have a car?</p>
+            <br class="input-break"/>
             <input class="radiobutton" type="radio" ng-model="transport.mode" value="driving" ng-checked="true"> Yes, I do
+            <br class="input-break"/>
             <input class="radiobutton second" type="radio" ng-model="transport.mode" value="walking" ng-checked="false"> No, I rely on public
             transport
         </div>
