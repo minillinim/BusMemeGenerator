@@ -127,5 +127,27 @@ select {
   margin-bottom: 10px; }
   .meme-info span {
     display: block; }
+  .meme-info .more-details-label {
+    cursor: hand;
+    text-decoration: underline; }
+  .meme-info .more-details {
+    position: absolute;
+    border: 1pt solid;
+    padding: 5px;
+    background-color: #D8E4E8;
+    color: #4468DB;
+    margin-top: -160px;
+    margin-left: 60px;
+    width: 200px; }
+    .meme-info .more-details .details-header {
+      text-decoration: underline; }
+    .meme-info .more-details .more-details-content {
+      margin-top: 20px; }
+    .meme-info .more-details .close-button {
+      position: absolute;
+      cursor: hand;
+      right: 5px;
+      top: 5px;
+      width: 30px; }
 
 /*# sourceMappingURL=gallery.css.map */

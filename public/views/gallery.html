@@ -29,6 +29,23 @@
             	<span>{{image.userName}}</span>
             	<span ng-show="!image.UserName">Annonymous</span>
             	<span ng-show="image.createDate">Created on {{image.createDate}}</span>
+                <span class="more-details-label" ng-click="showMoreDetails=!showMoreDetails">More details..</span>
+                <div class="more-details" ng-show="showMoreDetails">
+                    <b>Meme Details</b>
+                    <img class="close-button" src="../assets/close.svg" ng-click="showMoreDetails=false"/>
+                    <div class="more-details-content">
+                        <div class="public-transport">
+                            <div class="details-header">Public Transport: </div>
+                            <div class="travel-time">Travel time:{{image.publicModeTravelTime}}</div>
+                            <div class="travel-distance">Distance:{{image.publicModeTravelDistance}}m</div>
+                        </div>
+                        <div class="other-mode">
+                            <div class="details-header">{{image.otherMode}}:</div>
+                            <div class="travel-time">Travel time:{{image.otherModeTravelTime}}</div>
+                            <div class="travel-distance">Distance:{{image.otherModeTravelDistance}}m</div>
+                        </div>
+                    </div>
+                </div>
              </div>
         </div>
     </div>

@@ -52,4 +52,34 @@
 	span{
 		display:block;
 	}
+
+	.more-details-label{
+    	cursor:hand;
+    	text-decoration:underline;
+	}
+
+	.more-details{
+	    position: absolute;
+	    border: 1pt solid;
+	    padding: 5px;
+	    background-color: $secondary-color;
+	    color: $nav-color;
+	    margin-top: -160px;
+	    margin-left: 60px;
+	    width: 200px;
+
+	    .details-header{
+	    	text-decoration:underline;
+	    }
+		.more-details-content {
+		    margin-top: 20px;
+		}
+	    .close-button{
+	    	position:absolute;
+	    	cursor:hand;
+	    	right: 5px;
+	    	top: 5px;
+	    	width: 30px;
+	    }
+	}
 }
