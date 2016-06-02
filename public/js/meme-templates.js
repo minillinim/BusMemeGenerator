@@ -44,6 +44,7 @@ app.controller('MemeController', function ($scope, $rootScope,$location, MemeFac
         // downloadLink.href = canvas.toDataURL("image/jpeg");
         $('#img-out').hide();
         $rootScope.imageLink = '';
+        $rootScope.memeText = $scope.selectedTemplate.firstLine + ' - ' + $scope.selectedTemplate.secondLine;
     };
 
 
@@ -60,23 +61,24 @@ app.controller('MemeController', function ($scope, $rootScope,$location, MemeFac
             callback($rootScope.imageLink);
             console.log('I already have an image!');
         }
-        else{
+        else {
             $scope.downloadCanvas();
-                MemeFactory.saveImageUrl($rootScope.imageUrl).then(function(response){
+            MemeFactory.saveImageUrl($rootScope.imageUrl).then(function(response){
 
-                    var baseUrl =$location.absUrl().replace('#/','');
-                    var imageLink =encodeURIComponent(response.data.imageLink);
-                    $rootScope.imageLink = baseUrl + '/image/' + imageLink;
-                    console.log('saving image!');
-                    callback($rootScope.imageLink);
-                 });
-            }
-    }
+                var baseUrl =$location.absUrl().replace('#/','');
+                var imageLink =encodeURIComponent(response.data.imageLink);
+                $rootScope.imageLink = baseUrl + 'image/' + imageLink;
+                console.log('saving image!');
+                callback($rootScope.imageLink);
+             });
+        }
+    };
+    
     $scope.facebookShare = function() {
 
         $scope.saveImage(function(imageLink){
             window.open("https://www.facebook.com/sharer/sharer.php?u=" + imageLink +
-                "&t="+ document.title, '', 
+                "&t="+ $rootScope.memeText, '',
                 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         });
     };
@@ -87,11 +89,10 @@ app.controller('MemeController', function ($scope, $rootScope,$location, MemeFac
         });
     };
     $scope.twitterShare = function() {
-        
         $scope.saveImage(function(imageLink){
-            
+            window.open("https://twitter.com/intent/tweet?text=" + $rootScope.memeText + "&url=" + imageLink,
+                '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         });
-        return false;
     };
 
     function scrollToElement(id){
