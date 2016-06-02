@@ -78,13 +78,32 @@ select {
   .share-panel .instructions {
     margin-top: -10px; }
   .share-panel .share-content {
-    padding-top: 20px;
-    margin-left: 15%; }
+    padding-top: 20px; }
+
+.stay-in-touch {
+  margin-top: 30px; }
+  .stay-in-touch .stay-in-touch-content {
+    color: white;
+    text-transform: none;
+    font-size: 12px;
+    margin-top: 10px; }
+    .stay-in-touch .stay-in-touch-content .user-input {
+      margin-top: 10px; }
+      .stay-in-touch .stay-in-touch-content .user-input input {
+        display: inline-block; }
+      .stay-in-touch .stay-in-touch-content .user-input .subscribe {
+        text-align: center;
+        width: 120px; }
+      .stay-in-touch .stay-in-touch-content .user-input #email-address {
+        width: 350px; }
+      .stay-in-touch .stay-in-touch-content .user-input #full-name {
+        width: 180px; }
 
 .share-icon {
   width: 70px;
   height: 80px;
   display: inline-block;
+  padding-left: 2%;
   padding-right: 50px;
   cursor: pointer; }
 
@@ -107,9 +126,11 @@ select {
   background: url(../assets/twitter-blue.svg) no-repeat 10% center; }
 
 .meme-image-small {
-  padding-top: 30px;
+  margin-top: 30px;
   width: 300px;
-  height: 300px; }
+  height: 300px;
+  border: 1px solid #547CD4;
+  border-radius: 3px; }
 
 .step-img {
   width: 32px;
