@@ -10,14 +10,6 @@ app.config(function ($routeProvider) {
     })
 });
 
-app.controller('GalleryController', function ($scope, MemeFactory) {
-
-    MemeFactory.getImages().then(function (response) {
-        $scope.images = response.data
-    });
-
-})
-
 app.controller('MapController', function ($scope, $location,$rootScope,MapService, $anchorScroll) {
     var map;
 

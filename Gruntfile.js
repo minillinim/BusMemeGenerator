@@ -39,7 +39,8 @@ module.exports = function (grunt) {
                     'public/js/address-validation.js', 
                     'public/js/map.js',
                     'public/js/meme-templates.js',
-                    'public/js/time-options.js'
+                    'public/js/time-options.js',
+                    'public/js/gallery.js'
                     ]
                 }
             }
