@@ -69,13 +69,13 @@
       }
 
       .map-wrapper {
+        /*display: none;*/
         padding: 30px 0 80px 50px;
         height: 600px;
-
+        width: 600px;
         #gmap_canvas {
           height: 100%;
-          width: 90%;
-
+          width: 100%;
           img {
             max-width: none !important;
             background: none !important;

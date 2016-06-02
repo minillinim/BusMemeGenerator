@@ -32,29 +32,30 @@ function getXYcoords(mapInfo, latLng) {
     var worldPoint = mapInfo.projection.fromLatLngToPoint(latLng);
     return [(worldPoint.x - mapInfo.origin.x) * mapInfo.xScale, (worldPoint.y - mapInfo.origin.y) * mapInfo.yScale]
 }
-
-function testPixelGettering(map) {
-    google.maps.event.addListenerOnce(map, "projection_changed", function () {
-        var startLat = document.getElementById('startAddressLat').value,
-            startLng = document.getElementById('startAddressLong').value,
-            destLat = document.getElementById('destAddressLat').value,
-            destLng = document.getElementById('destAddressLong').value;
-
-        var mapConversionInfo = getMapConversionInfo(map);
-        var bounds = map.getBounds();
-
-        var topRight = getXYcoords(mapConversionInfo, bounds.getNorthEast());
-        var bottomLeft = getXYcoords(mapConversionInfo, bounds.getSouthWest());
-        var origin_px = getXYcoords(mapConversionInfo, new google.maps.LatLng(startLat, startLng));
-        var destination_px = getXYcoords(mapConversionInfo, new google.maps.LatLng(destLat, destLng));
-
-        console.log("Origin:", origin_px, "Destination", destination_px, "TR:", topRight, "BL:", bottomLeft);
-    });
+    
+function drawPolyline(map, latlng, context, lineColor, mapConversionInfo) {  
+    
+    //google.maps.event.addListenerOnce(map,"projection_changed", function() {
+        var startCoords = getXYcoords(mapConversionInfo, new google.maps.LatLng(latlng[0].lat, latlng[0].lng));
+        context.strokeStyle = lineColor;
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(startCoords[0], startCoords[1]);
+        for(i=1; i<latlng.length; i++) {
+            var coord = getXYcoords(mapConversionInfo, new google.maps.LatLng(latlng[i].lat, latlng[i].lng));
+    
+                console.log(latlng[i].lat, latlng[i].lng, coord);
+            context.lineTo(coord[0], coord[1]);
+        }
+        context.stroke();
+    //});
 }
 
-app.controller('MapController', function ($scope, $location, $rootScope, MapService, $anchorScroll) {
+app.controller('MapController', function ($scope, $location,$rootScope,MapService, $anchorScroll) {
     var transitDirections;
     var map;
+    var latlngPublic;
+    var latlngWalking;
 
     $rootScope.showGallery = function () {
         $location.path('/galleries');
@@ -77,14 +78,27 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         return ($scope.transitDirectionsPolyline !== '') && ($scope.drivingOrWalkingDirectionsPolyline !== '');
     };
 
+   var initMap = function (zoom, center) {
+
+        var mapOptions = {
+            zoom: zoom,
+            center: center,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("gmap_canvas"), mapOptions);
+        
+        transitDirections = new google.maps.DirectionsRenderer({
+            map: map,
+            polylineOptions: {strokeColor: 'red'}
+        });
+        drivingOrWalkingDirections = new google.maps.DirectionsRenderer({
+            map: map,
+            polylineOptions: {strokeColor: 'blue'}
+        });
+    };
+ 
     $scope.getMapData = function () {
         
-        if (!isAddressChanged) {
-            if (document.getElementById('map-results')) document.getElementById('map-results').style.display = 'none';
-            document.getElementById("validation-errors").innerHTML = 'Invalid address';
-            return;
-        }
-
         if (validateAddresses()) {
             if (document.getElementById('map-results')) document.getElementById('map-results').style.display = 'block';
             $scope.showMap = true;
@@ -113,10 +127,23 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                             duration: result.routes[0].legs[0].duration.text
                         };
                     });
+                    
+                    latlngPublic = [];
+                    
+                    result.routes.forEach(function(route) {
+                        route.legs.forEach(function(leg) {
+                            leg.steps.forEach(function(step) {
+                                step.path.forEach(function(path) {
+                                    latlngPublic.push({lat: path.lat(), lng: path.lng() });
+                                });
+                            });
+                        });       
+                    });
                     document.getElementById('public-duration').innerText = $scope.public.duration;
                     $scope.transitDirectionsPolyline = result.routes[0].overview_polyline;
                     $scope.transitBounds = result.routes[0].bounds;
                     $scope.exportAsImage();
+                    
                 }
             });
 
@@ -129,16 +156,26 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                             duration: result.routes[0].legs[0].duration.text
                         };
                     });
+                    latlngWalking = [];
+                    
+                    result.routes.forEach(function(route) {
+                        route.legs.forEach(function(leg) {
+                            leg.steps.forEach(function(step) {
+                                step.path.forEach(function(path) {
+                                    latlngWalking.push({lat: path.lat(), lng: path.lng() });
+                                });
+                            });
+                        });       
+                    });
                     document.getElementById('other-duration').innerText = $scope.other.duration;
                     $scope.drivingOrWalkingDirectionsPolyline = result.routes[0].overview_polyline;
                     $scope.drivingOrWalkingBounds = result.routes[0].bounds;
                     $scope.exportAsImage();
                 }
             });
-
             initStep2();
-            scrollToElement('invisible-anchor');
-            isAddressChanged = false;                                                  
+            //scrollToElement('invisible-anchor');
+            //isAddressChanged = false;                                                  
 
         } else {
             document.getElementById('map-results').className = "";
@@ -159,6 +196,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     };
 
     $scope.exportAsImage = function () {
+        
         var mapWidth = 600;
         if (bothResultsFound()) {
             var bounds = getBoundsCoveringBoth($scope.transitBounds, $scope.drivingOrWalkingBounds),
@@ -174,12 +212,32 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 drivingOrWalkingPath = 'path=color:0x0000ffff|weight:4|enc:' + $scope.drivingOrWalkingDirectionsPolyline,
                 commonUrl = staticMapsUrl + mapCenter + '&' + zoomLevel + '&' + mapSize + '&' + startMarker + '&' + endMarker;
 
-            $('#img-out').show();
-            var image1 = document.getElementById('img-out');
-            image1.setAttribute('crossorigin', 'anonymous');
-            image1.setAttribute('src', commonUrl + '&' + drivingOrWalkingPath);
-            document.getElementById('img-out-2').setAttribute('src', commonUrl + '&' + transitPath);
+            initMap(zoom, center);
 
+            $('#img-out').show();
+            var image = document.getElementById('img-out');
+            image.setAttribute('crossorigin', 'anonymous');
+            image.setAttribute('src', commonUrl);
+            $("#img-out").load(function(){
+                var canvas = document.getElementById("canvas");
+                var context = canvas.getContext("2d");
+                $rootScope.context = context;
+                canvas.width = image.width;
+                canvas.height = image.height;
+                context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                context.textAlign = "center";
+                context.fillStyle = "white";
+                context.strokeStyle = "black";
+                context.lineWidth = 2;
+
+                var mapConversionInfo = getMapConversionInfo(map);
+                    // google.maps.event.addListenerOnce(map,"projection_changed", function() {
+                    drawPolyline(map, latlngPublic, context, "#FF0000", mapConversionInfo);
+                    drawPolyline(map, latlngWalking, context, "#00FF00", mapConversionInfo);
+                    // });
+
+                    $('#img-out').hide();            
+                });
         }
     };
 

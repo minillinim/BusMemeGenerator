@@ -18,26 +18,20 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
     };
 
     $scope.renderMeme = function () {
-        var image = document.getElementById("img-out");
-        var canvas = document.getElementById("canvas");
-        var context = canvas.getContext("2d");
+        var context = $rootScope.context;
+        var image = document.getElementById('img-out');
 
         var topText = $rootScope.selectedTemplate.firstLine;
         var bottomText = $rootScope.selectedTemplate.secondLine;
 
-        canvas.width = image.width;
-        canvas.height = image.height;
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        var width = image.width;
+        var height = image.height;
         context.textAlign = "center";
         context.fillStyle = "white";
         context.strokeStyle = "black";
         context.lineWidth = 2;
-        writeTextOnImage(context, topText, canvas.width / 2, 70);
-        writeTextOnImage(context, bottomText, canvas.width / 2, canvas.height - 30);
-        // downloadLink.href = canvas.toDataURL("image/jpeg");
-        $('#img-out').hide();
-        $rootScope.imageLink = '';
-        $rootScope.memeText = $rootScope.selectedTemplate.firstLine + ' - ' + $rootScope.selectedTemplate.secondLine;
+        writeTextOnImage(context, topText, width / 2, 70);
+        writeTextOnImage(context, bottomText, width / 2, height - 30);
     };
 
     function scrollToElement(id) {
