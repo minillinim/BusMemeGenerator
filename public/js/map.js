@@ -75,6 +75,46 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
         return ($scope.drivingOrWalkingBounds) && ($scope.transitBounds);
     };
 
+    var getGoogleRoute = function(mode, startLat, startLng, endLat, endLng) {
+        var d = Q.defer();
+
+        var travelOptions = {
+            startLat: startLat,
+            startLng: startLng,
+            destLat: endLat,
+            destLng: endLng
+        };
+
+        var routeDetails = {};
+        MapService.getDirections(travelOptions, mode, function (result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                routeDetails['distance'] = result.routes[0].legs[0].distance.text;
+                routeDetails['duration'] = result.routes[0].legs[0].duration.text;
+
+                var latLng = []
+                result.routes.forEach(function(route) {
+                    route.legs.forEach(function(leg) {
+                        leg.steps.forEach(function(step) {
+                            step.path.forEach(function(path) {
+                                latLng.push({lat: path.lat(), lng: path.lng() });
+                            });
+                        });
+                    });       
+                });
+
+                routeDetails['polyline'] = result.routes[0].overview_polyline;
+                routeDetails['polylineCoords'] = latLng;
+                routeDetails['bounds'] = result.routes[0].bounds;
+                
+                d.resolve(routeDetails);
+            } else {
+                d.resolve(null);
+            }
+        });
+
+        return d.promise;
+    }
+
     $scope.getMapData = function () {
         $scope.drivingOrWalkingBounds = null;
         $scope.transitBounds = null;
@@ -83,70 +123,63 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
             if (document.getElementById('map-results')) document.getElementById('map-results').style.display = 'block';
             $scope.showMap = true;
 
-            var travelOptions = {
-                startLat: document.getElementById('startAddressLat').value,
-                startLng: document.getElementById('startAddressLong').value,
-                destLat: document.getElementById('destAddressLat').value,
-                destLng: document.getElementById('destAddressLong').value
-            };
+            var startLat = document.getElementById('startAddressLat').value,
+                startLng = document.getElementById('startAddressLong').value,
+                destLat = document.getElementById('destAddressLat').value,
+                destLng = document.getElementById('destAddressLong').value;
 
-            $scope.origin = travelOptions.startLat + ',' + travelOptions.startLng;
-            $scope.destination = travelOptions.destLat + ',' + travelOptions.destLng;
+            $scope.origin = startLat + ',' + startLng;
+            $scope.destination = destLat + ',' + destLng;
 
-            MapService.getDirections(travelOptions, $scope.transport.mode, function (dwResult, dwStatus) {
-                if (dwStatus == google.maps.DirectionsStatus.OK) {
-                    $scope.$apply(function () {
-                        $scope.other = {
-                            mode: $scope.transport.mode,
-                            distance: dwResult.routes[0].legs[0].distance.text,
-                            duration: dwResult.routes[0].legs[0].duration.text
-                        };
-                    });
-
-                    latlngWalking = [];
-                    dwResult.routes.forEach(function(route) {
-                        route.legs.forEach(function(leg) {
-                            leg.steps.forEach(function(step) {
-                                step.path.forEach(function(path) {
-                                    latlngWalking.push({lat: path.lat(), lng: path.lng() });
-                                });
-                            });
-                        });       
-                    });
-
-                    document.getElementById('other-duration').innerText = $scope.other.duration;
-                    $scope.drivingOrWalkingDirectionsPolyline = dwResult.routes[0].overview_polyline;
-                    $scope.drivingOrWalkingBounds = dwResult.routes[0].bounds;
-
-                    MapService.getDirections(travelOptions, 'public', function (ptResult, ptStatus) {
-                        if (ptStatus == google.maps.DirectionsStatus.OK) {
-                            $scope.$apply(function () {
-                                $scope.public = {
-                                    mode: 'public',
-                                    distance: ptResult.routes[0].legs[0].distance.text,
-                                    duration: ptResult.routes[0].legs[0].duration.text
-                                };
-                            });
-                            
-                            latlngPublic = [];
-                            ptResult.routes.forEach(function(route) {
-                                route.legs.forEach(function(leg) {
-                                    leg.steps.forEach(function(step) {
-                                        step.path.forEach(function(path) {
-                                            latlngPublic.push({lat: path.lat(), lng: path.lng() });
-                                        });
-                                    });
-                                });       
-                            });
-
-                            document.getElementById('public-duration').innerText = $scope.public.duration;
-                            $scope.transitDirectionsPolyline = ptResult.routes[0].overview_polyline;
-                            $scope.transitBounds = ptResult.routes[0].bounds;
-                            $scope.mapToImage();
-                        }
-                    });
+            getGoogleRoute($scope.transport.mode, startLat, startLng, destLat, destLng).then(
+                function(dwRoute) {
+                    if(dwRoute) {
+                        $scope.$apply(function () {
+                            $scope.other = {
+                                mode: $scope.transport.mode,
+                                distance: dwRoute.distance,
+                                duration: dwRoute.duration
+                            };
+                        });
+                        latlngWalking = dwRoute.polylineCoords;
+                        document.getElementById('other-duration').innerText = dwRoute.duration;
+                        $scope.drivingOrWalkingBounds = dwRoute.bounds;
+                        return true;
+                    }
+                    return false;
                 }
-            });
+            ).then(
+                function(lastWorked) {
+                    if(!lastWorked) { return false; }
+                    getGoogleRoute('public', startLat, startLng, destLat, destLng).then(
+                        function(ptRoute) {
+                            if(ptRoute) {
+                                $scope.$apply(function () {
+                                    $scope.public = {
+                                        mode: 'public',
+                                        distance: ptRoute.distance,
+                                        duration: ptRoute.duration
+                                    };
+                                });
+                                latlngPublic = ptRoute.polylineCoords;
+                                $scope.transitDirectionsPolyline = ptRoute.polyline;
+                                document.getElementById('public-duration').innerText = ptRoute.duration;
+                                $scope.transitBounds = ptRoute.bounds;
+                                return true;
+                            }
+                            return false;
+                        }
+                    ).then(
+                        function(bothWorked) {
+                            if(bothWorked) {
+                                $scope.$apply(function () {
+                                    $scope.mapToImage();
+                                });
+                            }
+                        }
+                    );
+                }
+            );
 
             initStep2();
             scrollToElement('invisible-anchor');
@@ -180,7 +213,6 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
             if (!this.ready) {
                 var projection = this.getProjection(),
                 zoom = getExtraZoom(projection, bounds, _map.getBounds());
-                console.log("ZA:", zoom);
                 if (zoom > 0) {
                     google.maps.event.addListenerOnce(_map, "zoom_changed", function() {
                         // don't do anything until the zoom is changed
@@ -202,8 +234,6 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
         var expectedSize = getSizeInPixels(projection, expectedBounds),
             actualSize = getSizeInPixels(projection, actualBounds);
 
-        console.log(actualSize, expectedSize)
-
         if (Math.floor(expectedSize.x) == 0 || Math.floor(expectedSize.y) == 0) {
             return 0;
         }
@@ -211,8 +241,6 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
         var qx = actualSize.x / expectedSize.x;
         var qy = actualSize.y / expectedSize.y;
         var min = Math.min(qx, qy);
-
-        console.log(min)
 
         if (min < 1) {
             return 0;
