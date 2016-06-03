@@ -115,7 +115,7 @@ select {
       width: 20px;
       vertical-align: middle;
       cursor: pointer; }
-    .gallery-display .filters input.radiobutton {
+    .gallery-display .filters input.checkbox {
       margin: 0 5px; }
 
 .gallery-image {
