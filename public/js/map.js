@@ -349,7 +349,8 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
         writeTextOnImage(context, bottomText, width / 2, height - 30);
 
         $('canvas2').remove();
-        
+        $rootScope.memeText = $rootScope.selectedTemplate.firstLine + ' - ' + $rootScope.selectedTemplate.secondLine;
+
     };
 
     $scope.shareImage = function() {

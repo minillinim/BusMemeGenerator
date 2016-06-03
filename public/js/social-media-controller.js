@@ -2,6 +2,7 @@ var app = angular.module('bus-meme');
 
 app.controller('SocialMediaController', function ($scope, $rootScope, $location, MemeFactory) {
     var KM_TO_METER_FACTOR = 1000;
+    var HASH_TAG = ' %23publictransportfail';
 
     $scope.user = {};
     $scope.invalidUserInput = false;
@@ -26,7 +27,6 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     }
 
     $scope.saveImage = function (callback) {
-        console.log('The save image');
         if ($rootScope.imageLink) {
             callback($rootScope.imageLink);
         }
@@ -55,18 +55,24 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     $scope.facebookShare = function () {
         $scope.saveImage(function (imageLink) {
             window.open("https://www.facebook.com/sharer/sharer.php?u=" + imageLink +
-                "&t=" + $rootScope.memeText, '',
+                "&t=" + $rootScope.memeText + HASH_TAG, '',
                 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         });
     };
-
-    $scope.instagramShare = function () {
-        // $scope.saveImage(function(imageLink){});
-    };
-
+    
     $scope.twitterShare = function () {
-        $scope.saveImage(function (imageLink) {
-            window.open("https://twitter.com/intent/tweet?text=" + $rootScope.memeText + "&url=" + imageLink,
+        $scope.saveImage(function (imageLink) { 
+            
+            var tweetLength = 140;
+            var tweetText = $rootScope.memeText;
+            var urlLength = 80;
+            
+            if (tweetText.length + urlLength + HASH_TAG.length > tweetLength) {
+                tweetText = tweetText.substring(0, tweetLength - HASH_TAG.length - urlLength - 2) + '..';
+            }
+
+            tweetText = tweetText + HASH_TAG;
+            window.open("https://twitter.com/intent/tweet?text=" + tweetText + "&url=" + imageLink,
                 '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         });
     };
