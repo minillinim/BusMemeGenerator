@@ -107,9 +107,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                 duration: dwRoute.duration
                             };
                         });
+
                         $scope.dwLatLng = dwRoute.polylineCoords;
                         document.getElementById('other-duration').innerText = dwRoute.duration;
                         $scope.dwBounds = dwRoute.bounds;
+
                         return true;
                     }
                     return false;
@@ -127,10 +129,12 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                         duration: ptRoute.duration
                                     };
                                 });
+
                                 $scope.ptLatLng = ptRoute.polylineCoords;
                                 $scope.ptDirectionsPolyline = ptRoute.polyline;
                                 document.getElementById('public-duration').innerText = ptRoute.duration;
                                 $scope.ptBounds = ptRoute.bounds;
+
                                 return true;
                             }
                             return false;
@@ -155,6 +159,10 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             $scope.showMap = false;
         }
     };
+
+    var shorter = function(duration){
+        return duration.toLowerCase().replace('hour', 'hr');
+    }
 
     var renderStaticMap = function () {
         
@@ -278,7 +286,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         writeTextOnImage(context, bottomText, width / 2, height - 30);
 
         $('canvas2').remove();
-        
+        $rootScope.memeText = $rootScope.selectedTemplate.firstLine + ' - ' + $rootScope.selectedTemplate.secondLine;
+
     };
 
     var getZoom = function (bounds, mapWidth) {

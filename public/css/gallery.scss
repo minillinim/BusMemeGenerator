@@ -29,18 +29,40 @@
 		margin-bottom:40px;
 	    padding: 10px;
 	    color: $nav-color;
+		position: relative;
 
 	    .expand{
 	    	width:20px;
 	    	vertical-align:middle;
 	    	cursor:pointer;
 	    }
-	    input.radiobutton {
+	    input.checkbox {
 		    margin: 0 5px;
+		}
+		.sorting{
+			display:inline-block;
+			position:absolute;
+			right:10px;
+
+			select{
+    			background-color: white;
+    		}
 		}
 	}
 }
 
+.page-navigation{
+	margin-top:40px;
+
+	a{
+		color:$input-color;
+		padding: 0 5px;
+	}
+	a.active{
+		color:$nav-color;
+		font-weight: bold;
+	}
+}
 .gallery-image {
   width: 85%;
   width: 80%;
