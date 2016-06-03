@@ -12,29 +12,28 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
     $scope.setSelectedTemplate = function (template) {
         document.getElementById("meme-validation").innerText = '';
         $rootScope.selectedTemplate = template;
-        $scope.renderMeme();
+        $scope.renderMemeTmp();
     };
 
-    $scope.renderMeme = function () {
-        var image = document.getElementById("img-out");
-        var canvas = document.getElementById("canvas");
+    $scope.renderMemeTmp = function () {
+        $('#canvas2').remove();
+        $('<canvas>', {'id': 'canvas2'}).insertAfter($('#canvas'));
+
+        var canvas = document.getElementById("canvas2");
         var context = canvas.getContext("2d");
+        var image = document.getElementById('img-out');
+        canvas.width = image.width;
+        canvas.height = image.height;
 
         var topText = $rootScope.selectedTemplate.firstLine;
         var bottomText = $rootScope.selectedTemplate.secondLine;
 
-        canvas.width = image.width;
-        canvas.height = image.height;
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
         context.textAlign = "center";
         context.fillStyle = "white";
         context.strokeStyle = "black";
         context.lineWidth = 2;
         writeTextOnImage(context, topText, canvas.width / 2, 70);
         writeTextOnImage(context, bottomText, canvas.width / 2, canvas.height - 30);
-        $('#img-out').hide();
-        $rootScope.imageLink = '';
-        $rootScope.memeText = $rootScope.selectedTemplate.firstLine + ' - ' + $rootScope.selectedTemplate.secondLine;
     };
 
     function scrollToElement(id) {

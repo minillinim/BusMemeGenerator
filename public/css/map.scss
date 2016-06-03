@@ -10,8 +10,8 @@
 
   margin-left: 20%;
   border-left: thick solid $separator-color;
-  height: 800px;
-  padding-bottom:50px;
+  height: 750px;
+  padding-bottom:55px;
 
   .empty-space {
     height: 50px;
@@ -69,13 +69,13 @@
       }
 
       .map-wrapper {
+        /*display: none;*/
         padding: 30px 0 80px 50px;
-        height: 600px;
-
-        #gmap_canvas {
+        height: 600px !important;
+        width: 600px !important;
+        #gmap-canvas {
           height: 100%;
-          width: 90%;
-
+          width: 100%;
           img {
             max-width: none !important;
             background: none !important;
@@ -132,23 +132,31 @@
 }
 
 #meme-validation{
-    padding-bottom: 10px;
-    margin-left: 50px;
+    margin-left: 10px;
+    margin-top: 520px;
 }
 
 #share-image-button {
-  margin-left:50px;
-  padding:5px;
-  width: 15%;
+    margin-left: 10px;
+    margin-top: 30px;
+    padding: 5px;
+    width: 15%;
 }
 
 .map-canvas {
   padding: 50px;
+  position: relative;
 }
 
-.map-image {
-  width: 600px !important;
-  height: 600px !important;
+.map-canvas canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#map-image {
+    margin-left: 25px;
+    margin-top: 20px;
 }
 
 #gallery-image {

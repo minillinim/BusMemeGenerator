@@ -6,7 +6,7 @@
 
         <div class="left-panel">
 
-            <div class="journey-summary">
+            <div class="journey-summary" id="journey-summary">
                 <div class="summary-line">
                     <span class="summary-label">From:</span>
                     <span id="summary-from" class="summary-content"></span>
@@ -16,8 +16,11 @@
                     <span id="summary-to" class="summary-content"></span>
                 </div>
             </div>
-            <div id="map-image" ng-controller="MemeController">
-                <div class="map-canvas" >
+            <div class="map-wrapper" id="map-wrapper">
+                <div id="gmap-canvas"></div>
+            </div>
+            <div id="map-image">
+                <div class="map-canvas" ng-controller="MemeController">
                     <canvas id="canvas" width="0" height="0"></canvas>
                     <img id="img-out" class="map-image" src="" />
                 </div>
