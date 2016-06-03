@@ -110,14 +110,23 @@ select {
   .share-panel .share-content {
     padding-top: 20px; }
 
+.subscribe .subscribe-header {
+  color: white;
+  text-transform: none;
+  font-size: 12px;
+  margin-top: 20px; }
+
+.subscribe .button.subscribe {
+  width: 195px;
+  padding: 15px;
+  margin-top: 10px; }
+
+.subscribe .subscribe-success {
+  margin-top: 10px; }
+
 .stay-in-touch {
   margin-bottom: 30px; }
   .stay-in-touch .validation-errors {
-    margin-top: 10px; }
-  .stay-in-touch .stay-in-touch-content {
-    color: white;
-    text-transform: none;
-    font-size: 12px;
     margin-top: 10px; }
   .stay-in-touch .user-input {
     color: white;
