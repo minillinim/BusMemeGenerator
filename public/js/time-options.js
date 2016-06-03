@@ -90,6 +90,12 @@ app.controller('TimeController', function ($scope)
             $scope.selectedAmpm = $scope.ampms[1];
         }
 
+        if (hour == 0){
+            hour = 12;
+            $scope.selectedAmpm = $scope.ampms[0];
+        
+        }
+
         $scope.selectedMinute = $scope.minutes[roundedMinute / 5];
         $scope.selectedHour = $scope.hours[hour - 1];
     }
