@@ -362,7 +362,7 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
 
         if ($rootScope.selectedTemplate){
             document.getElementById('map-results').classList.add('done');
-            renderMemeFinal();
+            $scope.renderMemeFinal();
             $scope.showImage = true;
             scrollToElement('invisible-map-anchor');
         }

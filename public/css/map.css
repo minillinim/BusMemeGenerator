@@ -96,8 +96,8 @@ select {
 #map-results {
   margin-left: 20%;
   border-left: thick solid #547CD4;
-  height: 600px;
-  padding-bottom: 50px; }
+  height: 750px;
+  padding-bottom: 55px; }
   #map-results #invisible-map-anchor {
     width: 0;
     height: 0; }
@@ -179,11 +179,12 @@ select {
           background-color: white; }
 
 #meme-validation {
-  padding-bottom: 10px;
-  margin-left: 50px; }
+  margin-left: 10px;
+  margin-top: 520px; }
 
 #share-image-button {
-  margin-left: 50px;
+  margin-left: 10px;
+  margin-top: 30px;
   padding: 5px;
   width: 15%; }
 
@@ -196,9 +197,9 @@ select {
   top: 0;
   left: 0; }
 
-.map-image {
-  width: 600px !important;
-  height: 600px !important; }
+#map-image {
+  margin-left: 25px;
+  margin-top: 20px; }
 
 #gallery-image {
   height: 300px;
