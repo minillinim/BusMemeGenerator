@@ -7,7 +7,7 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         $scope.memeTemplates = response.data;
         $rootScope.selectedTemplate = '';
 
-   		$scope.memeTemplates = response.data;
+        $scope.memeTemplates = response.data;
 
     });
 
@@ -71,6 +71,9 @@ app.factory('MemeFactory', ['$http', function ($http) {
         },
         getImages: function () {
             return $http.get('/getImages');
+        },
+        saveUserDetails: function (userDetails) {
+            return $http.post('/saveUser', {data: userDetails});
         }
     }
 }]);

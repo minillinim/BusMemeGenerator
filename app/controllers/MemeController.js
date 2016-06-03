@@ -20,6 +20,7 @@ var saveMemeDetails = function (req, res, next) {
         res.status(201).json(req.body);
     });
 };
+
 function generateImageFilename() {
     var randomNumber = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     return (randomNumber + randomNumber + "-" + randomNumber + "-4" + randomNumber.substr(0, 3) + "-" + randomNumber + "-" + randomNumber + randomNumber + randomNumber).toLowerCase();
@@ -64,14 +65,14 @@ var saveImage = function (req, res, next) {
     }
 }
 
-var getDateDisplay = function(){
+var getDateDisplay = function () {
 
-    var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var date = new Date();
 
-    return date.getDate() + ' ' + 
-           months[date.getMonth()] + ' ' +
-           date.getFullYear();
+    return date.getDate() + ' ' +
+        months[date.getMonth()] + ' ' +
+        date.getFullYear();
 }
 
 var getMemeTemplates = function (req, res, next) {
@@ -113,6 +114,6 @@ module.exports = function () {
         saveMemeDetails: saveMemeDetails,
         saveImage: saveImage,
         serveImage: getImage,
-        getImages: getImages
+        getImages: getImages,
     }
 };

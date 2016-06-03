@@ -7,6 +7,7 @@ var express = require('express'),
     Image = mongoose.model('Image'),
     Location = mongoose.model('Location'),
     MemeController = require('./MemeController');
+    UserController = require('./UserController');
 
 
 module.exports = function (app) {
@@ -26,6 +27,8 @@ router.post('/saveImage', MemeController().saveImage);
 router.get('/image/:imageLink', MemeController().serveImage);
 
 router.get('/getImages', MemeController().getImages);
+
+router.post('/saveUser', UserController().saveUserDetails);
 
 
 router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', function (req, res, next) {

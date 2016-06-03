@@ -1,6 +1,6 @@
 var app = angular.module('bus-meme');
 
-app.controller('SocialMediaController', function ($scope, $rootScope,$location, MemeFactory) {
+app.controller('SocialMediaController', function ($scope, $rootScope, $location, MemeFactory) {
 
     var KM_TO_METER_FACTOR = 1000;
 
@@ -14,7 +14,18 @@ app.controller('SocialMediaController', function ($scope, $rootScope,$location, 
         var dl = document.getElementById('dl');
     };
 
-    function convertToMiliseconds(travelTime) {
+    $scope.saveUserDetails = function () {
+        MemeFactory.saveUserDetails(
+            {
+                fullName: $scope.user.fullName,
+                email: $scope.user.email
+            }
+        ).then(function (response) {
+            console.log(response.data);
+        });
+    }
+
+    function convertToTimeStamp(travelTime) {
         var timeArray = travelTime.split(' ');
         return moment.duration({
             hours: timeArray.length > 2 ? timeArray[0] : 0,
@@ -52,21 +63,21 @@ app.controller('SocialMediaController', function ($scope, $rootScope,$location, 
         }
     };
 
-    $scope.facebookShare = function() {
+    $scope.facebookShare = function () {
         console.log('facebook share');
-        $scope.saveImage(function(imageLink){
+        $scope.saveImage(function (imageLink) {
             window.open("https://www.facebook.com/sharer/sharer.php?u=" + imageLink +
-                "&t="+ $rootScope.memeText, '',
+                "&t=" + $rootScope.memeText, '',
                 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         });
     };
 
-    $scope.instagramShare = function() {
+    $scope.instagramShare = function () {
         // $scope.saveImage(function(imageLink){});
     };
 
-    $scope.twitterShare = function() {
-        $scope.saveImage(function(imageLink){
+    $scope.twitterShare = function () {
+        $scope.saveImage(function (imageLink) {
             window.open("https://twitter.com/intent/tweet?text=" + $rootScope.memeText + "&url=" + imageLink,
                 '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         });
