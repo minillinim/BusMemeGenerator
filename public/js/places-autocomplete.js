@@ -29,7 +29,7 @@ function setGoogleListener(control, name){
         var place = control.getPlace();
         var address = place.formatted_address;
         if (!place.geometry) {
-            console.error("Google Maps API call returned an empty address, please try to provide an other place");
+            console.debug("Google Maps API call returned an empty address, please try to provide an other place");
             return;
         }
         var latitude = place.geometry.location.lat();
@@ -37,10 +37,10 @@ function setGoogleListener(control, name){
             
         getPostalCode(latitude, longitude).then(
             function (postcode) {
-                setAddressDetails(name, latitude,longitude,postcode);
+                setAddressDetails(name, latitude,longitude, postcode);
             }, 
             function (err) {
-                console.error('An error occurred during postcode resolution.', err);
+                console.debug('An error occurred during postcode resolution.', err);
             }
         ); 
     });
@@ -60,12 +60,24 @@ function setAddressDetails(name, lat, long, postcode){
     document.getElementById(name + "AddressLong").value = long;
 }
 function readPostalCode(place) {
+
+    var outOfBoundAddress = false;
+    var postcode = '';
     for (var i = 0; i < place.address_components.length; i++) {
-        var addressType = place.address_components[i].types[0];
-        if (addressType == 'postal_code') {
-          return place.address_components[i].short_name;
+        var addressType = place.address_components[i].types[0];    
+        if (addressType === 'country' && 'Australia' !== place.address_components[i].long_name) {
+            outOfBoundAddress = true;
+            break;            
+        } 
+        if (addressType === 'postal_code') {
+            postcode = place.address_components[i].short_name;
         }
     }
+
+    if (!outOfBoundAddress) {
+        return postcode;
+    }
+
     return '';    
 }
 

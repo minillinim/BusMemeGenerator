@@ -78,12 +78,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     };
 
     $scope.getMapData = function () {
-
-console.log(validateAddresses(), $scope.showMap);
         if (validateAddresses()) {
-            
-            console.log('validation passed');
-
             var startLat = document.getElementById('startAddressLat').value,
                 startLng = document.getElementById('startAddressLong').value,
                 destLat = document.getElementById('destAddressLat').value,
