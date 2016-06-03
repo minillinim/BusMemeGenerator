@@ -4,7 +4,7 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
     $scope.images = [];
     $scope.travelMode = { driving:true, walking:true};
     $scope.sortOption = 'biggestDifference';
-    
+
     MemeFactory.getImages().then(function (response) {
         $scope.images = response.data
     });
@@ -37,6 +37,16 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
         if (sortOption==="biggestDifference")
             return '(image.otherModeTravelTime - image.publicModeTravelTime)';
         else return '-' + sortOption;
+    }
+
+    $scope.getDateDisplay = function (dbDate) {
+        var date = new Date(dbDate);
+        console.log(date);
+        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        return date.getDate() + ' ' +
+            months[date.getMonth()] + ' ' +
+            date.getFullYear();
     }
 });
 

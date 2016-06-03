@@ -10,7 +10,7 @@ var ImageSchema = new Schema({
     otherModeTravelDistance: Number,
     publicModeTravelTime: Number,
     publicModeTravelDistance: Number,
-    createDate: String,
+    createDate: Date,
     user: {
         fullName: String,
         email: String

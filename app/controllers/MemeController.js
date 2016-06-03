@@ -47,7 +47,7 @@ var saveImage = function (req, res, next) {
     var imageLink = generateImageFilename();
     var imageDetails = (JSON.parse(JSON.stringify(req.body))).data;
     imageDetails.imageLink = imageLink;
-    imageDetails.createDate = getDateDisplay();
+    imageDetails.createDate = new Date();
 
     console.log(imageDetails);
 
@@ -63,16 +63,6 @@ var saveImage = function (req, res, next) {
     } else {
         res.status(400).json("Bad data");
     }
-}
-
-var getDateDisplay = function () {
-
-    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var date = new Date();
-
-    return date.getDate() + ' ' +
-        months[date.getMonth()] + ' ' +
-        date.getFullYear();
 }
 
 var getMemeTemplates = function (req, res, next) {
