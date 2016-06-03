@@ -83,11 +83,10 @@ app.controller('SocialMediaController', function ($scope, $rootScope,$location, 
     }
 
     $scope.saveUserDetails = function () {
-        console.log('save user details');
         $scope.invalidUserInput = !validUser($scope.user);
-        console.log($scope.invalidUserInput);
+        
         if (!$scope.invalidUserInput) {
-            console.log($scope.user);
+            $scope.subscribed = true;
         }
     }
 });
