@@ -1,5 +1,3 @@
-var isAddressChanged = false;
-
 google.maps.event.addDomListener(window, 'load', function () {
 
     loadGoogleAutocomplete();
@@ -39,26 +37,28 @@ function setGoogleListener(control, name){
             
         getPostalCode(latitude, longitude).then(
             function (postcode) {
-                document.getElementById(name + "PostCode").value = postcode;                        
-                document.getElementById(name + "AddressLat").value = latitude;
-                document.getElementById(name + "AddressLong").value = longitude;
+                setAddressDetails(name, latitude,longitude,postcode);
             }, 
             function (err) {
                 console.error('An error occurred during postcode resolution.', err);
             }
         ); 
-        isAddressChanged = true;                                                  
     });
     
     $("#dest-address").keydown(function () {
-        isAddressChanged = false;                                                  
+        setAddressDetails('dest', '','','');        
     });
     $("#start-address").keydown(function () {
-        isAddressChanged = false;                                                  
+        setAddressDetails('start', '','','');
     });
 
 }
 
+function setAddressDetails(name, lat, long, postcode){
+    document.getElementById(name + "PostCode").value = postcode;                        
+    document.getElementById(name + "AddressLat").value = lat;
+    document.getElementById(name + "AddressLong").value = long;
+}
 function readPostalCode(place) {
     for (var i = 0; i < place.address_components.length; i++) {
         var addressType = place.address_components[i].types[0];

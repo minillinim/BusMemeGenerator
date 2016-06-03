@@ -12,7 +12,6 @@ function validateAddresses(){
 	if (!startLan || !startLong || !startPC) {
 		errors.push("<li>Start address invalid or not found</li>");
 	}
-		
 	if (!destLat || !destLong || !destPC) {
 		errors.push("<li>Destination address invalid or not found</li>");
 	}		

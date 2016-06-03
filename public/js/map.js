@@ -78,16 +78,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     };
 
     $scope.getMapData = function () {
-        
-        if (!isAddressChanged) {
-            if (document.getElementById('map-results')) document.getElementById('map-results').style.display = 'none';
-            document.getElementById("validation-errors").innerHTML = 'Invalid address';
-            return;
-        }
 
+console.log(validateAddresses(), $scope.showMap);
         if (validateAddresses()) {
-            if (document.getElementById('map-results')) document.getElementById('map-results').style.display = 'block';
-            $scope.showMap = true;
+            
+            console.log('validation passed');
 
             var startLat = document.getElementById('startAddressLat').value,
                 startLng = document.getElementById('startAddressLong').value,
@@ -138,11 +133,10 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
             initStep2();
             scrollToElement('invisible-anchor');
-            isAddressChanged = false;                                                  
+            $scope.showMap = true;
 
         } else {
-            document.getElementById('map-results').className = "";
-            document.getElementById('journey-details').className = "";
+            $scope.showMap = false;
         }
     };
 
