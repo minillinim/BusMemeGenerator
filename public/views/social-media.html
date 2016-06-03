@@ -11,13 +11,12 @@
                 <div class="stay-in-touch-title">Would you like to tell us who you are?</div>
 
                 <div>
-                    <div class="stay-in-touch-content">Keep up to date and informed with the movement of making public transport a much better experience in Logan.</div>
                     <div class="user-input">
                         <input name="fullName" type="text" ng-model="user.fullName" maxlength="100" id="full-name" placeholder="Full name" />
-                        <input name="emailAddress" type="text" ng-model="user.email" maxlength="100" id="email-address" placeholder="Email address"/>
+                        <input name="emailAddress" type="text" ng-model="user.email" maxlength="100" id="email-address" placeholder="Email address (optional)"/>
+
                         <input class="button subscribe" ng-click="saveUserDetails()" value="Subscribe" />
                     </div>
-                    <div class="validation-errors" ng-show="invalidUserInput">Please provide valid name and email.</div>
                 </div>
             </div>
 
@@ -31,6 +30,13 @@
      -->
             </div>
 
+            <div class="subscribe">
+                <div class="subscribe-header">Would you like us to contact you with updates?</div>
+                <div class="validation-errors" ng-show="invalidUserInput">Please provide valid name and email if you want to be our friend :)</div>
+                <input class="button subscribe" ng-click="saveUserDetails()" value="Keep me in the loop!" />
+                <div class="subscribe-success" ng-show="subscribed">Thanks! We'll be in touch.</div>
+
+            </div>
         </div>
     </div>
 </div>

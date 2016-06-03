@@ -26,8 +26,8 @@
              ng-repeat="image in images | transportMode:travelMode |orderBy : (image.otherModeTravelTime - image.publicModeTravelTime)">
              <img class="gallery-image" ng-src="{{image.imageUrl}}" alt="">
              <div class="meme-info">
-            	<span>{{image.userName}}</span>
-            	<span ng-show="!image.UserName">Annonymous</span>
+            	<span>{{image.user.fullName}}</span>
+            	<span ng-show="!image.user.fullName">Annonymous</span>
             	<span ng-show="image.createDate">Created on {{image.createDate}}</span>
                 <span class="more-details-label" ng-click="showMoreDetails=!showMoreDetails">More details..</span>
                 <div class="more-details" ng-show="showMoreDetails">

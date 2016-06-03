@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    User = require('./user');
 
 var ImageSchema = new Schema({
     imageUrl: String,
@@ -10,8 +11,10 @@ var ImageSchema = new Schema({
     publicModeTravelTime: Number,
     publicModeTravelDistance: Number,
     createDate: String,
-    userName: String,
-    userEmail: String
+    user: {
+        fullName: String,
+        email: String
+    }
 });
 
 mongoose.model('Image', ImageSchema, 'Image');

@@ -1,7 +1,6 @@
 var app = angular.module('bus-meme');
 
-app.controller('SocialMediaController', function ($scope, $rootScope,$location, MemeFactory) {
-
+app.controller('SocialMediaController', function ($scope, $rootScope, $location, MemeFactory) {
     var KM_TO_METER_FACTOR = 1000;
 
     $scope.user = {};
@@ -33,15 +32,14 @@ app.controller('SocialMediaController', function ($scope, $rootScope,$location, 
         else {
             $scope.downloadCanvas();
 
-            console.log($scope.other);
-
             var imageDetails = {
                 imageUrl: $rootScope.imageUrl,
                 otherMode: $scope.other.mode,
                 otherModeTravelTime: convertToMiliseconds($scope.other.duration),
                 otherModeTravelDistance: convertToMeters($scope.other.distance),
                 publicModeTravelTime: convertToMiliseconds($scope.public.duration),
-                publicModeTravelDistance: convertToMeters($scope.public.distance)
+                publicModeTravelDistance: convertToMeters($scope.public.distance),
+                user: $scope.user
             };
 
             MemeFactory.saveImageDetails(imageDetails).then(function (response) {
@@ -52,21 +50,20 @@ app.controller('SocialMediaController', function ($scope, $rootScope,$location, 
         }
     };
 
-    $scope.facebookShare = function() {
-        console.log('facebook share');
-        $scope.saveImage(function(imageLink){
+    $scope.facebookShare = function () {
+        $scope.saveImage(function (imageLink) {
             window.open("https://www.facebook.com/sharer/sharer.php?u=" + imageLink +
-                "&t="+ $rootScope.memeText, '',
+                "&t=" + $rootScope.memeText, '',
                 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         });
     };
 
-    $scope.instagramShare = function() {
+    $scope.instagramShare = function () {
         // $scope.saveImage(function(imageLink){});
     };
 
-    $scope.twitterShare = function() {
-        $scope.saveImage(function(imageLink){
+    $scope.twitterShare = function () {
+        $scope.saveImage(function (imageLink) {
             window.open("https://twitter.com/intent/tweet?text=" + $rootScope.memeText + "&url=" + imageLink,
                 '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         });
@@ -83,11 +80,13 @@ app.controller('SocialMediaController', function ($scope, $rootScope,$location, 
     }
 
     $scope.saveUserDetails = function () {
-        console.log('save user details');
         $scope.invalidUserInput = !validUser($scope.user);
-        console.log($scope.invalidUserInput);
+
         if (!$scope.invalidUserInput) {
-            console.log($scope.user);
+
+            MemeFactory.saveUserDetails($scope.user).then(function (response) {
+                console.log(response.data);
+            });
         }
     }
 });

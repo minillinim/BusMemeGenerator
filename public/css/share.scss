@@ -25,18 +25,29 @@
     	padding-top: 20px;
     }
 }
+.subscribe{
+	.subscribe-header{
+		color:$input-color;
+		text-transform:none;
+		font-size:12px;
+		margin-top:20px;
+	}
+
+	.button.subscribe {
+	    width: 195px;
+	    padding: 15px;
+	    margin-top: 10px;
+	}
+	.subscribe-success{
+		margin-top:10px;
+	}
+}
 .stay-in-touch{
 	margin-bottom:30px;
 	.validation-errors {
 		margin-top:10px;
 	}
 	.stay-in-touch-title{
-	}
-	.stay-in-touch-content{
-		color:$input-color;
-		text-transform:none;
-		font-size:12px;
-		margin-top:10px;
 	}
 	.user-input{
 		color:$input-color;
