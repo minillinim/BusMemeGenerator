@@ -3,12 +3,10 @@ var app = angular.module('bus-meme');
 app.controller('MemeController', function ($scope, $rootScope, $location, MemeFactory, $anchorScroll) {
 
     MemeFactory.getMemeTemplates().then(function (response) {
-
         $scope.memeTemplates = response.data;
         $rootScope.selectedTemplate = '';
 
         $scope.memeTemplates = response.data;
-
     });
 
     $scope.setSelectedTemplate = function (template) {
@@ -34,7 +32,6 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         context.lineWidth = 2;
         writeTextOnImage(context, topText, canvas.width / 2, 70);
         writeTextOnImage(context, bottomText, canvas.width / 2, canvas.height - 30);
-        // downloadLink.href = canvas.toDataURL("image/jpeg");
         $('#img-out').hide();
         $rootScope.imageLink = '';
         $rootScope.memeText = $rootScope.selectedTemplate.firstLine + ' - ' + $rootScope.selectedTemplate.secondLine;
@@ -42,7 +39,6 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
 
     function scrollToElement(id) {
         setTimeout(function () {
-            console.log('wth');
             $anchorScroll(id);
         }, 10);
     }
@@ -54,7 +50,6 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
             if (context.measureText(text).width < canvas.width - 10) {
                 context.fillText(text, x, y);
                 context.strokeText(text, x, y);
-
                 break;
             }
         }

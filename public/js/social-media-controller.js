@@ -1,7 +1,6 @@
 var app = angular.module('bus-meme');
 
 app.controller('SocialMediaController', function ($scope, $rootScope, $location, MemeFactory) {
-
     var KM_TO_METER_FACTOR = 1000;
 
     $scope.user = {};
@@ -14,18 +13,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
         var dl = document.getElementById('dl');
     };
 
-    $scope.saveUserDetails = function () {
-        MemeFactory.saveUserDetails(
-            {
-                fullName: $scope.user.fullName,
-                email: $scope.user.email
-            }
-        ).then(function (response) {
-            console.log(response.data);
-        });
-    }
-
-    function convertToTimeStamp(travelTime) {
+    function convertToMiliseconds(travelTime) {
         var timeArray = travelTime.split(' ');
         return moment.duration({
             hours: timeArray.length > 2 ? timeArray[0] : 0,
@@ -44,15 +32,14 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
         else {
             $scope.downloadCanvas();
 
-            console.log($scope.other);
-
             var imageDetails = {
                 imageUrl: $rootScope.imageUrl,
                 otherMode: $scope.other.mode,
                 otherModeTravelTime: convertToMiliseconds($scope.other.duration),
                 otherModeTravelDistance: convertToMeters($scope.other.distance),
                 publicModeTravelTime: convertToMiliseconds($scope.public.duration),
-                publicModeTravelDistance: convertToMeters($scope.public.distance)
+                publicModeTravelDistance: convertToMeters($scope.public.distance),
+                user: $scope.user
             };
 
             MemeFactory.saveImageDetails(imageDetails).then(function (response) {
@@ -64,7 +51,6 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     };
 
     $scope.facebookShare = function () {
-        console.log('facebook share');
         $scope.saveImage(function (imageLink) {
             window.open("https://www.facebook.com/sharer/sharer.php?u=" + imageLink +
                 "&t=" + $rootScope.memeText, '',
@@ -95,9 +81,12 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
 
     $scope.saveUserDetails = function () {
         $scope.invalidUserInput = !validUser($scope.user);
-        
+
         if (!$scope.invalidUserInput) {
-            $scope.subscribed = true;
+
+            MemeFactory.saveUserDetails($scope.user).then(function (response) {
+                console.log(response.data);
+            });
         }
     }
 });

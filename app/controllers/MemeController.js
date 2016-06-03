@@ -48,12 +48,12 @@ var saveImage = function (req, res, next) {
     var imageDetails = (JSON.parse(JSON.stringify(req.body))).data;
     imageDetails.imageLink = imageLink;
     imageDetails.createDate = getDateDisplay();
-    imageDetails.userName = '';
-    imageDetails.userEmail = '';
+
+    console.log(imageDetails);
 
     if (imageDetails) {
         var imageFromuser = new Image(imageDetails);
-        imageFromuser.save(function (err) {
+        imageFromuser.save(function (err, image) {
             if (err) {
                 res.json(err);
             }
