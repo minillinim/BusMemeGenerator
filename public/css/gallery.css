@@ -125,6 +125,15 @@ select {
       .gallery-display .filters .sorting select {
         background-color: white; }
 
+.page-navigation {
+  margin-top: 40px; }
+  .page-navigation a {
+    color: white;
+    padding: 0 5px; }
+  .page-navigation a.active {
+    color: #4468DB;
+    font-weight: bold; }
+
 .gallery-image {
   width: 85%;
   width: 80%; }

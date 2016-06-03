@@ -51,6 +51,18 @@
 	}
 }
 
+.page-navigation{
+	margin-top:40px;
+
+	a{
+		color:$input-color;
+		padding: 0 5px;
+	}
+	a.active{
+		color:$nav-color;
+		font-weight: bold;
+	}
+}
 .gallery-image {
   width: 85%;
   width: 80%;

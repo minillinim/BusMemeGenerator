@@ -3,15 +3,16 @@
         <img src="../assets/bus-meme-logo.svg"/>BUS MEME GENERATOR
     </div>
     <div class="create-meme" ng-click="showHomePage()">
-    	<span ng-click="showHomePage()">+ Create Meme</span>
+        <span ng-click="showHomePage()">+ Create Meme</span>
     </div>
 </div>
 <div class="gallery-display" ng-controller="GalleryController">
-	<div class="gallery-header">
-		<h2>Gallery</h2>
-		<div class="description-line">View other <span class="hashtag">#publictransportfail</span>s</div>
-	</div>
-	<div class="filters">
+    <div class="gallery-header">
+        <h2>Gallery</h2>
+
+        <div class="description-line">View other <span class="hashtag">#publictransportfail</span>s</div>
+    </div>
+    <div class="filters">
         <img class="expand" src="../assets/expand.svg" ng-click="showFilters=!showFilters;"/>
 		Filter Options
         <div class="sorting">
@@ -28,34 +29,46 @@
             <input class="checkbox" type="checkbox" ng-model="travelMode.driving">Driving</input>
             <input class="checkbox" type="checkbox" ng-model="travelMode.walking">Walking</input>
         </div>
-	</div>
+    </div>
 
-    <div class="pure-g">
         <div class="pure-u-1-4"
-             ng-repeat="image in images | transportMode:travelMode |orderBy : getSortingCriteria(sortOption)">
-             <img class="gallery-image" ng-src="{{image.imageUrl}}" alt="">
-             <div class="meme-info">
-            	<span>{{image.user.fullName}}</span>
-            	<span ng-show="!image.user.fullName">Annonymous</span>
-            	<span ng-show="image.createDate">Created on {{getDateDisplay(image.createDate)}}</span>
+             ng-repeat="image in images | offset: currentPage*itemsPerPage | limitTo: itemsPerPage |transportMode:travelMode |orderBy : getSortingCriteria(sortOption)">
+            <img class="gallery-image" ng-src="{{image.imageUrl}}" alt="">
+
+            <div class="meme-info">
+                <span>{{image.user.fullName}}</span>
+                <span ng-show="!image.user.fullName">Annonymous</span>
+                <span ng-show="image.createDate">Created on {{image.createDate}}</span>
                 <span class="more-details-label" ng-click="showMoreDetails=!showMoreDetails">More details..</span>
+
                 <div class="more-details" ng-show="showMoreDetails">
                     <b>Meme Details</b>
                     <img class="close-button" src="../assets/close.svg" ng-click="showMoreDetails=false"/>
+
                     <div class="more-details-content">
                         <div class="public-transport">
-                            <div class="details-header">Public Transport: </div>
+                            <div class="details-header">Public Transport:</div>
                             <div class="travel-time">Travel time: {{formatTravelTime(image.publicModeTravelTime)}}</div>
-                            <div class="travel-distance">Distance: {{formatDistance(image.publicModeTravelDistance)}}</div>
+                            <div class="travel-distance">Distance: {{formatDistance(image.publicModeTravelDistance)}}
+                            </div>
                         </div>
                         <div class="other-mode">
                             <div class="details-header">{{image.otherMode}}:</div>
                             <div class="travel-time">Travel time: {{formatTravelTime(image.otherModeTravelTime)}}</div>
-                            <div class="travel-distance">Distance: {{formatDistance(image.otherModeTravelDistance)}}</div>
+                            <div class="travel-distance">Distance: {{formatDistance(image.otherModeTravelDistance)}}
+                            </div>
                         </div>
                     </div>
                 </div>
-             </div>
+            </div>
+        </div>
+
+        <div class="page-navigation">
+            <a href ng-class="prevPageDisabled()" ng-click="prevPage()">« Prev</a>
+            <span ng-repeat="n in range()">
+                <a href ng-class="{active: n == currentPage}" ng-click="setPage(n)">{{n+1}}</a>
+            </span>
+            <a href ng-class="nextPageDisabled()" ng-click="nextPage()">Next »</a>
         </div>
     </div>
 </div>
