@@ -110,13 +110,20 @@ select {
     border-radius: 3px;
     margin-bottom: 40px;
     padding: 10px;
-    color: #4468DB; }
+    color: #4468DB;
+    position: relative; }
     .gallery-display .filters .expand {
       width: 20px;
       vertical-align: middle;
       cursor: pointer; }
     .gallery-display .filters input.checkbox {
       margin: 0 5px; }
+    .gallery-display .filters .sorting {
+      display: inline-block;
+      position: absolute;
+      right: 10px; }
+      .gallery-display .filters .sorting select {
+        background-color: white; }
 
 .gallery-image {
   width: 85%;

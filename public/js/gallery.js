@@ -3,7 +3,8 @@ var app = angular.module('bus-meme');
 app.controller('GalleryController', function ($scope, $location, MemeFactory) {
     $scope.images = [];
     $scope.travelMode = { driving:true, walking:true};
-
+    $scope.sortOption = 'biggestDifference';
+    
     MemeFactory.getImages().then(function (response) {
         $scope.images = response.data
     });
@@ -30,6 +31,12 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
             var minutesLeft = timeInMinutes - (hours * 60);
             return hours + " hrs " + minutesLeft + " mins";
         }
+    }
+
+    $scope.getSortingCriteria = function(sortOption){
+        if (sortOption==="biggestDifference")
+            return '(image.otherModeTravelTime - image.publicModeTravelTime)';
+        else return '-' + sortOption;
     }
 });
 

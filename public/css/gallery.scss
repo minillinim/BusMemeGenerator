@@ -29,6 +29,7 @@
 		margin-bottom:40px;
 	    padding: 10px;
 	    color: $nav-color;
+		position: relative;
 
 	    .expand{
 	    	width:20px;
@@ -37,6 +38,15 @@
 	    }
 	    input.checkbox {
 		    margin: 0 5px;
+		}
+		.sorting{
+			display:inline-block;
+			position:absolute;
+			right:10px;
+
+			select{
+    			background-color: white;
+    		}
 		}
 	}
 }
