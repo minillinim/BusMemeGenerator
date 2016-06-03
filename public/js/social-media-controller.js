@@ -26,6 +26,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     }
 
     $scope.saveImage = function (callback) {
+        console.log('The save image');
         if ($rootScope.imageLink) {
             callback($rootScope.imageLink);
         }
@@ -46,6 +47,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
                 var baseUrl = $location.absUrl().replace('#/', '');
                 var imageLink = encodeURIComponent(response.data.imageLink);
                 $rootScope.imageLink = baseUrl + 'image/' + imageLink;
+                callback($rootScope.imageLink);
             });
         }
     };
