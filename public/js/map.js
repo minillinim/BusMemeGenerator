@@ -139,7 +139,7 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
                             };
                         });
                         latlngWalking = dwRoute.polylineCoords;
-                        document.getElementById('other-duration').innerText = dwRoute.duration;
+                        document.getElementById('other-duration').innerText = shorter(dwRoute.duration);
                         $scope.drivingOrWalkingBounds = dwRoute.bounds;
                         return true;
                     }
@@ -160,7 +160,7 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
                                 });
                                 latlngPublic = ptRoute.polylineCoords;
                                 $scope.transitDirectionsPolyline = ptRoute.polyline;
-                                document.getElementById('public-duration').innerText = ptRoute.duration;
+                                document.getElementById('public-duration').innerText = shorter(ptRoute.duration);
                                 $scope.transitBounds = ptRoute.bounds;
                                 return true;
                             }
@@ -186,6 +186,10 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
             $scope.showMap = false;
         }
     };
+
+    var shorter = function(duration){
+        return duration.toLowerCase().replace('hour', 'hr');
+    }
 
     var getZoom = function (bounds, mapWidth) {
         //http://stackoverflow.com/a/6055653
