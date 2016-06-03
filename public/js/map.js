@@ -10,50 +10,8 @@ app.config(function ($routeProvider) {
     })
 });
 
-function getMapConversionInfo(_map) {
-    var projection = _map.getProjection();
-
-    var bounds = _map.getBounds();
-    var topRight = projection.fromLatLngToPoint(bounds.getNorthEast());
-    var bottomLeft = projection.fromLatLngToPoint(bounds.getSouthWest());
-
-    var topLeft = new google.maps.Point(bottomLeft.x, topRight.y);
-    var projectedWidth = topRight.x - bottomLeft.x;
-    var projectedHeight = bottomLeft.y - topRight.y;
-
-    var container = document.getElementById('gmap-canvas');
-    var xScale = parseInt(container.offsetWidth) / projectedWidth;
-    var yScale = parseInt(container.offsetHeight) / projectedHeight;
-
-    return {"xScale": xScale, "yScale": yScale, "origin": topLeft, "projection": projection, "width": container.offsetWidth};
-}
-
-function getXYcoords(mapInfo, latLng) {
-    var worldPoint = mapInfo.projection.fromLatLngToPoint(latLng);
-    return [
-            (worldPoint.x - mapInfo.origin.x) * mapInfo.xScale,
-            (worldPoint.y - mapInfo.origin.y) * mapInfo.yScale
-           ];
-}
+app.controller('MapController', function ($scope, $location, $rootScope, MapService, $anchorScroll) {
     
-function drawPolyline(map, latlng, context, lineColor, gmapsInfo) {      
-    var startCoords = getXYcoords(gmapsInfo, new google.maps.LatLng(latlng[0].lat, latlng[0].lng));
-    context.strokeStyle = lineColor;
-    context.lineWidth = 2;
-    context.beginPath();
-    context.moveTo(startCoords[0], startCoords[1]);
-    for(i=1; i<latlng.length; i++) {
-        var coord = getXYcoords(gmapsInfo, new google.maps.LatLng(latlng[i].lat, latlng[i].lng));
-        context.lineTo(coord[0], coord[1]);
-    }
-    context.stroke();
-}
-
-app.controller('MapController', function ($scope, $location,$rootScope,MapService, $anchorScroll) {
-    var map;
-    var latlngPublic;
-    var latlngWalking;
-
     $rootScope.showGallery = function () {
         $location.path('/galleries');
     };
@@ -66,16 +24,27 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
 
     $scope.showImage = false;
     $scope.showMap = false;
-    $scope.transitDirectionsPolyline = '';
-    $scope.drivingOrWalkingDirectionsPolyline = '';
+    
+    $scope.ptDirectionsPolyline = '';
+    $scope.dwDirectionsPolyline = '';
+    
     $scope.origin = '';
     $scope.destination = '';
+    
+    $scope.ptLatLng = [];
+    $scope.dwLatLng = [];
+
+    $scope.dwBounds = null;
+    $scope.ptBounds = null;
+    
+    $scope.map = null;
 
     var bothResultsFound = function () {
-        return ($scope.drivingOrWalkingBounds) && ($scope.transitBounds);
+        return ($scope.dwBounds) && ($scope.ptBounds);
     };
 
     var getGoogleRoute = function(mode, startLat, startLng, endLat, endLng) {
+
         var d = Q.defer();
 
         var travelOptions = {
@@ -111,14 +80,14 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
                 d.resolve(null);
             }
         });
-
         return d.promise;
     }
 
     $scope.getMapData = function () {
-        
-        $scope.drivingOrWalkingBounds = null;
-        $scope.transitBounds = null;
+
+        $scope.dwBounds = null;
+        $scope.ptBounds = null;
+
         if (validateAddresses()) {
             var startLat = document.getElementById('startAddressLat').value,
                 startLng = document.getElementById('startAddressLong').value,
@@ -138,9 +107,9 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
                                 duration: dwRoute.duration
                             };
                         });
-                        latlngWalking = dwRoute.polylineCoords;
+                        $scope.dwLatLng = dwRoute.polylineCoords;
                         document.getElementById('other-duration').innerText = dwRoute.duration;
-                        $scope.drivingOrWalkingBounds = dwRoute.bounds;
+                        $scope.dwBounds = dwRoute.bounds;
                         return true;
                     }
                     return false;
@@ -158,10 +127,10 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
                                         duration: ptRoute.duration
                                     };
                                 });
-                                latlngPublic = ptRoute.polylineCoords;
-                                $scope.transitDirectionsPolyline = ptRoute.polyline;
+                                $scope.ptLatLng = ptRoute.polylineCoords;
+                                $scope.ptDirectionsPolyline = ptRoute.polyline;
                                 document.getElementById('public-duration').innerText = ptRoute.duration;
-                                $scope.transitBounds = ptRoute.bounds;
+                                $scope.ptBounds = ptRoute.bounds;
                                 return true;
                             }
                             return false;
@@ -187,73 +156,9 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
         }
     };
 
-    var getZoom = function (bounds, mapWidth) {
-        //http://stackoverflow.com/a/6055653
-        var GLOBE_WIDTH = 256; // a constant in Google's map projection
-        var west = bounds.getSouthWest().lng();
-        var east = bounds.getNorthEast().lng();
-        var angle = east - west;
-        if (angle < 0) {
-            angle += 360;
-        }
-        return Math.round(Math.log(mapWidth * 360 / angle / GLOBE_WIDTH) / Math.LN2) - 1;
-    };
-
-    var fitBoundsThenRender = function (_map, bounds) {
-        // https://stackoverflow.com/questions/9843732/how-to-affect-the-grace-margin-of-map-fitbounds
-        var zoom = 0;
-        _map.fitBounds(bounds);
-
-        var overlayHelper = new google.maps.OverlayView();
-        overlayHelper.draw = function () {
-            if (!this.ready) {
-                var projection = this.getProjection(),
-                zoom = getExtraZoom(projection, bounds, _map.getBounds());
-                if (zoom > 0) {
-                    google.maps.event.addListenerOnce(_map, "zoom_changed", function() {
-                        // don't do anything until the zoom is changed
-                        renderStaticMap();
-                    });
-                    _map.setZoom(_map.getZoom() + zoom);
-                } else {
-                    renderStaticMap();
-                }
-                this.ready = true;
-                google.maps.event.trigger(this, 'ready');
-            }
-        };
-        overlayHelper.setMap(_map);
-    }
-
-    // LatLngBounds b1, b2 -> zoom increment
-    var getExtraZoom = function (projection, expectedBounds, actualBounds) {
-        var expectedSize = getSizeInPixels(projection, expectedBounds),
-            actualSize = getSizeInPixels(projection, actualBounds);
-
-        if (Math.floor(expectedSize.x) == 0 || Math.floor(expectedSize.y) == 0) {
-            return 0;
-        }
-
-        var qx = actualSize.x / expectedSize.x;
-        var qy = actualSize.y / expectedSize.y;
-        var min = Math.min(qx, qy);
-
-        if (min < 1) {
-            return 0;
-        }
-
-        return Math.floor(Math.log(min) / Math.log(2) /* = log2(min) */);
-    }
-
-    // LatLngBounds bnds -> height and width as a Point
-    var getSizeInPixels = function (projection, bounds) {
-        var sw = projection.fromLatLngToContainerPixel(bounds.getSouthWest());
-        var ne = projection.fromLatLngToContainerPixel(bounds.getNorthEast());
-        return new google.maps.Point(Math.abs(sw.y - ne.y), Math.abs(sw.x - ne.x));
-    }
-
     var renderStaticMap = function () {
-        var gmapsInfo = getMapConversionInfo(map);
+        
+        var gmapsInfo = getMapConversionInfo();
 
         $('#img-out').show();
 
@@ -263,13 +168,12 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
             mapCenter = 'center=' + $scope.center.lat() + ',' + $scope.center.lng(),
             zoomLevel = +'zoom=' + $scope.zoom,
             mapSize = 'size=' + $scope.mapWidth + 'x' + $scope.mapWidth,
-            transitPath = 'path=color:0x00ff0000|weight:4|enc:' + $scope.transitDirectionsPolyline,
             commonUrl = staticMapsUrl + mapCenter + '&' + zoomLevel + '&' + mapSize + '&' + startMarker + '&' + endMarker;
 
         var image = document.getElementById('img-out');
         image.setAttribute('crossorigin', 'anonymous');
-        image.setAttribute('src', commonUrl + '&' + '&' + transitPath);
-        
+        image.setAttribute('src', commonUrl);
+
         $("#img-out").load(function() {
             
             var canvas = document.getElementById("canvas");
@@ -284,8 +188,8 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
             context.strokeStyle = "black";
             context.lineWidth = 4;
             
-            drawPolyline(map, latlngPublic, context, "#FF0000", gmapsInfo);
-            drawPolyline(map, latlngWalking, context, "#0000FF", gmapsInfo);
+            drawPolyline($scope.ptLatLng, context, "#FF0000", gmapsInfo);
+            drawPolyline($scope.dwLatLng, context, "#0000FF", gmapsInfo);
             
             $('#img-out').hide(); 
 
@@ -298,9 +202,9 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
     $scope.mapToImage = function () {
 
         if (bothResultsFound()) {
+            
             $scope.mapWidth = 600;
-
-            $scope.bounds = getBoundsCoveringBoth($scope.transitBounds, $scope.drivingOrWalkingBounds),
+            $scope.bounds = getBoundsCoveringBoth($scope.ptBounds, $scope.dwBounds),
             $scope.center = $scope.bounds.getCenter(),
             $scope.zoom = getZoom($scope.bounds, $scope.mapWidth);
 
@@ -311,15 +215,23 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
             };
 
             $('#map-wrapper').show();
-            map = new google.maps.Map(document.getElementById("gmap-canvas"), mapOptions);
+            $scope.map = new google.maps.Map(document.getElementById("gmap-canvas"), mapOptions);
 
-            google.maps.event.addListenerOnce(map, "projection_changed", function() {
-                fitBoundsThenRender(map, $scope.bounds);
+            google.maps.event.addListenerOnce($scope.map, 'idle', function() {
+                if($scope.map.getZoom() != $scope.zoom) {
+                    google.maps.event.addListenerOnce($scope.map, "zoom_changed", function() {
+                        renderStaticMap();
+                    });
+                    $scope.map.setZoom($scope.zoom);
+                } else {
+                    renderStaticMap();
+                }
             });
         }
     };
 
     var writeTextOnImage = function (context, text, x, y) {
+
         var f = 36;
         for (; f >= 0; f -= 1) {
             context.font = "bold " + f + "pt Impact, Charcoal, sans-serif";
@@ -332,7 +244,24 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
         }
     }
 
+    var drawPolyline = function(latLngArray, context, lineColor, gmapsInfo) {    
+
+        var startCoords = getXYcoords(gmapsInfo, new google.maps.LatLng(latLngArray[0].lat, latLngArray[0].lng));
+        context.strokeStyle = lineColor;
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(startCoords[0], startCoords[1]);
+
+        for(i=1; i<latLngArray.length; i++) {
+            var coord = getXYcoords(gmapsInfo, new google.maps.LatLng(latLngArray[i].lat, latLngArray[i].lng));
+            context.lineTo(coord[0], coord[1]);
+        }
+        
+        context.stroke();
+    }
+
     $scope.renderMemeFinal = function () {
+
         var context = $rootScope.context;
         var image = document.getElementById('img-out');
 
@@ -352,6 +281,69 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
         
     };
 
+    var getZoom = function (bounds, mapWidth) {
+        //https://stackoverflow.com/a/13274361
+        var WORLD_DIM = { height: 256, width: 256 };
+        var ZOOM_MAX = 21;
+
+        function _latRad(lat) {
+            var sin = Math.sin(lat * Math.PI / 180);
+            var radX2 = Math.log((1 + sin) / (1 - sin)) / 2;
+            return Math.max(Math.min(radX2, Math.PI), -Math.PI) / 2;
+        }
+
+        function _zoom(mapPx, worldPx, fraction) {
+            return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
+        }
+
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
+
+        var latFraction = (_latRad(ne.lat()) - _latRad(sw.lat())) / Math.PI;
+
+        var lngDiff = ne.lng() - sw.lng();
+        var lngFraction = ((lngDiff < 0) ? (lngDiff + 360) : lngDiff) / 360;
+
+        var latZoom = _zoom(mapWidth, WORLD_DIM.height, latFraction);
+        var lngZoom = _zoom(mapWidth, WORLD_DIM.width, lngFraction);
+
+        return Math.min(latZoom, lngZoom, ZOOM_MAX);
+    };
+
+    var getBoundsCoveringBoth = function (bounds1, bounds2) {
+        bounds1.extend(bounds2.getNorthEast());
+        bounds1.extend(bounds2.getSouthWest());
+        return bounds1;
+    };
+
+    var getMapConversionInfo = function () {
+
+        var projection = $scope.map.getProjection();
+
+        var bounds = $scope.map.getBounds();
+        var topRight = projection.fromLatLngToPoint(bounds.getNorthEast());
+        var bottomLeft = projection.fromLatLngToPoint(bounds.getSouthWest());
+
+        var topLeft = new google.maps.Point(bottomLeft.x, topRight.y);
+        var projectedWidth = topRight.x - bottomLeft.x;
+        var projectedHeight = bottomLeft.y - topRight.y;
+
+        var container = document.getElementById('gmap-canvas');
+        var xScale = parseInt(container.offsetWidth) / projectedWidth;
+        var yScale = parseInt(container.offsetHeight) / projectedHeight;
+
+        return {"xScale": xScale, "yScale": yScale, "origin": topLeft, "projection": projection, "width": container.offsetWidth};
+    }
+
+    var getXYcoords = function (mapInfo, latLng) {
+
+        var worldPoint = mapInfo.projection.fromLatLngToPoint(latLng);
+        return [
+                (worldPoint.x - mapInfo.origin.x) * mapInfo.xScale,
+                (worldPoint.y - mapInfo.origin.y) * mapInfo.yScale
+               ];
+    }
+
     $scope.shareImage = function() {
         
         document.getElementById("meme-validation").innerText = '';
@@ -367,26 +359,23 @@ app.controller('MapController', function ($scope, $location,$rootScope,MapServic
         }
     };
 
-    function initStep2() {
+    var initStep2 = function () {
+
         document.getElementById('step-1').classList.add('done');
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
     }
     
-    function scrollToElement(id) {
+    var scrollToElement = function (id) {
+
         setTimeout(function () {
                 $anchorScroll(id);
         }, 10);
     }
-
-    var getBoundsCoveringBoth = function (bounds1, bounds2) {
-        bounds1.extend(bounds2.getNorthEast());
-        bounds1.extend(bounds2.getSouthWest());
-        return bounds1;
-    };
 });
 
 app.factory('MapService', function () {
+
     return {
         getDirections: function (travelOptions, mode, callback) {
             var directionsService = new google.maps.DirectionsService();
