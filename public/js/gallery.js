@@ -2,7 +2,7 @@ var app = angular.module('bus-meme');
 
 app.controller('GalleryController', function ($scope, $location, MemeFactory) {
     $scope.images = [];
-    $scope.travelMode = ['driving', 'walking'];
+    $scope.travelMode = 'driving';
 
     MemeFactory.getImages().then(function (response) {
         $scope.images = response.data
@@ -37,7 +37,7 @@ app.filter('transportMode', function () {
     return function (images, transportMode) {
         if (transportMode && images.length > 0) {
             return images.filter(function (image) {
-                return image.otherMode === transportMode[0].toLowerCase() || image.otherMode === transportMode[1].toLowerCase();
+                return image.otherMode === transportMode.toLowerCase();
             })
         } else {
             return images;
