@@ -35,14 +35,14 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
     }
 
     $scope.getSortingCriteria = function (sortOption) {
+
         if (sortOption === "biggestDifference")
-            return '(image.otherModeTravelTime - image.publicModeTravelTime)';
+            return '(image.publicModeTravelTime - image.otherModeTravelTime)';
         else return '-' + sortOption;
     }
 
     $scope.getDateDisplay = function (dbDate) {
         var date = new Date(dbDate);
-        console.log(date);
         var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
         return date.getDate() + ' ' +
@@ -70,7 +70,6 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
     $scope.range = function () {
         var range = [];
 
-        console.log($scope.pageCount());
         for (i = 0; i < $scope.pageCount(); i++) {
             range.push(i);
         }
@@ -79,8 +78,6 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
     };
 
     $scope.setPage = function (n) {
-
-        console.log('n:', n);
         if (n < 0)
             return;
 
@@ -105,7 +102,6 @@ app.filter('transportMode', function () {
     return function (images, travelMode) {
         if (images.length > 0) {
             return images.filter(function (image) {
-                console.log(image);
                 if (image.otherMode === "driving" && travelMode.driving) {
                     return true;
                 } else if (image.otherMode === "walking" && travelMode.walking) {
