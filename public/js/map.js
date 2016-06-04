@@ -25,9 +25,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     $scope.showImage = false;
     $scope.showMap = false;
     
-    $scope.ptDirectionsPolyline = '';
-    $scope.dwDirectionsPolyline = '';
-    
     $scope.origin = '';
     $scope.destination = '';
     
@@ -119,7 +116,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             ).then(
                 function(lastWorked) {
                     if(!lastWorked) { return false; }
-                    getGoogleRoute('public', startLat, startLng, destLat, destLng).then(
+                    return getGoogleRoute('public', startLat, startLng, destLat, destLng).then(
                         function(ptRoute) {
                             if(ptRoute) {
                                 $scope.$apply(function () {
@@ -131,7 +128,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                 });
 
                                 $scope.ptLatLng = ptRoute.polylineCoords;
-                                $scope.ptDirectionsPolyline = ptRoute.polyline;
                                 document.getElementById('public-duration').innerText = ptRoute.duration;
                                 $scope.ptBounds = ptRoute.bounds;
 
@@ -139,15 +135,15 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                             }
                             return false;
                         }
-                    ).then(
-                        function(bothWorked) {
-                            if(bothWorked) {
-                                $scope.$apply(function () {
-                                    $scope.mapToImage();
-                                });
-                            }
-                        }
                     );
+                }
+            ).then(
+                function(bothWorked) {
+                    if(bothWorked) {
+                        $scope.$apply(function () {
+                            $scope.mapToImage();
+                        });
+                    }
                 }
             );
 
@@ -190,14 +186,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             canvas.width = image.width;
             canvas.height = image.height;
             context.drawImage(image, 0, 0, canvas.width, canvas.height);
-            context.imageSmoothingEnabled = true;
-            context.textAlign = "center";
-            context.fillStyle = "white";
-            context.strokeStyle = "black";
-            context.lineWidth = 4;
-            
-            drawPolyline($scope.ptLatLng, context, "#FF0000", gmapsInfo);
-            drawPolyline($scope.dwLatLng, context, "#0000FF", gmapsInfo);
+
+            var lineWidth = 4;
+
+            drawPolyline($scope.ptLatLng, context, lineWidth, "#FF0000", gmapsInfo);
+            drawPolyline($scope.dwLatLng, context, lineWidth, "#0000FF", gmapsInfo);
             
             $('#img-out').hide(); 
 
@@ -212,7 +205,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         if (bothResultsFound()) {
             
             $scope.mapWidth = 600;
-            $scope.bounds = getBoundsCoveringBoth($scope.ptBounds, $scope.dwBounds),
+            $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]),
             $scope.center = $scope.bounds.getCenter(),
             $scope.zoom = getZoom($scope.bounds, $scope.mapWidth);
 
@@ -244,6 +237,10 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         for (; f >= 0; f -= 1) {
             context.font = "bold " + f + "pt Impact, Charcoal, sans-serif";
             if (context.measureText(text).width < canvas.width - 10) {
+                context.textAlign = "center";
+                context.fillStyle = "white";
+                context.strokeStyle = "black";
+                context.lineWidth = 4;
                 context.fillText(text, x, y);
                 context.strokeText(text, x, y);
 
@@ -252,7 +249,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         }
     }
 
-    var drawPolyline = function(latLngArray, context, lineColor, gmapsInfo) {    
+    var drawPolyline = function(latLngArray, context, lineWidth, lineColor, gmapsInfo) {    
 
         var startCoords = getXYcoords(gmapsInfo, new google.maps.LatLng(latLngArray[0].lat, latLngArray[0].lng));
         context.strokeStyle = lineColor;
@@ -264,7 +261,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             var coord = getXYcoords(gmapsInfo, new google.maps.LatLng(latLngArray[i].lat, latLngArray[i].lng));
             context.lineTo(coord[0], coord[1]);
         }
-        
+        context.lineWidth = lineWidth;
         context.stroke();
     }
 
@@ -319,10 +316,13 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         return Math.min(latZoom, lngZoom, ZOOM_MAX);
     };
 
-    var getBoundsCoveringBoth = function (bounds1, bounds2) {
-        bounds1.extend(bounds2.getNorthEast());
-        bounds1.extend(bounds2.getSouthWest());
-        return bounds1;
+    var getCombinedBounds = function (bounds) {
+        var bBounds = bounds[0];
+        for(var i=1; i< bounds.length; i++) {
+            bBounds.extend(bounds[i].getNorthEast());
+            bBounds.extend(bounds[i].getSouthWest());
+        }
+        return bBounds;
     };
 
     var getMapConversionInfo = function () {

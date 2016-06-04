@@ -25,7 +25,7 @@ var travel_by_tram = 32;
 var default_walk_speed = 1;
 
 function getJourneysBetween(startLat, startLng, endLat, endLng, mode, at, walkMax) {
-  //localhost:3000/tl/-27.415458/153.050513/-27.465918/153.025939/after/1464668217/1200/
+  //localhost:3000/tl/-27.415458/153.050513/-27.465918/153.025939/after/1464961050/1200/
   tripInfo = {
     "startLat": startLat,
     "startLng": startLng,
@@ -113,12 +113,16 @@ function _getJourneysBetween(tripInfo, startLoc, endLoc) {
       }
     ).then(
       function(response) {
-        var itineraries = response.TravelOptions.Itineraries;
+        var itineraries = [response.TravelOptions.Itineraries[0]];
         return _processItineraries(tripInfo, [], itineraries);
       }
     ).then(
       function(processedItineraries) {
-        d.resolve(processedItineraries);
+        if(processedItineraries.length > 0) {
+          d.resolve(processedItineraries[0]);
+        } else {
+          d.resolve(undefined);
+        }
       }
     );
   } else {
@@ -157,9 +161,10 @@ function _processItineraries(tripInfo, processedItineraries, itineraries) {
     var itinerary = itineraries[processedItineraries.length];
     _processLegs(tripInfo, [], itinerary.Legs).then(
       function(processedLegs) {
+
         var processed_itinerary = {
-           "startTime": itinerary.StartTime, 
-           "endTime": itinerary.EndTime,
+           "startTime": parseInt(itinerary.StartTime.split('(')[1].split('+')[0]), 
+           "endTime": parseInt(itinerary.EndTime.split('(')[1].split('+')[0]),
            "totalZones": itinerary.Fare.TotalZones
         };
         
@@ -193,6 +198,7 @@ function _processLegs(tripInfo, processedLegs, legs) {
     _getStopLocationById(leg.FromStopId, tripInfo.startLat, tripInfo.startLng).then(
       function(locationInfo) {
         var processed_leg = {};
+        console.log(JSON.stringify(locationInfo))
         processed_leg["startDesc"] = locationInfo.Description;
         processed_leg["startLat"] = locationInfo.Position.Lat;
         processed_leg["startLng"] = locationInfo.Position.Lng;
