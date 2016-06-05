@@ -39,7 +39,6 @@ router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', functio
         req.params.at,
         req.params.walkMax)
         .then(function (processedJourney) {
-            console.log(processedJourney);
             res.send(processedJourney);
         });
 });

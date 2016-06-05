@@ -36,10 +36,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     
     $scope.map = null;
 
-    var bothResultsFound = function () {
-        return ($scope.dwBounds) && ($scope.ptBounds);
-    };
-
     var getGoogleRoute = function(mode, startLat, startLng, endLat, endLng) {
 
         var d = Q.defer();
@@ -108,6 +104,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             distance: '',
             duration: ''
         };
+
+        $scope.publicAvailable = true;
 
         if (validateAddresses()) {
             addStatus("Addresses are valid");
@@ -198,11 +196,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         if(dirStatus[1]) {
                             // both worked
                             $scope.$apply(function () {
-                                addStatus("Rendering your map...");
                                 $scope.mapToImage(true);
                             });
                         } else {
                             // need to walk there...
+                            $scope.publicAvailable = false;
                             if($scope.transport.mode !== 'walking') {
                                 addStatus("Retrieving walking directions from Google...");
                                 getGoogleRoute('walking', startLat, startLng, destLat, destLng).then(
@@ -226,7 +224,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                         var ptRouteIsValid = false;
                                         if(itWorked) { ptRouteIsValid = true; }
                                         $scope.$apply(function () {
-                                            addStatus("Rendering your map...");
                                             $scope.mapToImage(ptRouteIsValid);
                                         });
                                     }
@@ -234,7 +231,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                             } else {
                                 // user already requested walking
                                 $scope.$apply(function () {
-                                    addStatus("Rendering your map...");
                                     $scope.mapToImage(false);
                                 });
                             }
@@ -275,8 +271,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             var context = canvas.getContext("2d");
             $rootScope.context = context;
             canvas.width = image.width;
-            canvas.height = image.height;
-            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+            canvas.height = image.height * 1.25;
+            context.drawImage(image, 0, 0, canvas.width, image.height);
 
             var lineWidth = 2;
 
@@ -288,6 +284,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             }
             drawPolylines($scope.dwLatLng, context, lineWidth, '#0000FF', gmapsInfo);
 
+            drawLegend(context, gmapsInfo, image.height, canvas.width, canvas.height - image.height);
 
             $('#gmap-canvas').html("");
             $('#map-status').hide();
@@ -297,39 +294,37 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     }
 
     $scope.mapToImage = function (ptRouteIsValid) {
-
-        if (bothResultsFound()) {
-            
-            $scope.mapWidth = 600;
-            if(ptRouteIsValid) {
-                $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
-            } else {
-                $scope.bounds = getCombinedBounds([$scope.dwBounds]);
-            }
-
-            $scope.center = $scope.bounds.getCenter();
-            $scope.zoom = getZoom($scope.bounds, $scope.mapWidth);
-
-            var mapOptions = {
-                zoom: $scope.zoom,
-                center: $scope.center,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-
-            $('#map-wrapper').show();
-            $scope.map = new google.maps.Map(document.getElementById("gmap-canvas"), mapOptions);
-
-            google.maps.event.addListenerOnce($scope.map, 'idle', function() {
-                if($scope.map.getZoom() != $scope.zoom) {
-                    google.maps.event.addListenerOnce($scope.map, "zoom_changed", function() {
-                        renderStaticMap(ptRouteIsValid);
-                    });
-                    $scope.map.setZoom($scope.zoom);
-                } else {
-                    renderStaticMap(ptRouteIsValid);
-                }
-            });
+        addStatus("Rendering your meme...");
+        console.log(ptRouteIsValid)
+        $scope.mapWidth = 600;
+        if(ptRouteIsValid) {
+            $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
+        } else {
+            $scope.bounds = getCombinedBounds([$scope.dwBounds]);
         }
+
+        $scope.center = $scope.bounds.getCenter();
+        $scope.zoom = getZoom($scope.bounds, $scope.mapWidth);
+
+        var mapOptions = {
+            zoom: $scope.zoom,
+            center: $scope.center,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        $('#map-wrapper').show();
+        $scope.map = new google.maps.Map(document.getElementById("gmap-canvas"), mapOptions);
+
+        google.maps.event.addListenerOnce($scope.map, 'idle', function() {
+            if($scope.map.getZoom() != $scope.zoom) {
+                google.maps.event.addListenerOnce($scope.map, "zoom_changed", function() {
+                    renderStaticMap(ptRouteIsValid);
+                });
+                $scope.map.setZoom($scope.zoom);
+            } else {
+                renderStaticMap(ptRouteIsValid);
+            }
+        });
     };
 
     var writeTextOnImage = function (context, lineWidth, text, x, y) {
@@ -348,6 +343,22 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 break;
             }
         }
+    }
+
+    var drawLegend = function(context, gmapsInfo, yStart, width, height) {
+        context.beginPath();
+        context.rect(1, 0, width-2, yStart);
+        context.strokeStyle = '#000000';
+        context.lineWidth = 3;
+        context.stroke(); 
+
+        context.beginPath();
+        context.rect(1, yStart, width-2, height-1);
+        context.fillStyle = '#E8E5DC';
+        context.fill();
+        context.strokeStyle = '#000000';
+        context.lineWidth = 3;
+        context.stroke(); 
     }
 
     var drawCircleAt = function(center, context, color, gmapsInfo) {
