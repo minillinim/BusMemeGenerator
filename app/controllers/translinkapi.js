@@ -24,6 +24,13 @@ var travel_by_tram = 32;
 
 var default_walk_speed = 1;
 
+function _getModeString(mode) {
+  if(mode == travel_by_walk) {
+    return "walking"
+  }
+  return "public"
+}
+
 function getJourneysBetween(startLat, startLng, destLat, destLng, mode, at, walkMax) {
   //localhost:3000/tl/-27.415458/153.050513/-27.465918/153.025939/after/1464961050/1200/
   tripInfo = {
@@ -229,7 +236,7 @@ function _processLegs(tripInfo, processedLegs, legs) {
             processed_leg["departureTime"] = _parseTimeString(leg.DepartureTime);
             processed_leg["duration"] = leg.DurationMins;
             processed_leg["polyline"] = leg.Polyline;
-            processed_leg["travelMode"] = leg.TravelMode;
+            processed_leg["travelMode"] = _getModeString(leg.TravelMode);
 
             return processed_leg;
           }

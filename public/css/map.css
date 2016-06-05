@@ -146,10 +146,22 @@ select {
         width: 600px !important; }
         #map-results #map-results-content .left-panel .map-wrapper #gmap-canvas {
           height: 100%;
-          width: 100%; }
+          width: 100%;
+          position: relative;
+          z-index: 10 !important; }
           #map-results #map-results-content .left-panel .map-wrapper #gmap-canvas img {
             max-width: none !important;
             background: none !important; }
+        #map-results #map-results-content .left-panel .map-wrapper #map-status {
+          height: 100%;
+          width: 100%;
+          position: relative;
+          z-index: 1000 !important;
+          background-color: #6595FC;
+          color: #FFFFFF;
+          font-size: 12px;
+          word-wrap: break-word;
+          text-transform: none; }
     #map-results #map-results-content .right-panel {
       color: white;
       width: 17%;

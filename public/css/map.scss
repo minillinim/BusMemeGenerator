@@ -76,10 +76,23 @@
         #gmap-canvas {
           height: 100%;
           width: 100%;
+          position:relative;
+          z-index:10 !important;
           img {
             max-width: none !important;
             background: none !important;
           }
+        }
+        #map-status {
+          height: 100%;
+          width: 100%;
+          position:relative;
+          z-index:1000 !important;
+          background-color: $background-color;
+          color: #FFFFFF;
+          font-size: 12px;
+          word-wrap: break-word;
+          text-transform: none;
         }
       }
     }
