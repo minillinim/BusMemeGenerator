@@ -25,8 +25,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     $scope.showImage = false;
     $scope.showMap = false;
     
-    $scope.origin = '';
-    $scope.destination = '';
+    $scope.origin = null;
+    $scope.destination = null;
     
     $scope.ptLatLng = [];
     $scope.dwLatLng = [];
@@ -91,8 +91,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 destLat = document.getElementById('destAddressLat').value,
                 destLng = document.getElementById('destAddressLong').value;
 
-            $scope.origin = startLat + ',' + startLng;
-            $scope.destination = destLat + ',' + destLng;
+            $scope.origin = new google.maps.LatLng(startLat, startLng);
+            $scope.destination = new google.maps.LatLng(destLat, destLng);
 
             getGoogleRoute($scope.transport.mode, startLat, startLng, destLat, destLng).then(
                 function(dwRoute) {
@@ -108,7 +108,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         $scope.dwLatLng = dwRoute.polylineCoords;
                         document.getElementById('other-duration').innerText = dwRoute.duration;
                         $scope.dwBounds = dwRoute.bounds;
-                        console.log(dwRoute.bounds);
+                        console.log("DWB:", JSON.stringify(dwRoute.bounds));
 
                         return true;
                     }
@@ -165,8 +165,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 function(bothWorked) {
                     if(bothWorked) {
                         $scope.$apply(function () {
-                            console.log($scope.ptLatLng)
-                            console.log($scope.dwLatLng)
                             $scope.mapToImage();
                         });
                     }
@@ -194,19 +192,134 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             if (polyline[i].lng > lngMax) { lngMax = polyline[i].lng; }
             if (polyline[i].lng < lngMin) { lngMin = polyline[i].lng; }
         }
-        console.log("IFB:", latMax, latMin, lngMax, lngMin);
 
-        var bounds = new google.maps.LatLngBounds(
-            new google.maps.LatLng(latMax, lngMax),
-            new google.maps.LatLng(latMin, lngMin)
+        var boundingRect = new google.maps.LatLngBounds(
+            new google.maps.LatLng(latMin, lngMin),
+            new google.maps.LatLng(latMax, lngMax)
+            
         );
-        console.log(bounds);
+
+        var center = boundingRect.getCenter();
+        var d2sw = getLatLonDistanceInKm(center.lat(), center.lng(), latMin, lngMin);
+        var bounds= getSquareBoundingBox(center, d2sw);// + 0.7); // 700m boundary?
+        console.log("PLB:", JSON.stringify(bounds));
         return bounds;
     }
 
-    var shorter = function(duration){
+    var getLatLonDistanceInKm = function (lat1,lon1,lat2,lon2) {
+
+        var deg2rad = function(deg) { return deg * (Math.PI/180) };
+
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = deg2rad(lon2-lon1); 
+        var a = 
+            Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+            Math.sin(dLon/2) * Math.sin(dLon/2); 
+
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+          var d = R * c; // Distance in km
+      
+        return d;
+    };
+
+    var getSquareBoundingBox = function (centerPoint, distance) {
+        /**
+         * @param {number} distance - distance (km) from the point represented by centerPoint
+         * @param {google.maps.Point} centerPoint - two-dimensional array containing center coords [latitude, longitude]
+         * @description
+         *   Computes the bounding coordinates of all points on the surface of a sphere
+         *   that has a great circle distance to the point represented by the centerPoint
+         *   argument that is less or equal to the distance argument.
+         *   Technique from: Jan Matuschek <http://JanMatuschek.de/LatitudeLongitudeBoundingCoordinates>
+         * @author Alex Salisbury
+        */
+        var MIN_LAT,
+            MAX_LAT,
+            MIN_LNG,
+            MAX_LNG,
+            R,
+            radDist,
+            degLat,
+            degLon,
+            radLat,
+            radLon,
+            minLat,
+            maxLat,
+            minLon,
+            maxLon,
+            deltaLon;
+        
+        // helper functions (degrees<–>radians)
+        Number.prototype.degToRad = function () {
+            return this * (Math.PI / 180);
+        };
+
+        Number.prototype.radToDeg = function () {
+            return (180 * this) / Math.PI;
+        };
+        
+        // coordinate limits
+        MIN_LAT = (-90).degToRad();
+        MAX_LAT = (90).degToRad();
+        MIN_LNG = (-180).degToRad();
+        MAX_LNG = (180).degToRad();
+        
+        // Earth's radius (km)
+        R = 6378.1;
+        
+        // angular distance in radians on a great circle
+        radDist = distance / R;
+        
+        // center point coordinates (deg)
+        degLat = centerPoint.lat();
+        degLon = centerPoint.lng();
+        
+        // center point coordinates (rad)
+        radLat = degLat.degToRad();
+        radLon = degLon.degToRad();
+        
+        // minimum and maximum latitudes for given distance
+        minLat = radLat - radDist;
+        maxLat = radLat + radDist;
+        
+        // minimum and maximum longitudes for given distance
+        minLon = void 0;
+        maxLon = void 0;
+        
+        // define deltaLon to help determine min and max longitudes
+        deltaLon = Math.asin(Math.sin(radDist) / Math.cos(radLat));
+        
+        if (minLat > MIN_LAT && maxLat < MAX_LAT) {
+            minLon = radLon - deltaLon;
+            maxLon = radLon + deltaLon;
+            if (minLon < MIN_LNG) {
+                minLon = minLon + 2 * Math.PI;
+            }
+            if (maxLon > MAX_LNG) {
+                maxLon = maxLon - 2 * Math.PI;
+            }
+        } else {
+            // a pole is within the given distance
+            minLat = Math.max(minLat, MIN_LAT);
+            maxLat = Math.min(maxLat, MAX_LAT);
+            minLon = MIN_LNG;
+            maxLon = MAX_LNG;
+        }
+
+        var boundingSquare = new google.maps.LatLngBounds(
+            new google.maps.LatLng(minLat.radToDeg(), minLon.radToDeg()),
+            new google.maps.LatLng(maxLat.radToDeg(), maxLon.radToDeg())
+            
+        );
+
+        return boundingSquare;
+    };
+
+    var shorter = function(duration) {
         return duration.toLowerCase().replace('hour', 'hr');
-    }
+    };
 
     var renderStaticMap = function () {
         
@@ -214,17 +327,19 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
         $('#img-out').show();
 
-        var staticMapsUrl = 'https://maps.googleapis.com/maps/api/staticmap?scale=1&',
-            startMarker = 'markers=color:0x80da40ff|label:A|' + $scope.origin,
-            endMarker = 'markers=color:0xf76255ff|label:B|' + $scope.destination,
+        var staticMapsUrl = 'https://maps.googleapis.com/maps/api/staticmap?',
             mapCenter = 'center=' + $scope.center.lat() + ',' + $scope.center.lng(),
-            zoomLevel = +'zoom=' + $scope.zoom,
-            mapSize = 'size=' + $scope.mapWidth + 'x' + $scope.mapWidth,
-            commonUrl = staticMapsUrl + mapCenter + '&' + zoomLevel + '&' + mapSize + '&' + startMarker + '&' + endMarker;
+            startMarker = 'markers=color:0x80da40ff|label:A|' + $scope.origin.lat() + ',' + $scope.origin.lng(),
+            destMarker = 'markers=color:0xf76255ff|label:B|' + $scope.destination.lat() + ',' + $scope.destination.lng(),
+            zoomLevel = 'zoom=' + $scope.zoom,
+            mapSize = 'size=' + $scope.mapWidth + 'x' + $scope.mapWidth;
+
+        var imgUrl = staticMapsUrl + mapCenter + '&' + zoomLevel + '&' + mapSize  + '&' + startMarker + '&' + destMarker;
+        console.log(imgUrl);
 
         var image = document.getElementById('img-out');
         image.setAttribute('crossorigin', 'anonymous');
-        image.setAttribute('src', commonUrl);
+        image.setAttribute('src', imgUrl);
 
         $("#img-out").load(function() {
             
@@ -235,16 +350,19 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             canvas.height = image.height;
             context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-            var lineWidth = 4;
+            var lineWidth = 2;
 
             drawPolyline($scope.ptLatLng, context, lineWidth, "#FF0000", gmapsInfo);
             drawPolyline($scope.dwLatLng, context, lineWidth, "#0000FF", gmapsInfo);
             
             $('#img-out').hide(); 
 
-            $('#gmap-canvas').remove();
-            $('#map-wrapper').append($('<div>', {'id': 'gmap-canvas', 'class': 'gmap-canvas'}));
-            $('#map-wrapper').hide();
+            debug = false;
+            if(!debug) {
+                $('#gmap-canvas').remove();
+                $('#map-wrapper').append($('<div>', {'id': 'gmap-canvas', 'class': 'gmap-canvas'}));
+                $('#map-wrapper').hide();
+            }
         });
     }
 
@@ -253,11 +371,12 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         if (bothResultsFound()) {
             
             $scope.mapWidth = 600;
-            $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]),
-            $scope.center = $scope.bounds.getCenter(),
+            
+            $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
+            $scope.center = $scope.bounds.getCenter();
             $scope.zoom = getZoom($scope.bounds, $scope.mapWidth);
 
-            console.log($scope.bounds)
+            console.log("COMB;", JSON.stringify($scope.bounds), $scope.zoom);
 
             var mapOptions = {
                 zoom: $scope.zoom,
@@ -269,6 +388,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             $scope.map = new google.maps.Map(document.getElementById("gmap-canvas"), mapOptions);
 
             google.maps.event.addListenerOnce($scope.map, 'idle', function() {
+                console.log("ACT:", $scope.map.getZoom())
                 if($scope.map.getZoom() != $scope.zoom) {
                     google.maps.event.addListenerOnce($scope.map, "zoom_changed", function() {
                         renderStaticMap();
@@ -281,7 +401,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         }
     };
 
-    var writeTextOnImage = function (context, text, x, y) {
+    var writeTextOnImage = function (context, lineWidth, text, x, y) {
 
         var f = 36;
         for (; f >= 0; f -= 1) {
@@ -290,7 +410,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 context.textAlign = "center";
                 context.fillStyle = "white";
                 context.strokeStyle = "black";
-                context.lineWidth = 4;
+                context.lineWidth = lineWidth;
                 context.fillText(text, x, y);
                 context.strokeText(text, x, y);
 
@@ -302,15 +422,15 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     var drawPolyline = function(latLngArray, context, lineWidth, lineColor, gmapsInfo) {    
 
         var startCoords = getXYcoords(gmapsInfo, new google.maps.LatLng(latLngArray[0].lat, latLngArray[0].lng));
-        context.strokeStyle = lineColor;
-        context.lineWidth = 2;
+
         context.beginPath();
         context.moveTo(startCoords[0], startCoords[1]);
-
         for(i=1; i<latLngArray.length; i++) {
             var coord = getXYcoords(gmapsInfo, new google.maps.LatLng(latLngArray[i].lat, latLngArray[i].lng));
             context.lineTo(coord[0], coord[1]);
         }
+
+        context.strokeStyle = lineColor;
         context.lineWidth = lineWidth;
         context.stroke();
     }
@@ -328,9 +448,9 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         context.textAlign = "center";
         context.fillStyle = "white";
         context.strokeStyle = "black";
-        context.lineWidth = 2;
-        writeTextOnImage(context, topText, width / 2, 70);
-        writeTextOnImage(context, bottomText, width / 2, height - 30);
+        var lineWidth = 2;
+        writeTextOnImage(context, lineWidth, topText, width / 2, 70);
+        writeTextOnImage(context, lineWidth, bottomText, width / 2, height - 30);
 
         $('canvas2').remove();
         $rootScope.memeText = $rootScope.selectedTemplate.firstLine + ' - ' + $rootScope.selectedTemplate.secondLine;
@@ -349,6 +469,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         }
 
         function _zoom(mapPx, worldPx, fraction) {
+            //return Math.log(mapPx / worldPx / fraction) / Math.LN2;
             return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
         }
 
