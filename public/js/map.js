@@ -68,8 +68,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                     });       
                 });
 
-                routeDetails['polyline'] = result.routes[0].overview_polyline;
-                routeDetails['polylineCoords'] = latLng;
+                routeDetails['polylineCoords'] = [{"mode": mode, "coords": latLng}];
                 routeDetails['bounds'] = result.routes[0].bounds;
                 
                 d.resolve(routeDetails);
@@ -80,12 +79,38 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         return d.promise;
     }
 
+    var clearStatus = function() {
+        $('#map-status').html('');
+    }
+
+    var addStatus = function(message) {
+        $('#map-status').html($('#map-status').html() + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + message);
+    }
+
     $scope.getMapData = function () {
 
         $scope.dwBounds = null;
         $scope.ptBounds = null;
 
+        clearStatus()
+        $('#map-status').show();
+        addStatus('Building your meme, please be patient');
+        $('#map-wrapper').show();
+
+        $scope.public = {
+            mode: 'public',
+            distance: '',
+            duration: ''
+        };
+
+        $scope.other = {
+            mode: $scope.transport.mode,
+            distance: '',
+            duration: ''
+        };
+
         if (validateAddresses()) {
+            addStatus("Addresses are valid");
             var startLat = document.getElementById('startAddressLat').value,
                 startLng = document.getElementById('startAddressLong').value,
                 destLat = document.getElementById('destAddressLat').value,
@@ -94,29 +119,30 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             $scope.origin = new google.maps.LatLng(startLat, startLng);
             $scope.destination = new google.maps.LatLng(destLat, destLng);
 
+            addStatus("Retrieving " + $scope.transport.mode + " directions from Google...");
             getGoogleRoute($scope.transport.mode, startLat, startLng, destLat, destLng).then(
                 function(dwRoute) {
                     if(dwRoute) {
-                        $scope.$apply(function () {
-                            $scope.other = {
-                                mode: $scope.transport.mode,
-                                distance: dwRoute.distance,
-                                duration: dwRoute.duration
-                            };
-                        });
-
+                        addStatus("Success!");
+                        $scope.other = {
+                            mode: $scope.transport.mode,
+                            distance: dwRoute.distance,
+                            duration: shorter(dwRoute.duration)
+                        };
                         $scope.dwLatLng = dwRoute.polylineCoords;
-                        document.getElementById('other-duration').innerText = dwRoute.duration;
                         $scope.dwBounds = dwRoute.bounds;
-                        console.log("DWB:", JSON.stringify(dwRoute.bounds));
-
-                        return true;
+                        return [true, false];
                     }
-                    return false;
+                    addStatus("Failed to retieve directions, please wait a moment and try again");
+                    return [false, false];
                 }
             ).then(
-                function(dwWorked) {
-                    if(!dwWorked) { return false; }
+                function(dirStatus) {
+
+                    var d = Q.defer();
+                    if(!dirStatus[0]) { d.resolve(dirStatus); }
+
+                    addStatus("Retrieving journey information from Translink (allowing 10 sec)...")
 
                     var tlapiUrl = window.location.href.replace(
                         "#",
@@ -130,43 +156,89 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         +$scope.getMaxWalk()
                     );
 
-                    return $.ajax({
+                    $.ajax({
                         type: "GET",
                         url: tlapiUrl,
-                        async: false,
+                        timeout: 10000,
                         success: function (journey) {
-                            if(!journey) { return false; }
-
+                            if(!journey) {
+                                addStatus("Failed to retrieve journey information");
+                                d.resolve(dirStatus);
+                            }
+                            
+                            addStatus("Success!");
                             $scope.public = {
                                 mode: 'public',
-                                distance: journey.walkingDistance,
-                                duration: journey.duration
+                                distance: prettyDistance(journey.walkingDistance),
+                                duration: prettyDuration(journey.duration)
                             };
 
                             $scope.ptLatLng = [];
                             journey.legs.forEach(function(leg) {
+                                var legLatLng = [];
                                 google.maps.geometry.encoding.decodePath(leg.polyline).forEach(function(ll) {
-                                    $scope.ptLatLng.push( {"lat": ll.lat(), "lng": ll.lng()} );    
+                                    legLatLng.push( {"lat": ll.lat(), "lng": ll.lng()} );    
                                 });
+                                $scope.ptLatLng.push( {"mode": leg.travelMode, "coords": legLatLng} );
                             });
 
-                            document.getElementById('public-duration').innerText = journey.duration;
-
                             $scope.ptBounds = findPolylineBounds($scope.ptLatLng);
-
-                            return true;
+                            d.resolve([true, true]);
                         },
                         error: function (err) {
-                            return false;
+                            addStatus("Journey could not be retieved, let's walk there instead...");
+                            d.resolve(dirStatus);
                         }
                     });
+                    return d.promise;
                 }
             ).then(
-                function(bothWorked) {
-                    if(bothWorked) {
-                        $scope.$apply(function () {
-                            $scope.mapToImage();
-                        });
+                function(dirStatus) {
+                    if(dirStatus[0]) {
+                        if(dirStatus[1]) {
+                            // both worked
+                            $scope.$apply(function () {
+                                addStatus("Rendering your map...");
+                                $scope.mapToImage(true);
+                            });
+                        } else {
+                            // need to walk there...
+                            if($scope.transport.mode !== 'walking') {
+                                addStatus("Retrieving walking directions from Google...");
+                                getGoogleRoute('walking', startLat, startLng, destLat, destLng).then(
+                                    function(ptRoute) {
+                                        if(ptRoute) {
+                                            addStatus("Success!");
+                                            $scope.public = {
+                                                mode: 'public',
+                                                distance: "Walk: " + ptRoute.distance,
+                                                duration: shorter(ptRoute.duration)
+                                            };
+                                            $scope.ptLatLng = [ { 'mode' : 'walking', 'coords': ptRoute.polylineCoords } ];
+                                            $scope.ptBounds = ptRoute.bounds;
+                                            return true;
+                                        }
+                                        addStatus("Failed to retieve directions, please wait a moment and try again");
+                                        return false;
+                                    }
+                                ).then(
+                                    function(itWorked) {
+                                        var ptRouteIsValid = false;
+                                        if(itWorked) { ptRouteIsValid = true; }
+                                        $scope.$apply(function () {
+                                            addStatus("Rendering your map...");
+                                            $scope.mapToImage(ptRouteIsValid);
+                                        });
+                                    }
+                                )
+                            } else {
+                                // user already requested walking
+                                $scope.$apply(function () {
+                                    addStatus("Rendering your map...");
+                                    $scope.mapToImage(false);
+                                });
+                            }
+                        }
                     }
                 }
             );
@@ -176,22 +248,246 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             $scope.showMap = true;
 
         } else {
+            addStatus("Invalid addresses");
             $scope.showMap = false;
         }
     };
 
-    var findPolylineBounds = function(polyline) {
-        var latMax = polyline[0].lat,
-            lngMax = polyline[0].lng,
-            latMin = polyline[0].lat,
-            lngMin = polyline[0].lng;
+    var renderStaticMap = function (ptRouteIsValid) {
+        
+        var gmapsInfo = getMapConversionInfo();
 
-        for(var i=1; i< polyline.length; i++) {
-            if (polyline[i].lat > latMax) { latMax = polyline[i].lat; }
-            if (polyline[i].lat < latMin) { latMin = polyline[i].lat; }
-            if (polyline[i].lng > lngMax) { lngMax = polyline[i].lng; }
-            if (polyline[i].lng < lngMin) { lngMin = polyline[i].lng; }
+        var staticMapsUrl = 'https://maps.googleapis.com/maps/api/staticmap?',
+            mapCenter = 'center=' + $scope.center.lat() + ',' + $scope.center.lng(),
+            zoomLevel = 'zoom=' + $scope.zoom,
+            mapSize = 'size=' + $scope.mapWidth + 'x' + $scope.mapWidth;
+
+        var imgUrl = staticMapsUrl + mapCenter + '&' + zoomLevel + '&' + mapSize;
+
+        var image = document.getElementById('img-out');
+        image.setAttribute('crossorigin', 'anonymous');
+        image.setAttribute('src', imgUrl);
+
+        $('#img-out').show();
+        $("#img-out").load(function() {
+            
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+            $rootScope.context = context;
+            canvas.width = image.width;
+            canvas.height = image.height;
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+            var lineWidth = 2;
+
+            drawCircleAt($scope.origin, context, '#006400', gmapsInfo)
+            drawCircleAt($scope.destination, context, '#FF0000', gmapsInfo)
+
+            if(ptRouteIsValid) {
+                drawPolylines($scope.ptLatLng, context, lineWidth, '#FF0000', gmapsInfo);
+            }
+            drawPolylines($scope.dwLatLng, context, lineWidth, '#0000FF', gmapsInfo);
+
+
+            $('#gmap-canvas').html("");
+            $('#map-status').hide();
+            $('#img-out').hide(); 
+            $('#map-wrapper').hide();
+        });
+    }
+
+    $scope.mapToImage = function (ptRouteIsValid) {
+
+        if (bothResultsFound()) {
+            
+            $scope.mapWidth = 600;
+            if(ptRouteIsValid) {
+                $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
+            } else {
+                $scope.bounds = getCombinedBounds([$scope.dwBounds]);
+            }
+
+            $scope.center = $scope.bounds.getCenter();
+            $scope.zoom = getZoom($scope.bounds, $scope.mapWidth);
+
+            var mapOptions = {
+                zoom: $scope.zoom,
+                center: $scope.center,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            $('#map-wrapper').show();
+            $scope.map = new google.maps.Map(document.getElementById("gmap-canvas"), mapOptions);
+
+            google.maps.event.addListenerOnce($scope.map, 'idle', function() {
+                if($scope.map.getZoom() != $scope.zoom) {
+                    google.maps.event.addListenerOnce($scope.map, "zoom_changed", function() {
+                        renderStaticMap(ptRouteIsValid);
+                    });
+                    $scope.map.setZoom($scope.zoom);
+                } else {
+                    renderStaticMap(ptRouteIsValid);
+                }
+            });
         }
+    };
+
+    var writeTextOnImage = function (context, lineWidth, text, x, y) {
+
+        var f = 36;
+        for (; f >= 0; f -= 1) {
+            context.font = "bold " + f + "pt Impact, Charcoal, sans-serif";
+            if (context.measureText(text).width < canvas.width - 10) {
+                context.textAlign = "center";
+                context.fillStyle = "white";
+                context.strokeStyle = "black";
+                context.lineWidth = lineWidth;
+                context.fillText(text, x, y);
+                context.strokeText(text, x, y);
+
+                break;
+            }
+        }
+    }
+
+    var drawCircleAt = function(center, context, color, gmapsInfo) {
+        context.beginPath();
+        context.strokeStyle = color;
+        context.lineWidth = 5;
+        var centerXy = getXYcoords(gmapsInfo, center);
+        context.arc(centerXy[0], centerXy[1], 8, 0, 2*Math.PI);
+        context.stroke();
+    }
+
+    var drawPolylines = function(polylineData, context, lineWidth, lineColor, gmapsInfo) {    
+
+        polylineData.forEach(function(polyline) {
+            var latLngArray = polyline['coords'];
+            var startCoords = getXYcoords(gmapsInfo, new google.maps.LatLng(latLngArray[0].lat, latLngArray[0].lng));
+
+            context.beginPath();
+            context.moveTo(startCoords[0], startCoords[1]);
+            for(i=1; i<latLngArray.length; i++) {
+                var coord = getXYcoords(gmapsInfo, new google.maps.LatLng(latLngArray[i].lat, latLngArray[i].lng));
+                context.lineTo(coord[0], coord[1]);
+            }
+
+            if(polyline['mode'] == 'walking') {
+                context.setLineDash([5]);                
+                context.strokeStyle = "#006400";
+                context.lineWidth = 4;
+        } else {
+                context.setLineDash([]);
+                context.strokeStyle = lineColor;
+                context.lineWidth = lineWidth;
+            }
+            context.stroke();            
+        });
+    }
+
+    $scope.renderMemeFinal = function () {
+
+        var context = $rootScope.context;
+        var image = document.getElementById('img-out');
+
+        var topText = $rootScope.selectedTemplate.firstLine;
+        var bottomText = $rootScope.selectedTemplate.secondLine;
+
+        var width = image.width;
+        var height = image.height;
+        context.textAlign = "center";
+        context.fillStyle = "white";
+        context.strokeStyle = "black";
+        var lineWidth = 2;
+        writeTextOnImage(context, lineWidth, topText, width / 2, 70);
+        writeTextOnImage(context, lineWidth, bottomText, width / 2, height - 30);
+
+        $('canvas2').remove();
+        $rootScope.memeText = $rootScope.selectedTemplate.firstLine + ' - ' + $rootScope.selectedTemplate.secondLine;
+
+    };
+
+    var getZoom = function (bounds, mapWidth) {
+        //https://stackoverflow.com/a/13274361
+        var WORLD_DIM = { height: 256, width: 256 };
+        var ZOOM_MAX = 21;
+
+        function _latRad(lat) {
+            var sin = Math.sin(lat * Math.PI / 180);
+            var radX2 = Math.log((1 + sin) / (1 - sin)) / 2;
+            return Math.max(Math.min(radX2, Math.PI), -Math.PI) / 2;
+        }
+
+        function _zoom(mapPx, worldPx, fraction) {
+            //return Math.log(mapPx / worldPx / fraction) / Math.LN2;
+            return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
+        }
+
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
+
+        var latFraction = (_latRad(ne.lat()) - _latRad(sw.lat())) / Math.PI;
+
+        var lngDiff = ne.lng() - sw.lng();
+        var lngFraction = ((lngDiff < 0) ? (lngDiff + 360) : lngDiff) / 360;
+
+        var latZoom = _zoom(mapWidth, WORLD_DIM.height, latFraction);
+        var lngZoom = _zoom(mapWidth, WORLD_DIM.width, lngFraction);
+
+        return Math.min(latZoom, lngZoom, ZOOM_MAX);
+    };
+
+    var getCombinedBounds = function (bounds) {
+        var bBounds = bounds[0];
+        for(var i=1; i< bounds.length; i++) {
+            bBounds.extend(bounds[i].getNorthEast());
+            bBounds.extend(bounds[i].getSouthWest());
+        }
+        return bBounds;
+    };
+
+    var getMapConversionInfo = function () {
+
+        var projection = $scope.map.getProjection();
+
+        var bounds = $scope.map.getBounds();
+        var topRight = projection.fromLatLngToPoint(bounds.getNorthEast());
+        var bottomLeft = projection.fromLatLngToPoint(bounds.getSouthWest());
+
+        var topLeft = new google.maps.Point(bottomLeft.x, topRight.y);
+        var projectedWidth = topRight.x - bottomLeft.x;
+        var projectedHeight = bottomLeft.y - topRight.y;
+
+        var container = document.getElementById('gmap-canvas');
+        var xScale = parseInt(container.offsetWidth) / projectedWidth;
+        var yScale = parseInt(container.offsetHeight) / projectedHeight;
+
+        return {"xScale": xScale, "yScale": yScale, "origin": topLeft, "projection": projection, "width": container.offsetWidth};
+    }
+
+    var getXYcoords = function (mapInfo, latLng) {
+
+        var worldPoint = mapInfo.projection.fromLatLngToPoint(latLng);
+        return [
+                (worldPoint.x - mapInfo.origin.x) * mapInfo.xScale,
+                (worldPoint.y - mapInfo.origin.y) * mapInfo.yScale
+               ];
+    }
+    var findPolylineBounds = function(polylineData) {
+        var latMax = polylineData[0].coords[0].lat,
+            lngMax = polylineData[0].coords[0].lng,
+            latMin = polylineData[0].coords[0].lat,
+            lngMin = polylineData[0].coords[0].lng;
+
+        polylineData.forEach(function(polyline) {
+            var coords = polyline['coords'];
+            for(var i=0; i< polyline.length; i++) {
+                if (coords[i].lat > latMax) { latMax = coords[i].lat; }
+                if (coords[i].lat < latMin) { latMin = coords[i].lat; }
+                if (coords[i].lng > lngMax) { lngMax = coords[i].lng; }
+                if (coords[i].lng < lngMin) { lngMin = coords[i].lng; }
+            }
+        });
 
         var boundingRect = new google.maps.LatLngBounds(
             new google.maps.LatLng(latMin, lngMin),
@@ -201,8 +497,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
         var center = boundingRect.getCenter();
         var d2sw = getLatLonDistanceInKm(center.lat(), center.lng(), latMin, lngMin);
-        var bounds= getSquareBoundingBox(center, d2sw);// + 0.7); // 700m boundary?
-        console.log("PLB:", JSON.stringify(bounds));
+        var bounds= getSquareBoundingBox(center, d2sw + 0.2);
         return bounds;
     }
 
@@ -318,210 +613,33 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     };
 
     var shorter = function(duration) {
-        return duration.toLowerCase().replace('hour', 'hr');
+        return duration.replace('Hour', 'Hr');
     };
 
-    var renderStaticMap = function () {
+    var prettyDistance = function(distance) {
+        if(distance < 1000) {
+            return "Walk: " + distance + ' m'
+        }
+        return "Walk: " + Math.round(distance/100)/10 + ' Km'
+    }
+
+    var prettyDuration = function(duration) {
+        var mins = duration % 60;
+        var hrs = (duration - mins)/60;
+        var mString = "";
         
-        var gmapsInfo = getMapConversionInfo();
-
-        $('#img-out').show();
-
-        var staticMapsUrl = 'https://maps.googleapis.com/maps/api/staticmap?',
-            mapCenter = 'center=' + $scope.center.lat() + ',' + $scope.center.lng(),
-            startMarker = 'markers=color:0x80da40ff|label:A|' + $scope.origin.lat() + ',' + $scope.origin.lng(),
-            destMarker = 'markers=color:0xf76255ff|label:B|' + $scope.destination.lat() + ',' + $scope.destination.lng(),
-            zoomLevel = 'zoom=' + $scope.zoom,
-            mapSize = 'size=' + $scope.mapWidth + 'x' + $scope.mapWidth;
-
-        var imgUrl = staticMapsUrl + mapCenter + '&' + zoomLevel + '&' + mapSize  + '&' + startMarker + '&' + destMarker;
-        console.log(imgUrl);
-
-        var image = document.getElementById('img-out');
-        image.setAttribute('crossorigin', 'anonymous');
-        image.setAttribute('src', imgUrl);
-
-        $("#img-out").load(function() {
-            
-            var canvas = document.getElementById("canvas");
-            var context = canvas.getContext("2d");
-            $rootScope.context = context;
-            canvas.width = image.width;
-            canvas.height = image.height;
-            context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-            var lineWidth = 2;
-
-            drawPolyline($scope.ptLatLng, context, lineWidth, "#FF0000", gmapsInfo);
-            drawPolyline($scope.dwLatLng, context, lineWidth, "#0000FF", gmapsInfo);
-            
-            $('#img-out').hide(); 
-
-            debug = false;
-            if(!debug) {
-                $('#gmap-canvas').remove();
-                $('#map-wrapper').append($('<div>', {'id': 'gmap-canvas', 'class': 'gmap-canvas'}));
-                $('#map-wrapper').hide();
-            }
-        });
-    }
-
-    $scope.mapToImage = function () {
-
-        if (bothResultsFound()) {
-            
-            $scope.mapWidth = 600;
-            
-            $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
-            $scope.center = $scope.bounds.getCenter();
-            $scope.zoom = getZoom($scope.bounds, $scope.mapWidth);
-
-            console.log("COMB;", JSON.stringify($scope.bounds), $scope.zoom);
-
-            var mapOptions = {
-                zoom: $scope.zoom,
-                center: $scope.center,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-
-            $('#map-wrapper').show();
-            $scope.map = new google.maps.Map(document.getElementById("gmap-canvas"), mapOptions);
-
-            google.maps.event.addListenerOnce($scope.map, 'idle', function() {
-                console.log("ACT:", $scope.map.getZoom())
-                if($scope.map.getZoom() != $scope.zoom) {
-                    google.maps.event.addListenerOnce($scope.map, "zoom_changed", function() {
-                        renderStaticMap();
-                    });
-                    $scope.map.setZoom($scope.zoom);
-                } else {
-                    renderStaticMap();
-                }
-            });
-        }
-    };
-
-    var writeTextOnImage = function (context, lineWidth, text, x, y) {
-
-        var f = 36;
-        for (; f >= 0; f -= 1) {
-            context.font = "bold " + f + "pt Impact, Charcoal, sans-serif";
-            if (context.measureText(text).width < canvas.width - 10) {
-                context.textAlign = "center";
-                context.fillStyle = "white";
-                context.strokeStyle = "black";
-                context.lineWidth = lineWidth;
-                context.fillText(text, x, y);
-                context.strokeText(text, x, y);
-
-                break;
-            }
-        }
-    }
-
-    var drawPolyline = function(latLngArray, context, lineWidth, lineColor, gmapsInfo) {    
-
-        var startCoords = getXYcoords(gmapsInfo, new google.maps.LatLng(latLngArray[0].lat, latLngArray[0].lng));
-
-        context.beginPath();
-        context.moveTo(startCoords[0], startCoords[1]);
-        for(i=1; i<latLngArray.length; i++) {
-            var coord = getXYcoords(gmapsInfo, new google.maps.LatLng(latLngArray[i].lat, latLngArray[i].lng));
-            context.lineTo(coord[0], coord[1]);
+        if(mins > 1) {
+            mString = mins + ' Mins';
+        } else if (mins == 1) {
+            mString = mins + ' Min';
         }
 
-        context.strokeStyle = lineColor;
-        context.lineWidth = lineWidth;
-        context.stroke();
-    }
-
-    $scope.renderMemeFinal = function () {
-
-        var context = $rootScope.context;
-        var image = document.getElementById('img-out');
-
-        var topText = $rootScope.selectedTemplate.firstLine;
-        var bottomText = $rootScope.selectedTemplate.secondLine;
-
-        var width = image.width;
-        var height = image.height;
-        context.textAlign = "center";
-        context.fillStyle = "white";
-        context.strokeStyle = "black";
-        var lineWidth = 2;
-        writeTextOnImage(context, lineWidth, topText, width / 2, 70);
-        writeTextOnImage(context, lineWidth, bottomText, width / 2, height - 30);
-
-        $('canvas2').remove();
-        $rootScope.memeText = $rootScope.selectedTemplate.firstLine + ' - ' + $rootScope.selectedTemplate.secondLine;
-
-    };
-
-    var getZoom = function (bounds, mapWidth) {
-        //https://stackoverflow.com/a/13274361
-        var WORLD_DIM = { height: 256, width: 256 };
-        var ZOOM_MAX = 21;
-
-        function _latRad(lat) {
-            var sin = Math.sin(lat * Math.PI / 180);
-            var radX2 = Math.log((1 + sin) / (1 - sin)) / 2;
-            return Math.max(Math.min(radX2, Math.PI), -Math.PI) / 2;
+        if (hrs > 1) {
+            return hrs + ' Hrs ' + mString;
+        } else if (hrs == 1) {
+            return hrs + ' Hr ' + mString;
         }
-
-        function _zoom(mapPx, worldPx, fraction) {
-            //return Math.log(mapPx / worldPx / fraction) / Math.LN2;
-            return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
-        }
-
-        var ne = bounds.getNorthEast();
-        var sw = bounds.getSouthWest();
-
-        var latFraction = (_latRad(ne.lat()) - _latRad(sw.lat())) / Math.PI;
-
-        var lngDiff = ne.lng() - sw.lng();
-        var lngFraction = ((lngDiff < 0) ? (lngDiff + 360) : lngDiff) / 360;
-
-        var latZoom = _zoom(mapWidth, WORLD_DIM.height, latFraction);
-        var lngZoom = _zoom(mapWidth, WORLD_DIM.width, lngFraction);
-
-        return Math.min(latZoom, lngZoom, ZOOM_MAX);
-    };
-
-    var getCombinedBounds = function (bounds) {
-        var bBounds = bounds[0];
-        for(var i=1; i< bounds.length; i++) {
-            bBounds.extend(bounds[i].getNorthEast());
-            bBounds.extend(bounds[i].getSouthWest());
-        }
-        return bBounds;
-    };
-
-    var getMapConversionInfo = function () {
-
-        var projection = $scope.map.getProjection();
-
-        var bounds = $scope.map.getBounds();
-        var topRight = projection.fromLatLngToPoint(bounds.getNorthEast());
-        var bottomLeft = projection.fromLatLngToPoint(bounds.getSouthWest());
-
-        var topLeft = new google.maps.Point(bottomLeft.x, topRight.y);
-        var projectedWidth = topRight.x - bottomLeft.x;
-        var projectedHeight = bottomLeft.y - topRight.y;
-
-        var container = document.getElementById('gmap-canvas');
-        var xScale = parseInt(container.offsetWidth) / projectedWidth;
-        var yScale = parseInt(container.offsetHeight) / projectedHeight;
-
-        return {"xScale": xScale, "yScale": yScale, "origin": topLeft, "projection": projection, "width": container.offsetWidth};
-    }
-
-    var getXYcoords = function (mapInfo, latLng) {
-
-        var worldPoint = mapInfo.projection.fromLatLngToPoint(latLng);
-        return [
-                (worldPoint.x - mapInfo.origin.x) * mapInfo.xScale,
-                (worldPoint.y - mapInfo.origin.y) * mapInfo.yScale
-               ];
+        return mString;
     }
 
     $scope.shareImage = function() {
