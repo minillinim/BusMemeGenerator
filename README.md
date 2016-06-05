@@ -3,7 +3,7 @@ Code for the QCA / transport action group bus route meme project
 
 ## Project setup
 
-### Environment
+### Development
 
 #### No-docker setup
 
@@ -38,3 +38,40 @@ Mongo client (for db queries):
 docker exec -it busmemegenerator_db_1 bash
 root@221d3a2b4173:/# mongo
 ```
+
+### Production
+
+#### Docker installation
+
+```
+apt-get update
+apt-get install apt-transport-https ca-certificates
+apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+apt-get update
+apt-get purge lxc-docker
+apt-get install docker-engine
+```
+
+Change `/etc/default/docker`
+
+```
+DOCKER_OPTS="-H tcp://127.0.0.1:4243 -H unix:///var/run/docker.sock"
+```
+
+Restart docker:
+
+```
+service docker restart
+```
+
+#### Database / Application
+
+```
+export DOCKER_HOST=tcp://localhost:4243
+mkdir -p /var/lib/busmemegenerator_db/data
+docker run -d --name db -v /var/lib/busmemegenerator_db/data:/data/db mongo
+wget https://raw.githubusercontent.com/minillinim/BusMemeGenerator/master/app.env
+docker run -d --link db:db -p 80:80 --env-file ./app.env  willgarcia/busmemegenerator
+```
+
+If needed, edit `app.env` to change defaut port / database URI / Node environment
