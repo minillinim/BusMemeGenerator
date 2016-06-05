@@ -30,7 +30,6 @@ router.get('/getImages', MemeController().getImages);
 
 router.post('/saveUser', UserController().saveUserDetails);
 
-
 router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', function (req, res, next) {
     tlapi().getJourneysBetween(req.params.startLat,
         req.params.startLng,
@@ -41,6 +40,6 @@ router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', functio
         req.params.walkMax)
         .then(function (processedJourney) {
             console.log(processedJourney);
-            return processedJourney;
+            res.send(processedJourney);
         });
 });

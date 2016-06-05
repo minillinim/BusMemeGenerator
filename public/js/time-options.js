@@ -1,6 +1,6 @@
 var app = angular.module('bus-meme');
 
-app.controller('TimeController', function ($scope) 
+app.controller('TimeController', function ($scope, $rootScope) 
 {
     var weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
     var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -19,7 +19,9 @@ app.controller('TimeController', function ($scope)
 
     $scope.selectedMaxWalk = $scope.walkingOptions[4];
 
-    $scope.getSelectedTime = function(){
+    $rootScope.getMaxWalk = function() { return $scope.selectedMaxWalk.value; }
+    $rootScope.getTimeOption = function() { return $scope.timeOption; }
+    $rootScope.getSelectedTime = function(){
 
         var hour = $scope.selectedHour;
         if ($scope.selectedAmpm == 'pm')
@@ -34,6 +36,7 @@ app.controller('TimeController', function ($scope)
 
         return date;
     }
+
     function getSevenDays(){
         days = [];
 

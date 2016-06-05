@@ -24,13 +24,13 @@ var travel_by_tram = 32;
 
 var default_walk_speed = 1;
 
-function getJourneysBetween(startLat, startLng, endLat, endLng, mode, at, walkMax) {
+function getJourneysBetween(startLat, startLng, destLat, destLng, mode, at, walkMax) {
   //localhost:3000/tl/-27.415458/153.050513/-27.465918/153.025939/after/1464961050/1200/
   tripInfo = {
     "startLat": startLat,
     "startLng": startLng,
-    "endLat": endLat,
-    "endLng": endLng,
+    "destLat": destLat,
+    "destLng": destLng,
     "walkSpeed": default_walk_speed,
     "walkMax": walkMax,
     "at": _convertTime(at)
@@ -50,18 +50,17 @@ function getJourneysBetween(startLat, startLng, endLat, endLng, mode, at, walkMa
       tripInfo["timeMode"] = last_services;
       break;
   }
-  console.log(tripInfo);
 
   var d = Q.defer();
   _getLocation(startLat, startLng)
   .then(
     function(startLoc) {
       if(startLoc) {
-        return _getLocation(endLat, endLng)
+        return _getLocation(destLat, destLng)
         .then(
-          function(endLoc) {
-            if(endLoc) {
-              d.resolve(_getJourneysBetween(tripInfo, startLoc, endLoc));
+          function(destLoc) {
+            if(destLoc) {
+              d.resolve(_getJourneysBetween(tripInfo, startLoc, destLoc));
             } else {
               d.resolve(null);
             }
@@ -92,19 +91,19 @@ function _convertTime(timeStamp) {
          seconds.substr(-2);
 }
 
-function _getJourneysBetween(tripInfo, startLoc, endLoc) {
+function _getJourneysBetween(tripInfo, startLoc, destLoc) {
   //https://opia.api.translink.com.au/v2/travel/rest/plan/GP:-27.415458,153.050513/GP:-27.465918,153.025939?timeMode=1&at=05/24/16+16:27:00&walkSpeed=1&maximumWalkingDistanceM=1000&api_key=special-key'
   var d = Q.defer();
   var url = base_url + 
             plan_url + 
-            startLoc + "/" + endLoc + 
+            startLoc + "/" + destLoc + 
             "?timeMode=" + tripInfo.timeMode + 
             "&at=" + tripInfo.at + 
             "&walkSpeed=" + tripInfo.walkSpeed  + 
             "&maximumWalkingDistanceM=" + tripInfo.walkMax + 
             "&api_key=special-key";
 
-  if(startLoc && endLoc) {
+  if(startLoc && destLoc) {
     request.get(
       {
         url: url,
@@ -155,6 +154,11 @@ function _getLocation(lat, lng) {
   return d.promise;
 }
 
+function _parseTimeString(timeString) {
+  // extract from: '/Date(1464961260000+1000)/'
+  return parseInt(timeString.split('(')[1].split('+')[0])
+}
+
 function _processItineraries(tripInfo, processedItineraries, itineraries) {
   var d = Q.defer();
   if(processedItineraries.length < itineraries.length) {
@@ -163,19 +167,24 @@ function _processItineraries(tripInfo, processedItineraries, itineraries) {
       function(processedLegs) {
 
         var processed_itinerary = {
-           "startTime": parseInt(itinerary.StartTime.split('(')[1].split('+')[0]), 
-           "endTime": parseInt(itinerary.EndTime.split('(')[1].split('+')[0]),
+           "startTime": _parseTimeString(itinerary.StartTime), 
+           "endTime": _parseTimeString(itinerary.EndTime),
            "totalZones": itinerary.Fare.TotalZones
         };
         
         var total_walk_distance = 0;
+        var total_duration = 0;
+
         processedLegs.forEach(function(leg) {
           total_walk_distance += leg.totalWalkDistance;
+          total_duration += leg.duration;
         });
 
-        processed_itinerary["totalWalkDistance"] = total_walk_distance;
-        processed_itinerary["Legs"] = processedLegs;
-        return processed_itinerary
+        processed_itinerary["walkingDistance"] = total_walk_distance;
+        processed_itinerary["duration"] = total_duration;
+        processed_itinerary["legs"] = processedLegs;
+        
+        return processed_itinerary;
       }
     ).then(
       function(processed_itinerary) {
@@ -198,7 +207,6 @@ function _processLegs(tripInfo, processedLegs, legs) {
     _getStopLocationById(leg.FromStopId, tripInfo.startLat, tripInfo.startLng).then(
       function(locationInfo) {
         var processed_leg = {};
-        console.log(JSON.stringify(locationInfo))
         processed_leg["startDesc"] = locationInfo.Description;
         processed_leg["startLat"] = locationInfo.Position.Lat;
         processed_leg["startLng"] = locationInfo.Position.Lng;
@@ -206,17 +214,23 @@ function _processLegs(tripInfo, processedLegs, legs) {
       }
     ).then(
       function(processed_leg) {
-        return _getStopLocationById(leg.ToStopId, tripInfo.endLat, tripInfo.endLng).then(
+        return _getStopLocationById(leg.ToStopId, tripInfo.destLat, tripInfo.destLng).then(
           function(locationInfo) {
-            processed_leg["endDesc"] = locationInfo.Description;
-            processed_leg["endLat"] = locationInfo.Position.Lat;
-            processed_leg["endLng"] = locationInfo.Position.Lng;
+            processed_leg["destDesc"] = locationInfo.Description;
+            processed_leg["destLat"] = locationInfo.Position.Lat;
+            processed_leg["destLng"] = locationInfo.Position.Lng;
 
             if(leg.TravelMode == travel_by_walk) {
               processed_leg["totalWalkDistance"] = leg.DistanceM;
             } else {
               processed_leg["totalWalkDistance"] = 0;
             }
+
+            processed_leg["departureTime"] = _parseTimeString(leg.DepartureTime);
+            processed_leg["duration"] = leg.DurationMins;
+            processed_leg["polyline"] = leg.Polyline;
+            processed_leg["travelMode"] = leg.TravelMode;
+
             return processed_leg;
           }
         );

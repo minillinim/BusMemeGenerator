@@ -108,39 +108,65 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         $scope.dwLatLng = dwRoute.polylineCoords;
                         document.getElementById('other-duration').innerText = dwRoute.duration;
                         $scope.dwBounds = dwRoute.bounds;
+                        console.log(dwRoute.bounds);
 
                         return true;
                     }
                     return false;
                 }
             ).then(
-                function(lastWorked) {
-                    if(!lastWorked) { return false; }
-                    return getGoogleRoute('public', startLat, startLng, destLat, destLng).then(
-                        function(ptRoute) {
-                            if(ptRoute) {
-                                $scope.$apply(function () {
-                                    $scope.public = {
-                                        mode: 'public',
-                                        distance: ptRoute.distance,
-                                        duration: ptRoute.duration
-                                    };
+                function(dwWorked) {
+                    if(!dwWorked) { return false; }
+
+                    var tlapiUrl = window.location.href.replace(
+                        "#",
+                        "tl/"+
+                        startLat+"/"+
+                        startLng+"/"+
+                        destLat+"/"+
+                        destLng+"/"+
+                        $scope.getTimeOption()+"/"+
+                        $scope.getSelectedTime().getTime()/1000+"/"
+                        +$scope.getMaxWalk()
+                    );
+
+                    return $.ajax({
+                        type: "GET",
+                        url: tlapiUrl,
+                        async: false,
+                        success: function (journey) {
+                            if(!journey) { return false; }
+
+                            $scope.public = {
+                                mode: 'public',
+                                distance: journey.walkingDistance,
+                                duration: journey.duration
+                            };
+
+                            $scope.ptLatLng = [];
+                            journey.legs.forEach(function(leg) {
+                                google.maps.geometry.encoding.decodePath(leg.polyline).forEach(function(ll) {
+                                    $scope.ptLatLng.push( {"lat": ll.lat(), "lng": ll.lng()} );    
                                 });
+                            });
 
-                                $scope.ptLatLng = ptRoute.polylineCoords;
-                                document.getElementById('public-duration').innerText = ptRoute.duration;
-                                $scope.ptBounds = ptRoute.bounds;
+                            document.getElementById('public-duration').innerText = journey.duration;
 
-                                return true;
-                            }
+                            $scope.ptBounds = findPolylineBounds($scope.ptLatLng);
+
+                            return true;
+                        },
+                        error: function (err) {
                             return false;
                         }
-                    );
+                    });
                 }
             ).then(
                 function(bothWorked) {
                     if(bothWorked) {
                         $scope.$apply(function () {
+                            console.log($scope.ptLatLng)
+                            console.log($scope.dwLatLng)
                             $scope.mapToImage();
                         });
                     }
@@ -155,6 +181,28 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             $scope.showMap = false;
         }
     };
+
+    var findPolylineBounds = function(polyline) {
+        var latMax = polyline[0].lat,
+            lngMax = polyline[0].lng,
+            latMin = polyline[0].lat,
+            lngMin = polyline[0].lng;
+
+        for(var i=1; i< polyline.length; i++) {
+            if (polyline[i].lat > latMax) { latMax = polyline[i].lat; }
+            if (polyline[i].lat < latMin) { latMin = polyline[i].lat; }
+            if (polyline[i].lng > lngMax) { lngMax = polyline[i].lng; }
+            if (polyline[i].lng < lngMin) { lngMin = polyline[i].lng; }
+        }
+        console.log("IFB:", latMax, latMin, lngMax, lngMin);
+
+        var bounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(latMax, lngMax),
+            new google.maps.LatLng(latMin, lngMin)
+        );
+        console.log(bounds);
+        return bounds;
+    }
 
     var shorter = function(duration){
         return duration.toLowerCase().replace('hour', 'hr');
@@ -208,6 +256,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]),
             $scope.center = $scope.bounds.getCenter(),
             $scope.zoom = getZoom($scope.bounds, $scope.mapWidth);
+
+            console.log($scope.bounds)
 
             var mapOptions = {
                 zoom: $scope.zoom,
