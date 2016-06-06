@@ -2,14 +2,14 @@ var loganPostcodes = ['4114', '4117', '4118','4119','4123','4124','4125','4127',
 
 function validateAddresses(){
 	var startPC = document.getElementById("startPostCode").value;
-	var startLan = document.getElementById("startAddressLat").value;
+	var startLat = document.getElementById("startAddressLat").value;
 	var startLong = document.getElementById("startAddressLong").value;
 	var destPC = document.getElementById("destPostCode").value;
 	var destLat = document.getElementById("destAddressLat").value;
 	var destLong = document.getElementById("destAddressLong").value;
 	var errors = [];
 	
-	if (!startLan || !startLong || !startPC) {
+	if (!startLat || !startLong || !startPC) {
 		errors.push("<li>Start address invalid or not found</li>");
 	}
 	if (!destLat || !destLong || !destPC) {
@@ -18,6 +18,10 @@ function validateAddresses(){
 						
 	if (!addressWithinLoganRegion(startPC) && !addressWithinLoganRegion(destPC)) {
 		errors.push("<li>At this point we require at least one address to be within the Logan city bounds.</li>");
+	}
+
+	if (bothAddressesAreIdentical(startLat, startLong, destLat, destLong)){
+		errors.push("Please enter two different addresses");
 	}
 
 	if (errors.length > 0) {	
@@ -32,4 +36,13 @@ function validateAddresses(){
 function addressWithinLoganRegion(postcode)
 {
 	return loganPostcodes.indexOf(postcode) > -1;
+}
+
+function bothAddressesAreIdentical(startLat, startLong, destLat, destLong){
+	var addressesIdentical = false;
+
+	if (startLat === destLat && startLong === destLong)
+		addressesIdentical = true;
+
+	return addressesIdentical;
 }
