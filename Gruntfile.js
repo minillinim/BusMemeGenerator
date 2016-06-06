@@ -26,7 +26,8 @@ module.exports = function (grunt) {
                     'public/css/main.css': 'public/css/main.scss',
                     'public/css/share.css': 'public/css/share.scss',
                     'public/css/gallery.css': 'public/css/gallery.scss',
-                    'public/css/map.css': 'public/css/map.scss'
+                    'public/css/map.css': 'public/css/map.scss',
+                    'public/css/about.css': 'public/css/about.scss'
                 }
             }
         },
@@ -43,6 +44,7 @@ module.exports = function (grunt) {
                     'public/js/meme-templates.js',
                     'public/js/time-options.js',
                     'public/js/gallery.js',
+                    'public/js/about.js',
                     'public/js/social-media-controller.js'
                     ]
                 }

@@ -7,6 +7,9 @@ app.config(function ($routeProvider) {
     }).when('/galleries', {
         templateUrl: 'views/gallery.html',
         controller: 'GalleryController'
+    }).when('/about', {
+        templateUrl: 'views/about.html',
+        controller: 'AboutController'        
     })
 });
 
@@ -14,6 +17,10 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     
     $rootScope.showGallery = function () {
         $location.path('/galleries');
+    };
+
+    $rootScope.showAbout = function () {
+        $location.path('/about');
     };
 
     loadGoogleAutocomplete();

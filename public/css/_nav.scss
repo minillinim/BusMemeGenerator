@@ -30,23 +30,43 @@
     	cursor:pointer;
     }
     .gallery{
-    	cursor:pointer;
-    	color: $input-color;
-	    right: 10px;
-	    position: fixed;
-	    padding: 20px;
-	    display:inline-block;
-	    
-	    img{
-	    	display:inline-block;
-	    	width:20px;
-		    padding-right: 5px;
-		    vertical-align: top;
-	    }
+        cursor:pointer;
+        color: $input-color;
+        right: 10px;
+        position: fixed;
+        padding: 20px;
+        display:inline-block;
+        
+        img{
+            display:inline-block;
+            width:20px;
+            padding-right: 5px;
+            vertical-align: top;
+        }
     }
+    .about{
+        cursor:pointer;
+        color: $input-color;
+        right: 100px;
+        position: fixed;
+        padding: 20px;
+        display:inline-block;
+        
+        img{
+            display:inline-block;
+            width:20px;
+            padding-right: 5px;
+            vertical-align: top;
+        }
+    }    
 }
 
 #nav.gallery-nav{
 	background-color:$nav-color;
 	height:65px;
+}
+
+#nav.about-nav{
+    background-color:$nav-color;
+    height:65px;
 }

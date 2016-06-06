@@ -84,8 +84,24 @@ select {
       width: 20px;
       padding-right: 5px;
       vertical-align: top; }
+  #nav .about {
+    cursor: pointer;
+    color: white;
+    right: 100px;
+    position: fixed;
+    padding: 20px;
+    display: inline-block; }
+    #nav .about img {
+      display: inline-block;
+      width: 20px;
+      padding-right: 5px;
+      vertical-align: top; }
 
 #nav.gallery-nav {
+  background-color: #4468DB;
+  height: 65px; }
+
+#nav.about-nav {
   background-color: #4468DB;
   height: 65px; }
 

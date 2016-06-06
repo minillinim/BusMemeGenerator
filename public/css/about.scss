@@ -1,0 +1,28 @@
+@import 'variables';
+@import 'common';
+
+.about-display{
+
+    padding: 50px;
+
+    .about-header{
+
+        h2{
+            font-size:32px;
+            margin-bottom: 5px;
+            .hashtag{
+                color:$text-color;
+            }
+        }
+        .description-line{
+            margin-bottom:15px;
+            color:$input-color;
+            font-size:18px;
+
+            .highlight{
+                font-weight:bold;
+                color:$text-color;
+            }
+        } 
+    }
+}
