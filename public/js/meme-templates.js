@@ -9,10 +9,18 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         $scope.memeTemplates = response.data;
     });
 
+    $scope.handleOverlay = function(){
+        $scope.showTemplates=true;
+        document.getElementById("templates").className="template-selection";
+        document.getElementById("map-overlay").className="map-overlay";
+    }
     $scope.setSelectedTemplate = function (template) {
         document.getElementById("meme-validation").innerText = '';
         $rootScope.selectedTemplate = template;
         $scope.renderMemeTmp();
+        $scope.showTemplates=false;
+        document.getElementById("map-overlay").className="map-overlay-hidden";
+        document.getElementById("templates").className="template-selection-hidden";
     };
 
     $scope.renderMemeTmp = function () {

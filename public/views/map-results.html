@@ -4,60 +4,60 @@
 
     <div id="map-results-content">
 
-        <div class="left-panel">
-
-            <div class="journey-summary" id="journey-summary">
-                <div class="summary-line">
-                    <span class="summary-label">From:</span>
-                    <span id="summary-from" class="summary-content"></span>
-                </div>
-                <div class="summary-line">
-                    <span class="summary-label">To:</span>
-                    <span id="summary-to" class="summary-content"></span>
-                </div>
+        <div class="journey-summary" id="journey-summary">
+            <div class="summary-line">
+                <span class="summary-label">From:</span>
+                <span id="summary-from" class="summary-content"></span>
             </div>
-            <div class="map-wrapper" id="map-wrapper">
-                <div id="map-status"></div>
-                <div id="gmap-canvas"></div>
-            </div>
-            <div id="map-image">
-                <div class="map-canvas" ng-controller="MemeController">
-                    <canvas id="canvas" width="0" height="0"></canvas>
-                    <img id="img-out" class="map-image" src="" />
-                </div>
-                <!--<a id="dl" ng-click="dlCanvas()">Download Canvas</a>-->
-                <img id="img-out-2" class="map-image" src="" style="display:none"/>
-                <div id="meme-validation"></div>
-                <input class="button" id="share-image-button" ng-click="$parent.shareImage()" type="submit" value="Next"/>
-            </div>
-
-        </div>
-        <div class="right-panel">
-            <div class="traveltime-comparison">
-                <div class="traveltime-row">
-                    <span class="traveltime-column">Public Transport</span>
-                    <span class="traveltime-column">{{transport.mode}}</span>
-                </div>
-                <div class="traveltime-row">
-                    <span id="public-duration" class="traveltime-column">{{public.duration}}</span>
-                    <span id="other-duration" class="traveltime-column">{{other.duration}}</span>
-                </div>
-                <div class="traveltime-row">
-                    <span id="public-distance" class="traveltime-column">{{public.distance}}</span>
-                    <span id="other-distance" class="traveltime-column">{{other.distance}}</span>
-                </div>
-            </div>
-            <div class="template-selection" ng-controller="MemeController">
-                <div class="templates-header">
-                    Choose message template
-                </div>
-                <ul class="message-template-list" ng-repeat="template in memeTemplates" ng-click="setSelectedTemplate(template)" ng-class="{selected: template === selectedTemplate}">
-                    <li class="message-template" >
-                        {{template.firstLine}} <br/>{{template.secondLine}}
-                    </li>
-                </ul>
+            <div class="summary-line">
+                <span class="summary-label">To:</span>
+                <span id="summary-to" class="summary-content"></span>
             </div>
         </div>
+        <div class="map-wrapper" id="map-wrapper">
+            <div id="map-status"></div>
+            <div id="gmap-canvas"></div>
+        </div>
+        <div id="map-image">
+            <div class="map-canvas" ng-controller="MemeController">
+                <canvas id="canvas" width="0" height="0"></canvas>
+                <img id="img-out" class="map-image" src="" />
+
+                <img class="templates-menu" src="../assets/menu.svg" ng-click="handleOverlay()"/>
+                <div id="map-overlay" class="map-overlay"></div>
+                <div id="templates" class="template-selection" ng-controller="MemeController">
+                    <div class="templates-header">
+                        Choose message template
+                    </div>
+                    <ul class="message-template-list" ng-repeat="template in memeTemplates" ng-click="setSelectedTemplate(template)" ng-class="{selected: template === selectedTemplate}">
+                        <li class="message-template" >
+                            {{template.firstLine}} <br/>{{template.secondLine}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--<a id="dl" ng-click="dlCanvas()">Download Canvas</a>-->
+            <img id="img-out-2" class="map-image" src="" style="display:none"/>
+            <div id="meme-validation"></div>
+            <input class="button" id="share-image-button" ng-click="$parent.shareImage()" type="submit" value="Next"/>
+        </div>
+
+   
+       <!--  <div class="traveltime-comparison">
+            <div class="traveltime-row">
+                <span class="traveltime-column">Public Transport</span>
+                <span class="traveltime-column">{{transport.mode}}</span>
+            </div>
+            <div class="traveltime-row">
+                <span id="public-duration" class="traveltime-column">{{public.duration}}</span>
+                <span id="other-duration" class="traveltime-column">{{other.duration}}</span>
+            </div>
+            <div class="traveltime-row">
+                <span id="public-distance" class="traveltime-column">{{public.distance}}</span>
+                <span id="other-distance" class="traveltime-column">{{other.distance}}</span>
+            </div>
+        </div> -->
+        
     </div>
     <div id="invisible-map-anchor"></div>
 </div>
