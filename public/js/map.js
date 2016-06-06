@@ -54,19 +54,30 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 routeDetails['duration'] = result.routes[0].legs[0].duration.text;
 
                 var latLng = []
+                var currentMode = "";
+                routeDetails['polylineCoords'] = []
                 result.routes.forEach(function(route) {
                     route.legs.forEach(function(leg) {
                         leg.steps.forEach(function(step) {
+                            var travelMode = step.travel_mode.toLowerCase(); 
+                            if(travelMode !== currentMode) {
+                                if(latLng.length > 0) {
+                                    routeDetails['polylineCoords'].push( {"mode": currentMode, "coords": latLng} )
+                                    latLng = [];
+                                }
+                                currentMode = travelMode;
+                            }
                             step.path.forEach(function(path) {
                                 latLng.push({lat: path.lat(), lng: path.lng() });
                             });
                         });
                     });       
                 });
-
-                routeDetails['polylineCoords'] = [{"mode": mode, "coords": latLng}];
-                routeDetails['bounds'] = result.routes[0].bounds;
-                
+                if(latLng.length > 0) {
+                    routeDetails['polylineCoords'].push( {"mode": currentMode, "coords": latLng} )
+                    latLng = [];
+                }
+                routeDetails['bounds'] = result.routes[0].bounds;                
                 d.resolve(routeDetails);
             } else {
                 d.resolve(null);
@@ -105,8 +116,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             duration: ''
         };
 
-        $scope.publicAvailable = true;
-
         if (validateAddresses()) {
             addStatus("Addresses are valid");
             var startLat = document.getElementById('startAddressLat').value,
@@ -131,7 +140,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         $scope.dwBounds = dwRoute.bounds;
                         return [true, false];
                     }
-                    addStatus("Failed to retieve directions, please wait a moment and try again");
+                    addStatus("Failed to retrieve directions, please wait a moment and try again");
                     return [false, false];
                 }
             ).then(
@@ -163,7 +172,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                 addStatus("Failed to retrieve journey information");
                                 d.resolve(dirStatus);
                             }
-                            
                             addStatus("Success!");
                             $scope.public = {
                                 mode: 'public',
@@ -184,7 +192,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                             d.resolve([true, true]);
                         },
                         error: function (err) {
-                            addStatus("Journey could not be retieved, let's walk there instead...");
+                            addStatus("Journey could not be retrieved, trying Google...");
                             d.resolve(dirStatus);
                         }
                     });
@@ -192,49 +200,73 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 }
             ).then(
                 function(dirStatus) {
-                    if(dirStatus[0]) {
-                        if(dirStatus[1]) {
-                            // both worked
-                            $scope.$apply(function () {
+                    if(dirStatus[0]) {  // Google driving worked
+                        if(dirStatus[1]) {  // Translink PT worked
+                            $scope.$apply(function() {
                                 $scope.mapToImage(true);
                             });
-                        } else {
-                            // need to walk there...
-                            $scope.publicAvailable = false;
-                            if($scope.transport.mode !== 'walking') {
-                                addStatus("Retrieving walking directions from Google...");
-                                getGoogleRoute('walking', startLat, startLng, destLat, destLng).then(
-                                    function(ptRoute) {
-                                        if(ptRoute) {
-                                            addStatus("Success!");
-                                            $scope.public = {
-                                                mode: 'public',
-                                                distance: "Walk: " + ptRoute.distance,
-                                                duration: shorter(ptRoute.duration)
-                                            };
-                                            $scope.ptLatLng = [ { 'mode' : 'walking', 'coords': ptRoute.polylineCoords } ];
-                                            $scope.ptBounds = ptRoute.bounds;
-                                            return true;
+                        } else { // Translink PT failed
+                            // Try google for PT route...
+                            $scope.ptLatLng = [];
+                            addStatus("Retrieving journey information from Google...");
+                            return getGoogleRoute('transit', startLat, startLng, destLat, destLng).then(
+                                function(ptRoute) {
+                                    if(ptRoute) {
+                                        addStatus("Success!");
+                                        $scope.public = {
+                                            mode: 'public',
+                                            distance: "Walk: " + ptRoute.distance,
+                                            duration: shorter(ptRoute.duration)
+                                        };
+                                        $scope.ptLatLng = ptRoute.polylineCoords;
+                                        $scope.ptBounds = ptRoute.bounds;
+                                        return true;
+                                    }
+                                    addStatus("Journey could not be retrieved, try walking there instead...");
+                                    return false;
+                                }
+                            ).then(
+                                function(googleFoundPT) {
+                                    if(googleFoundPT) {
+                                        return true;
+                                    } else {
+                                        // try walking...                                        
+                                        if($scope.transport.mode === 'walking') {
+                                            // we were already walking so...
+                                            return false;
+                                        } else {
+                                            addStatus("Retrieving walking directions from Google...");
+                                            return getGoogleRoute('walking', startLat, startLng, destLat, destLng).then(
+                                                function(ptRoute) {
+                                                    if(ptRoute) {
+                                                        addStatus("Success!");
+                                                        $scope.public = {
+                                                            mode: 'public',
+                                                            distance: "Walk: " + ptRoute.distance,
+                                                            duration: shorter(ptRoute.duration)
+                                                        };
+                                                        $scope.ptLatLng = ptRoute.polylineCoords;
+                                                        $scope.ptBounds = ptRoute.bounds;
+                                                        return true;
+                                                    }
+                                                    addStatus("Failed to retrieve walking directions");
+                                                    return false;
+                                                }
+                                            )
                                         }
-                                        addStatus("Failed to retieve directions, please wait a moment and try again");
-                                        return false;
                                     }
-                                ).then(
-                                    function(itWorked) {
-                                        var ptRouteIsValid = false;
-                                        if(itWorked) { ptRouteIsValid = true; }
-                                        $scope.$apply(function () {
-                                            $scope.mapToImage(ptRouteIsValid);
-                                        });
-                                    }
-                                )
-                            } else {
-                                // user already requested walking
-                                $scope.$apply(function () {
-                                    $scope.mapToImage(false);
-                                });
-                            }
-                        }
+                                }
+                            ).then(
+                                function(ptRouteIsValid) {
+                                    $scope.$apply(function() {
+                                        $scope.mapToImage(ptRouteIsValid);
+                                    });
+                                }
+                            );
+                        } 
+                    } else {
+                        // everything failed
+                        addStatus("Sorry, there was an error. PLease try again later");
                     }
                 }
             );
@@ -259,6 +291,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             mapSize = 'size=' + $scope.mapWidth + 'x' + $scope.mapWidth;
 
         var imgUrl = staticMapsUrl + mapCenter + '&' + zoomLevel + '&' + mapSize;
+        console.log(imgUrl)
 
         var image = document.getElementById('img-out');
         image.setAttribute('crossorigin', 'anonymous');
@@ -295,7 +328,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
     $scope.mapToImage = function (ptRouteIsValid) {
         addStatus("Rendering your meme...");
-        console.log(ptRouteIsValid)
         $scope.mapWidth = 600;
         if(ptRouteIsValid) {
             $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
@@ -387,7 +419,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 context.setLineDash([5]);                
                 context.strokeStyle = "#006400";
                 context.lineWidth = 4;
-        } else {
+            } else {
                 context.setLineDash([]);
                 context.strokeStyle = lineColor;
                 context.lineWidth = lineWidth;
