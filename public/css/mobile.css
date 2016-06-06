@@ -48,16 +48,8 @@
   .map-image {
     width: 300px !important;
     height: 300px !important; }
-  .gallery-display .filters {
-    width: 35%; }
   .instructions, #map-results .instructions {
     font-size: 10px; }
-  #nav .gallery {
-    padding-top: 15px; }
-    #nav .gallery img {
-      width: 32px; }
-    #nav .gallery span {
-      visibility: hidden; }
   #nav .bus-meme-home {
     font-size: 22px; }
   #map-results #map-results-content .left-panel .journey-summary {
