@@ -84,8 +84,8 @@ var getMemeTemplates = function (req, res, next) {
 
 var getImages = function (req, res, next) {
     var images = [];
-
-    Image.find().stream().on('data', function (data) {
+    Image.find({}, {'imageUrl': 0}).stream().on('data', function (data) {
+        console.log('images', data);
         images.push(data);
     }).on('error', function (err) {
         console.log('error', err);

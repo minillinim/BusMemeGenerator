@@ -8,6 +8,9 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
 
     MemeFactory.getImages().then(function (response) {
         $scope.images = response.data
+        $scope.images.forEach(function(image){
+            image.imageUrl = "/image/" + image.imageLink;
+        });
     });
 
     $scope.showHomePage = function () {
