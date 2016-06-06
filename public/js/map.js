@@ -172,13 +172,15 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                             };
 
                             $scope.ptLatLng = [];
-                            journey.legs.forEach(function(leg) {
-                                var legLatLng = [];
-                                google.maps.geometry.encoding.decodePath(leg.polyline).forEach(function(ll) {
-                                    legLatLng.push( {"lat": ll.lat(), "lng": ll.lng()} );    
+                            if(journey.legs){
+                                journey.legs.forEach(function(leg) {
+                                    var legLatLng = [];
+                                    google.maps.geometry.encoding.decodePath(leg.polyline).forEach(function(ll) {
+                                        legLatLng.push( {"lat": ll.lat(), "lng": ll.lng()} );    
+                                    });
+                                    $scope.ptLatLng.push( {"mode": leg.travelMode, "coords": legLatLng} );
                                 });
-                                $scope.ptLatLng.push( {"mode": leg.travelMode, "coords": legLatLng} );
-                            });
+                            }
 
                             $scope.ptBounds = findPolylineBounds($scope.ptLatLng);
                             d.resolve([true, true]);
@@ -284,7 +286,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             }
             drawPolylines($scope.dwLatLng, context, lineWidth, '#0000FF', gmapsInfo);
 
-            drawLegend(context, gmapsInfo, image.height, canvas.width, canvas.height - image.height);
+            drawLegend(context, gmapsInfo, image.height, canvas.width, canvas.height - image.height, image.height);
 
             $('#gmap-canvas').html("");
             $('#map-status').hide();
@@ -295,7 +297,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
     $scope.mapToImage = function (ptRouteIsValid) {
         addStatus("Rendering your meme...");
-        console.log(ptRouteIsValid)
         $scope.mapWidth = 600;
         if(ptRouteIsValid) {
             $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
@@ -345,11 +346,14 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         }
     }
 
-    var drawLegend = function(context, gmapsInfo, yStart, width, height) {
+    var drawLegend = function(context, gmapsInfo, yStart, width, height, imageHeight) {
+
+        var lineHeight = 3;
+
         context.beginPath();
         context.rect(1, 0, width-2, yStart);
         context.strokeStyle = '#000000';
-        context.lineWidth = 3;
+        context.lineWidth = lineHeight;
         context.stroke(); 
 
         context.beginPath();
@@ -357,8 +361,43 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         context.fillStyle = '#E8E5DC';
         context.fill();
         context.strokeStyle = '#000000';
-        context.lineWidth = 3;
+        context.lineWidth = lineHeight;
         context.stroke(); 
+
+        drawMapSummary(context, 3, width / 2, imageHeight + 20);
+    }
+
+    var drawMapSummary = function(context, lineWidth, x, y){
+
+        var dateText = "First Service on Sun 1 JUN 2016";
+
+        context.font = "18px Helvetica";
+        context.textAlign = "center";
+        context.fillStyle = "black";
+        context.lineWidth = lineWidth;
+        context.lineHeight = 20;
+    
+        context.fillText(dateText, x, y );
+        context.fillText('Public Transport:', x, y + 30);
+        context.fillText(getPublicTransportDuration() + getPublicTransportWalking(), x, y + 50);
+        context.fillText(getOtherModeHeader(), x, y + 80);
+        context.fillText(getOtherModeDuration() + getOtherModeDistance(), x, y + 100);
+    }
+
+    var getPublicTransportDuration = function(){
+        return 'Total time: 1hr 2min  ';
+    }
+    var getPublicTransportWalking = function(){
+        return 'Total walking distance: 2km   ';
+    }
+    var getOtherModeHeader = function(){
+        return 'Driving:';
+    }
+    var getOtherModeDuration = function(){
+        return 'Total time: 20 min   '
+    }
+    var getOtherModeDistance = function(){
+        return 'Total distance: 4km  '
     }
 
     var drawCircleAt = function(center, context, color, gmapsInfo) {
@@ -387,7 +426,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 context.setLineDash([5]);                
                 context.strokeStyle = "#006400";
                 context.lineWidth = 4;
-        } else {
+            } else {
                 context.setLineDash([]);
                 context.strokeStyle = lineColor;
                 context.lineWidth = lineWidth;
@@ -397,7 +436,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     }
 
     $scope.renderMemeFinal = function () {
-
         var context = $rootScope.context;
         var image = document.getElementById('img-out');
 
@@ -485,31 +523,34 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                ];
     }
     var findPolylineBounds = function(polylineData) {
-        var latMax = polylineData[0].coords[0].lat,
-            lngMax = polylineData[0].coords[0].lng,
-            latMin = polylineData[0].coords[0].lat,
-            lngMin = polylineData[0].coords[0].lng;
+        if (polylineData[0]){
+            var latMax = polylineData[0].coords[0].lat,
+                lngMax = polylineData[0].coords[0].lng,
+                latMin = polylineData[0].coords[0].lat,
+                lngMin = polylineData[0].coords[0].lng;
 
-        polylineData.forEach(function(polyline) {
-            var coords = polyline['coords'];
-            for(var i=0; i< polyline.length; i++) {
-                if (coords[i].lat > latMax) { latMax = coords[i].lat; }
-                if (coords[i].lat < latMin) { latMin = coords[i].lat; }
-                if (coords[i].lng > lngMax) { lngMax = coords[i].lng; }
-                if (coords[i].lng < lngMin) { lngMin = coords[i].lng; }
-            }
-        });
+            polylineData.forEach(function(polyline) {
+                var coords = polyline['coords'];
+                for(var i=0; i< polyline.length; i++) {
+                    if (coords[i].lat > latMax) { latMax = coords[i].lat; }
+                    if (coords[i].lat < latMin) { latMin = coords[i].lat; }
+                    if (coords[i].lng > lngMax) { lngMax = coords[i].lng; }
+                    if (coords[i].lng < lngMin) { lngMin = coords[i].lng; }
+                }
+            });
 
-        var boundingRect = new google.maps.LatLngBounds(
-            new google.maps.LatLng(latMin, lngMin),
-            new google.maps.LatLng(latMax, lngMax)
-            
-        );
+            var boundingRect = new google.maps.LatLngBounds(
+                new google.maps.LatLng(latMin, lngMin),
+                new google.maps.LatLng(latMax, lngMax)
+                
+            );
 
-        var center = boundingRect.getCenter();
-        var d2sw = getLatLonDistanceInKm(center.lat(), center.lng(), latMin, lngMin);
-        var bounds= getSquareBoundingBox(center, d2sw + 0.2);
-        return bounds;
+            var center = boundingRect.getCenter();
+            var d2sw = getLatLonDistanceInKm(center.lat(), center.lng(), latMin, lngMin);
+            var bounds= getSquareBoundingBox(center, d2sw + 0.2);
+            return bounds;
+        }else 
+        return undefined;
     }
 
     var getLatLonDistanceInKm = function (lat1,lon1,lat2,lon2) {

@@ -19,11 +19,11 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
     $scope.setSelectedTemplate = function (template) {
         document.getElementById("meme-validation").innerText = '';
         $rootScope.selectedTemplate = template;
-        $scope.renderMemeTmp();
+        $scope.renderMemeTemplate();
         $scope.showTemplates=false;
     };
 
-    $scope.renderMemeTmp = function () {
+    $scope.renderMemeTemplate = function () {
         $('#canvas2').remove();
         $('<canvas>', {'id': 'canvas2'}).insertAfter($('#canvas'));
 
@@ -40,6 +40,7 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         context.fillStyle = "white";
         context.strokeStyle = "black";
         context.lineWidth = 2;
+
         writeTextOnImage(context, topText, canvas.width / 2, 70);
         writeTextOnImage(context, bottomText, canvas.width / 2, canvas.height - 30);
     };
