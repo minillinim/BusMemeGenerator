@@ -55,6 +55,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
                 var latLng = []
                 var currentMode = "";
+                var totalWalkingDistance = 0;
                 routeDetails['polylineCoords'] = []
                 result.routes.forEach(function(route) {
                     route.legs.forEach(function(leg) {
@@ -66,6 +67,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                     latLng = [];
                                 }
                                 currentMode = travelMode;
+                                if('walking' == currentMode) { totalWalkingDistance += step.distance.value; }
                             }
                             step.path.forEach(function(path) {
                                 latLng.push({lat: path.lat(), lng: path.lng() });
@@ -75,9 +77,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 });
                 if(latLng.length > 0) {
                     routeDetails['polylineCoords'].push( {"mode": currentMode, "coords": latLng} )
-                    latLng = [];
                 }
-                routeDetails['bounds'] = result.routes[0].bounds;                
+                routeDetails['bounds'] = result.routes[0].bounds; 
+                if('transit' === mode || 'walking' === mode) {              
+                    routeDetails['distance'] = totalWalkingDistance;
+                }
                 d.resolve(routeDetails);
             } else {
                 d.resolve(null);
@@ -163,6 +167,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         +$scope.getMaxWalk()
                     );
 
+                    console.log(tlapiUrl);
+                    
                     $.ajax({
                         type: "GET",
                         url: tlapiUrl,
@@ -172,6 +178,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                 addStatus("Failed to retrieve journey information");
                                 d.resolve(dirStatus);
                             }
+
                             addStatus("Success!");
                             $scope.public = {
                                 mode: 'public',
@@ -217,7 +224,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                         addStatus("Success!");
                                         $scope.public = {
                                             mode: 'public',
-                                            distance: "Walk: " + ptRoute.distance,
+                                            distance: prettyDistance(ptRoute.distance),
                                             duration: shorter(ptRoute.duration)
                                         };
                                         $scope.ptLatLng = ptRoute.polylineCoords;
@@ -244,7 +251,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                                         addStatus("Success!");
                                                         $scope.public = {
                                                             mode: 'public',
-                                                            distance: "Walk: " + ptRoute.distance,
+                                                            distance: 'Walk: ' + ptRoute.distance,
                                                             duration: shorter(ptRoute.duration)
                                                         };
                                                         $scope.ptLatLng = ptRoute.polylineCoords;
@@ -702,10 +709,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     };
 
     var prettyDistance = function(distance) {
-        if(distance < 1000) {
-            return "Walk: " + distance + ' m'
-        }
-        return "Walk: " + Math.round(distance/100)/10 + ' Km'
+        return 'Walk: ' + Math.round(distance/100)/10 + ' Km'
     }
 
     var prettyDuration = function(duration) {

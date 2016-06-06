@@ -23,7 +23,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     }
 
     function convertToMeters(distance) {
-        return Number(distance.replace(' km', '')) * KM_TO_METER_FACTOR;
+        return Number(distance.toLowerCase().replace(' km', '').replace('walk: ', '')) * KM_TO_METER_FACTOR;
     }
 
     $scope.saveImage = function (callback) {
