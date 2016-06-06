@@ -4,6 +4,7 @@
         <div class="instructions">Share your <span class="hashtag">#publictransportfail</span> with your friends!</div>
 
         <div class="share-content">
+            <div class="share-description">Click on the Facebook or Twitter icons to share your meme. When you do, it will also be saved to our gallery.</div>
             
             <img id="image-to-share" class="meme-image-small" src="{{imageUrl}}"/>
 
@@ -11,6 +12,8 @@
                 <div ng-click="facebookShare()" src="../assets/facebook-white.svg" class="share-icon facebook"></div>
                 <div ng-click="twitterShare()" src="../assets/twitter-white.svg" class="share-icon twitter"></div>
             </div>
+
+            <div class="share-description bottom">Not as bad as you thought? why not <a class="start-over" href ng-click="reloadPage()">start over</a>?</div>
 
             <div class="stay-in-touch">
                 <div class="stay-in-touch-title">Would you like us to contact you with updates?</div>
