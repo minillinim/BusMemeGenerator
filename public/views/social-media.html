@@ -1,39 +1,30 @@
 <div id="share-map" class="share-panel" ng-show="showImage">
     <div  ng-controller="SocialMediaController">
         <img class="step-img" src="../assets/step-3.gif"/>
-        <div class="instructions">Share and stay in touch</div>
+        <div class="instructions">Share your <span class="hashtag">#publictransportfail</span> with your friends!</div>
 
         <div class="share-content">
             
             <img id="image-to-share" class="meme-image-small" src="{{imageUrl}}"/>
 
+            <div class="social-media-icons">
+                <div ng-click="facebookShare()" src="../assets/facebook-white.svg" class="share-icon facebook"></div>
+                <div ng-click="twitterShare()" src="../assets/twitter-white.svg" class="share-icon twitter"></div>
+            </div>
+
             <div class="stay-in-touch">
-                <div class="stay-in-touch-title">Would you like to tell us who you are?</div>
+                <div class="stay-in-touch-title">Would you like us to contact you with updates?</div>
 
                 <div>
                     <div class="user-input">
                         <input name="fullName" type="text" ng-model="user.fullName" maxlength="100" id="full-name" placeholder="Full name" />
                         <input name="emailAddress" type="text" ng-model="user.email" maxlength="100" id="email-address" placeholder="Email address (optional)"/>
 
-                        <input class="button subscribe" ng-click="saveUserDetails()" value="Subscribe" />
+                        <input class="button subscribe" ng-click="saveUserDetails()" value="Keep me in the loop!" />
                     </div>
+                    <div class="validation-errors" ng-show="invalidUserInput">Please provide valid name and email if you want to be our friend :)</div>
+                    <div class="subscribe-success" ng-show="subscribed">Thanks! We'll be in touch.</div>
                 </div>
-            </div>
-
-            <div class="social-media-icons">
-
-                <div class="share-instructions">Share your <span class="hashtag">#publictransportfail</span> with your friends!</div>
-
-                <div ng-click="facebookShare()" src="../assets/facebook-white.svg" class="share-icon facebook"></div>
-                <div ng-click="twitterShare()" src="../assets/twitter-white.svg" class="share-icon twitter"></div>
-            </div>
-
-            <div class="subscribe">
-                <div class="subscribe-header">Would you like us to contact you with updates?</div>
-                <div class="validation-errors" ng-show="invalidUserInput">Please provide valid name and email if you want to be our friend :)</div>
-                <input class="button subscribe" ng-click="saveUserDetails()" value="Keep me in the loop!" />
-                <div class="subscribe-success" ng-show="subscribed">Thanks! We'll be in touch.</div>
-
             </div>
         </div>
     </div>

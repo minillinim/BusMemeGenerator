@@ -1,6 +1,5 @@
 @import 'variables';
 @import 'common';
-@import 'nav';
 
 #map-results {
 
@@ -10,7 +9,7 @@
 
   margin-left: 20%;
   border-left: thick solid $separator-color;
-  height: 750px;
+  height: 950px;
   padding-bottom:55px;
 
   .empty-space {
@@ -37,15 +36,6 @@
 
   #map-results-content {
 
-    display: table;
-    width: 95%;
-    table-layout: fixed;
-
-    .left-panel {
-
-      width: 45%;
-      display: table-cell;
-
       .journey-summary {
 
         color: $input-color;
@@ -62,17 +52,16 @@
           display: inline-block;
           border-bottom: 1px solid $separator-color;
           padding-bottom: 2px;
-          width: 85%;
+          width: 48%;
           padding-top: 8px;
-          font-size: 12px;
         }
       }
 
       .map-wrapper {
-        /*display: none;*/
         padding: 30px 0 80px 50px;
         height: 600px !important;
         width: 600px !important;
+        
         #gmap-canvas {
           height: 100%;
           width: 100%;
@@ -89,64 +78,17 @@
           position:relative;
           z-index:1000 !important;
           background-color: $background-color;
-          color: #FFFFF;
-          font-size: 12px;
+          color: #FFFFFF;
           word-wrap: break-word;
           text-transform: none;
         }
       }
-    }
-
-    .right-panel {
-      color: $input-color;
-      width: 17%;
-      display: table-cell;
-
-      .traveltime-comparison {
-        display: table;
-
-        .traveltime-row {
-          display: table-row;
-        }
-        .traveltime-column {
-          display: table-cell;
-          padding-right: 30px;
-          text-transform: capitalize;
-        }
-      }
-
-      .template-selection {
-
-        padding-top: 15%;
-
-        .message-header {
-          padding-bottom: 10px;
-        }
-
-        .message-template {
-          padding: 10px 5px;
-        }
-
-        .message-template-list {
-
-          padding-left: 30px;
-          cursor: pointer;
-          background-color: $separator-color;
-          color: $input-color;
-          border-radius: 3px;
-        }
-        .message-template-list.selected {
-          color: $separator-color;
-          background-color: $input-color;
-        }
-      }
-    }
   }
 }
 
 #meme-validation{
     margin-left: 10px;
-    margin-top: 520px;
+    margin-top: 20px;
 }
 
 #share-image-button {
@@ -157,14 +99,74 @@
 }
 
 .map-canvas {
-  padding: 50px;
   position: relative;
-}
+  width:600px;
 
-.map-canvas canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
+  #canvas2{
+    position:absolute;
+    left:0;
+  }
+  .map-overlay-hidden {
+    display: none;
+  }
+  .map-overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    top: 0;
+    opacity: 0.5;
+  }
+  .templates-menu{
+    position:absolute;
+    left:0;
+    top:0;
+    width:20px;
+    padding: 2px;
+    background-color: $secondary-color;
+    border: 2px solid black;
+    cursor:pointer;
+    border-radius: 3px;
+    margin: 6px;
+  }
+  .templates-menu.unclickable {
+    cursor: initial;
+  }
+  .template-selection-hidden {
+    display:none;
+  }
+  .template-selection {
+
+    position:absolute;
+    width: 50%;
+    background-color: #123378;
+    padding: 10px;
+    top: 10px;
+    left: 10px;
+    margin: 15% 22.5%;
+
+    .message-header {
+      padding-bottom: 10px;
+    }
+
+    .message-template {
+      padding: 10px 5px;
+      list-style: none;
+    }
+
+    .message-template-list {
+
+      padding-left: 30px;
+      cursor: pointer;
+      background-color: $separator-color;
+      color: $input-color;
+      border-radius: 3px;
+    }
+    .message-template-list.selected {
+      color: $separator-color;
+      background-color: $input-color;
+    }
+  }
 }
 
 #map-image {

@@ -1,7 +1,7 @@
 var app = angular.module('bus-meme');
 
 app.controller('MemeController', function ($scope, $rootScope, $location, MemeFactory, $anchorScroll) {
-
+    $scope.showTemplates = true;
     MemeFactory.getMemeTemplates().then(function (response) {
         $scope.memeTemplates = response.data;
         $rootScope.selectedTemplate = '';
@@ -9,13 +9,21 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         $scope.memeTemplates = response.data;
     });
 
+    $scope.handleOverlay = function(){
+        if (!$rootScope.memeShared){
+            $scope.showTemplates=true;
+            document.getElementById("templates").className="template-selection";
+            document.getElementById("map-overlay").className="map-overlay";   
+        }
+    };
     $scope.setSelectedTemplate = function (template) {
         document.getElementById("meme-validation").innerText = '';
         $rootScope.selectedTemplate = template;
-        $scope.renderMemeTmp();
+        $scope.renderMemeTemplate();
+        $scope.showTemplates=false;
     };
 
-    $scope.renderMemeTmp = function () {
+    $scope.renderMemeTemplate = function () {
         $('#canvas2').remove();
         $('<canvas>', {'id': 'canvas2'}).insertAfter($('#canvas'));
 
@@ -32,6 +40,7 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         context.fillStyle = "white";
         context.strokeStyle = "black";
         context.lineWidth = 2;
+
         writeTextOnImage(context, topText, canvas.width / 2, 70);
         writeTextOnImage(context, bottomText, canvas.width / 2, canvas.height - 30);
     };

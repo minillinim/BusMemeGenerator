@@ -1,9 +1,9 @@
 @import 'variables';
 @import 'common';
-@import 'nav';
 
 .gallery-display{
-	margin-top:80px;
+
+    padding: 50px;
 
 	.gallery-header{
 
@@ -23,7 +23,6 @@
 	}
 
 	.filters{
-		width:93%;
 		background-color:$secondary-color;
 		border-radius:3px;
 		margin-bottom:40px;
@@ -64,16 +63,20 @@
 	}
 }
 .gallery-image {
-  width: 85%;
   width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .meme-info{
 	color: $input-color;
+	margin-top:10px;
 	margin-bottom:10px;
+    margin-left: 10%;
 	span{
 		display:block;
     	width: 90%;
+        font-size: 18px;
 	}
 
 	.more-details-label{

@@ -2,7 +2,6 @@ input {
   height: 32px;
   margin-right: 0;
   vertical-align: middle;
-  font-size: 14px;
   padding-left: 10px;
   border-radius: 3px;
   border: none;
@@ -17,7 +16,6 @@ input {
   opacity: 0.8; }
 
 select {
-  font-size: 12px;
   border-radius: 3px;
   border: none;
   line-height: 20px;
@@ -30,7 +28,6 @@ select {
   opacity: 0.8; }
 
 .button {
-  font-size: 16px;
   height: 32px;
   vertical-align: middle;
   max-width: none;
@@ -49,54 +46,10 @@ select {
 .checkbox {
   text-transform: none; }
 
-#nav {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1300;
-  height: 10px; }
-  #nav .bus-meme-home {
-    cursor: pointer;
-    font-size: 28px;
-    font-weight: bold;
-    display: inline-block; }
-    #nav .bus-meme-home img {
-      width: 46px;
-      margin: 10px;
-      margin-left: 30px;
-      vertical-align: middle; }
-  #nav .create-meme {
-    display: inline-block;
-    right: 10px;
-    position: fixed;
-    padding: 20px;
-    color: white;
-    text-transform: uppercase;
-    font-size: 18px;
-    cursor: pointer; }
-  #nav .gallery {
-    cursor: pointer;
-    color: white;
-    right: 10px;
-    position: fixed;
-    padding: 20px;
-    display: inline-block; }
-    #nav .gallery img {
-      display: inline-block;
-      width: 16px;
-      padding-right: 5px;
-      padding-top: 1px;
-      vertical-align: top; }
-
-#nav.gallery-nav {
-  background-color: #4468DB;
-  height: 65px; }
-
 #map-results {
   margin-left: 20%;
   border-left: thick solid #547CD4;
-  height: 750px;
+  height: 950px;
   padding-bottom: 55px; }
   #map-results #invisible-map-anchor {
     width: 0;
@@ -117,82 +70,45 @@ select {
     font-size: 18px;
     display: inline-block;
     padding-top: 5px; }
-  #map-results #map-results-content {
-    display: table;
-    width: 95%;
-    table-layout: fixed; }
-    #map-results #map-results-content .left-panel {
-      width: 45%;
-      display: table-cell; }
-      #map-results #map-results-content .left-panel .journey-summary {
-        color: white;
-        text-transform: none;
-        padding-left: 50px; }
-        #map-results #map-results-content .left-panel .journey-summary .summary-label {
-          text-decoration: none;
-          display: inline-block;
-          width: 10%; }
-        #map-results #map-results-content .left-panel .journey-summary .summary-content {
-          display: inline-block;
-          border-bottom: 1px solid #547CD4;
-          padding-bottom: 2px;
-          width: 85%;
-          padding-top: 8px;
-          font-size: 12px; }
-      #map-results #map-results-content .left-panel .map-wrapper {
-        /*display: none;*/
-        padding: 30px 0 80px 50px;
-        height: 600px !important;
-        width: 600px !important; }
-        #map-results #map-results-content .left-panel .map-wrapper #gmap-canvas {
-          height: 100%;
-          width: 100%;
-          position: relative;
-          z-index: 10 !important; }
-          #map-results #map-results-content .left-panel .map-wrapper #gmap-canvas img {
-            max-width: none !important;
-            background: none !important; }
-        #map-results #map-results-content .left-panel .map-wrapper #map-status {
-          height: 100%;
-          width: 100%;
-          position: relative;
-          z-index: 1000 !important;
-          background-color: #6595FC;
-          color: #FFFFF;
-          font-size: 12px;
-          word-wrap: break-word;
-          text-transform: none; }
-    #map-results #map-results-content .right-panel {
-      color: white;
-      width: 17%;
-      display: table-cell; }
-      #map-results #map-results-content .right-panel .traveltime-comparison {
-        display: table; }
-        #map-results #map-results-content .right-panel .traveltime-comparison .traveltime-row {
-          display: table-row; }
-        #map-results #map-results-content .right-panel .traveltime-comparison .traveltime-column {
-          display: table-cell;
-          padding-right: 30px;
-          text-transform: capitalize; }
-      #map-results #map-results-content .right-panel .template-selection {
-        padding-top: 15%; }
-        #map-results #map-results-content .right-panel .template-selection .message-header {
-          padding-bottom: 10px; }
-        #map-results #map-results-content .right-panel .template-selection .message-template {
-          padding: 10px 5px; }
-        #map-results #map-results-content .right-panel .template-selection .message-template-list {
-          padding-left: 30px;
-          cursor: pointer;
-          background-color: #547CD4;
-          color: white;
-          border-radius: 3px; }
-        #map-results #map-results-content .right-panel .template-selection .message-template-list.selected {
-          color: #547CD4;
-          background-color: white; }
+  #map-results #map-results-content .journey-summary {
+    color: white;
+    text-transform: none;
+    padding-left: 50px; }
+    #map-results #map-results-content .journey-summary .summary-label {
+      text-decoration: none;
+      display: inline-block;
+      width: 10%; }
+    #map-results #map-results-content .journey-summary .summary-content {
+      display: inline-block;
+      border-bottom: 1px solid #547CD4;
+      padding-bottom: 2px;
+      width: 48%;
+      padding-top: 8px; }
+  #map-results #map-results-content .map-wrapper {
+    padding: 30px 0 80px 50px;
+    height: 600px !important;
+    width: 600px !important; }
+    #map-results #map-results-content .map-wrapper #gmap-canvas {
+      height: 100%;
+      width: 100%;
+      position: relative;
+      z-index: 10 !important; }
+      #map-results #map-results-content .map-wrapper #gmap-canvas img {
+        max-width: none !important;
+        background: none !important; }
+    #map-results #map-results-content .map-wrapper #map-status {
+      height: 100%;
+      width: 100%;
+      position: relative;
+      z-index: 1000 !important;
+      background-color: #6595FC;
+      color: #FFFFFF;
+      word-wrap: break-word;
+      text-transform: none; }
 
 #meme-validation {
   margin-left: 10px;
-  margin-top: 520px; }
+  margin-top: 20px; }
 
 #share-image-button {
   margin-left: 10px;
@@ -201,13 +117,57 @@ select {
   width: 15%; }
 
 .map-canvas {
-  padding: 50px;
-  position: relative; }
-
-.map-canvas canvas {
-  position: absolute;
-  top: 0;
-  left: 0; }
+  position: relative;
+  width: 600px; }
+  .map-canvas #canvas2 {
+    position: absolute;
+    left: 0; }
+  .map-canvas .map-overlay-hidden {
+    display: none; }
+  .map-canvas .map-overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    top: 0;
+    opacity: 0.5; }
+  .map-canvas .templates-menu {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    padding: 2px;
+    background-color: #D8E4E8;
+    border: 2px solid black;
+    cursor: pointer;
+    border-radius: 3px;
+    margin: 6px; }
+  .map-canvas .templates-menu.unclickable {
+    cursor: initial; }
+  .map-canvas .template-selection-hidden {
+    display: none; }
+  .map-canvas .template-selection {
+    position: absolute;
+    width: 50%;
+    background-color: #123378;
+    padding: 10px;
+    top: 10px;
+    left: 10px;
+    margin: 15% 22.5%; }
+    .map-canvas .template-selection .message-header {
+      padding-bottom: 10px; }
+    .map-canvas .template-selection .message-template {
+      padding: 10px 5px;
+      list-style: none; }
+    .map-canvas .template-selection .message-template-list {
+      padding-left: 30px;
+      cursor: pointer;
+      background-color: #547CD4;
+      color: white;
+      border-radius: 3px; }
+    .map-canvas .template-selection .message-template-list.selected {
+      color: #547CD4;
+      background-color: white; }
 
 #map-image {
   margin-left: 25px;

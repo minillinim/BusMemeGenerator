@@ -1,25 +1,19 @@
 @import 'variables';
 @import 'common';
-@import 'nav';
 
 .share-panel {
 	margin-left:20%;
 	border-left: thick solid $separator-color;
-	height: 750px;
     padding: 10px 0 50px 50px;
 
     .instructions{
     	margin-top:-10px;
-    }
-    .share-instructions{
-    	display:block;
-	    margin-bottom: 20px;
-	    font-size: 14px;
-    	.hashtag{
-    		text-transform:none;
-    		color:$input-color;
-    	}
-    }
+		font-size: 18px;
+		.hashtag{
+			text-transform:none;
+			color:$input-color;
+		}
+	}
 
     .share-content{
     	padding-top: 20px;
@@ -43,7 +37,7 @@
 	}
 }
 .stay-in-touch{
-	margin-bottom:30px;
+	margin-top:20px;
 	.validation-errors {
 		margin-top:10px;
 	}
@@ -59,13 +53,7 @@
 
 		.subscribe{
 			text-align: center;
-			width: 120px;
-		}
-		#email-address{
-			width: 350px;
-		}
-		#full-name{
-			width:180px;
+			width: 200px;
 		}
 	}
 }

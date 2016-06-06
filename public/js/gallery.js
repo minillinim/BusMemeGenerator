@@ -35,11 +35,10 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
     }
 
     $scope.getSortingCriteria = function (sortOption) {
-
         if (sortOption === "biggestDifference")
-            return '(image.publicModeTravelTime - image.otherModeTravelTime)';
+            return '(otherModeTravelTime / publicModeTravelTime)';
         else return '-' + sortOption;
-    }
+    };
 
     $scope.getDateDisplay = function (dbDate) {
         var date = new Date(dbDate);
