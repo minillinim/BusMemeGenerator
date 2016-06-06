@@ -671,6 +671,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
     var initStep2 = function () {
 
+        $rootScope.memeShared = false;
         document.getElementById('step-1').classList.add('done');
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
