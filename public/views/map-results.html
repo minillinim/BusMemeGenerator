@@ -24,16 +24,18 @@
                 <img id="img-out" class="map-image" src="" />
 
                 <img class="templates-menu" src="../assets/menu.svg" ng-click="handleOverlay()"/>
-                <div id="map-overlay" class="map-overlay"></div>
-                <div id="templates" class="template-selection" ng-controller="MemeController">
-                    <div class="templates-header">
-                        Choose message template
+                <div ng-show="showTemplates">
+                    <div id="map-overlay" class="map-overlay"></div>
+                    <div id="templates" class="template-selection">
+                        <div class="templates-header">
+                            Choose message template
+                        </div>
+                        <ul class="message-template-list" ng-repeat="template in memeTemplates" ng-click="setSelectedTemplate(template)" ng-class="{selected: template === selectedTemplate}">
+                            <li class="message-template" >
+                                {{template.firstLine}} <br/>{{template.secondLine}}
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="message-template-list" ng-repeat="template in memeTemplates" ng-click="setSelectedTemplate(template)" ng-class="{selected: template === selectedTemplate}">
-                        <li class="message-template" >
-                            {{template.firstLine}} <br/>{{template.secondLine}}
-                        </li>
-                    </ul>
                 </div>
             </div>
             <!--<a id="dl" ng-click="dlCanvas()">Download Canvas</a>-->

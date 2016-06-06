@@ -1,7 +1,7 @@
 var app = angular.module('bus-meme');
 
 app.controller('MemeController', function ($scope, $rootScope, $location, MemeFactory, $anchorScroll) {
-
+    $scope.showTemplates = true;
     MemeFactory.getMemeTemplates().then(function (response) {
         $scope.memeTemplates = response.data;
         $rootScope.selectedTemplate = '';
@@ -13,14 +13,12 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         $scope.showTemplates=true;
         document.getElementById("templates").className="template-selection";
         document.getElementById("map-overlay").className="map-overlay";
-    }
+    };
     $scope.setSelectedTemplate = function (template) {
         document.getElementById("meme-validation").innerText = '';
         $rootScope.selectedTemplate = template;
         $scope.renderMemeTmp();
         $scope.showTemplates=false;
-        document.getElementById("map-overlay").className="map-overlay-hidden";
-        document.getElementById("templates").className="template-selection-hidden";
     };
 
     $scope.renderMemeTmp = function () {
