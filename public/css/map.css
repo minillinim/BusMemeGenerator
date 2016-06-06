@@ -188,6 +188,7 @@ select {
     padding: 2px;
     background-color: #D8E4E8;
     border: 2px solid black;
+    cursor: pointer;
     border-radius: 3px;
     margin: 6px; }
   .map-canvas .template-selection-hidden {
