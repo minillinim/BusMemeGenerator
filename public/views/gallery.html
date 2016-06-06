@@ -39,7 +39,7 @@
                 <div class="meme-info">
                     <span>{{image.user.fullName}}</span>
                     <span ng-show="!image.user.fullName">Annonymous</span>
-                    <span ng-show="image.createDate">Created on {{image.createDate}}</span>
+                    <span ng-show="image.createDate">Created on {{getDateDisplay(image.createDate)}}</span>
                     <span class="more-details-label" ng-click="showMoreDetails=!showMoreDetails">More details..</span>
 
                     <div class="more-details" ng-show="showMoreDetails">

@@ -329,7 +329,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     }
 
     $scope.mapToImage = function (ptRouteIsValid) {
-        addStatus("Rendering your meme...");
         $scope.mapWidth = 600;
         if(ptRouteIsValid) {
             $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
@@ -408,29 +407,45 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         context.lineHeight = 20;
     
         context.fillText(getUserTimeSelectionHeader(), x, y );
-        context.fillText('Public Transport:', x, y + 30);
-        context.fillText(getPublicTransportDuration() + getPublicTransportWalking(), x, y + 50);
-        context.fillText(getOtherModeHeader(), x, y + 80);
-        context.fillText(getOtherModeDuration() + getOtherModeDistance(), x, y + 100);
+        context.fillText(getOtherModeHeader(), x, y + 30);
+        context.fillText(getOtherModeSummary(), x, y + 50);
+        context.fillText('PUBLIC TRANSPORT:', x, y + 80);
+        context.fillText(getPublicTransportSummary(), x, y + 100);
     }
 
     var getUserTimeSelectionHeader = function(){
-        return 'First Service on Sun 1 JUN 2016';
+        console.log($scope.getTimeOption());
+
+        var transportChoice = $scope.formattedTimeOption();
+        var date = $scope.formattedDate();
+        return transportChoice + ' on ' + date;
     }
-    var getPublicTransportDuration = function(){
-        return 'Total time: 1hr 2min  ';
+    
+    var publicTransportAvailable = function(){
+        return true;
     }
-    var getPublicTransportWalking = function(){
-        return 'Total walking distance: 2km   ';
+    var getPublicTransportSummary = function(){
+
+        if (publicTransportAvailable()){
+            var duration = 'Total time: ' + $scope.public.duration + '  ';
+            var distance = 'Total walking distance: ' + $scope.public.distance.replace('Walk: ', '');
+
+            return duration + '  ' + distance;   
+        }
+        else{
+            return 'NO SERVICE AVAILABLE!!';
+        }
     }
     var getOtherModeHeader = function(){
-        return 'Driving:';
+        return  $scope.other.mode.toUpperCase() + ':';
     }
-    var getOtherModeDuration = function(){
-        return 'Total time: 20 min   '
+    var getOtherModeSummary = function(){
+        var duration = 'Total time: ' + $scope.other.duration;
+        var distance = 'Total distance: ' + $scope.other.distance;
+
+        return duration + '  ' + distance;
     }
     var getOtherModeDistance = function(){
-        return 'Total distance: 4km  '
     }
 
     var drawCircleAt = function(center, context, color, gmapsInfo) {
@@ -471,7 +486,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     $scope.renderMemeFinal = function () {
         var context = $rootScope.context;
         var image = document.getElementById('img-out');
-
         var topText = $rootScope.selectedTemplate.firstLine;
         var bottomText = $rootScope.selectedTemplate.secondLine;
 
@@ -730,7 +744,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     $scope.shareImage = function() {
         
         document.getElementById("meme-validation").innerText = '';
-
+console.log('share');
         if ($rootScope.selectedTemplate){
             document.getElementById('map-results').classList.add('done');
             $scope.renderMemeFinal();
