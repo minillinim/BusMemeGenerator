@@ -368,22 +368,22 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     }
 
     var drawMapSummary = function(context, lineWidth, x, y){
-
-        var dateText = "First Service on Sun 1 JUN 2016";
-
         context.font = "18px Helvetica";
         context.textAlign = "center";
         context.fillStyle = "black";
         context.lineWidth = lineWidth;
         context.lineHeight = 20;
     
-        context.fillText(dateText, x, y );
+        context.fillText(getUserTimeSelectionHeader(), x, y );
         context.fillText('Public Transport:', x, y + 30);
         context.fillText(getPublicTransportDuration() + getPublicTransportWalking(), x, y + 50);
         context.fillText(getOtherModeHeader(), x, y + 80);
         context.fillText(getOtherModeDuration() + getOtherModeDistance(), x, y + 100);
     }
 
+    var getUserTimeSelectionHeader = function(){
+        return 'First Service on Sun 1 JUN 2016';
+    }
     var getPublicTransportDuration = function(){
         return 'Total time: 1hr 2min  ';
     }
