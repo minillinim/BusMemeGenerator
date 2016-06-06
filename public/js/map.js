@@ -318,15 +318,22 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
             var lineWidth = 2;
 
-            drawCircleAt($scope.origin, context, '#006400', gmapsInfo)
-            drawCircleAt($scope.destination, context, '#FF0000', gmapsInfo)
+            var ptRouteColor = '#FF0000';
+            var otherRouteColor = '#0000FF';
+            var markerColor = '#006400';
+            var marker2Color = '#FF0000';
+
+            drawCircleAt($scope.origin, context, markerColor, gmapsInfo)
+            drawCircleAt($scope.destination, context, marker2Color, gmapsInfo)
 
             if(ptRouteIsValid) {
-                drawPolylines($scope.ptLatLng, context, lineWidth, '#FF0000', gmapsInfo);
+                drawPolylines($scope.ptLatLng, context, lineWidth, ptRouteColor, gmapsInfo);
             }
-            drawPolylines($scope.dwLatLng, context, lineWidth, '#0000FF', gmapsInfo);
+            drawPolylines($scope.dwLatLng, context, lineWidth, otherRouteColor, gmapsInfo);
 
             drawLegend(context, gmapsInfo, image.height, canvas.width, canvas.height - image.height, image.height);
+
+            drawMapSummary(context, ptRouteIsValid, image.width / 2, image.height + 20, ptRouteColor,otherRouteColor,markerColor);
 
             $('#gmap-canvas').html("");
             $('#map-status').hide();
@@ -336,7 +343,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     }
 
     $scope.mapToImage = function (ptRouteIsValid) {
-        addStatus("Rendering your meme...");
         $scope.mapWidth = 600;
         if(ptRouteIsValid) {
             $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
@@ -403,41 +409,101 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         context.strokeStyle = '#000000';
         context.lineWidth = lineHeight;
         context.stroke(); 
-
-        drawMapSummary(context, 3, width / 2, imageHeight + 20);
     }
 
-    var drawMapSummary = function(context, lineWidth, x, y){
-        context.font = "18px Helvetica";
+    var drawMapSummary = function(context, ptRouteIsValid, x, y, ptColour, otherColour, walkingColour){
+        
+        var fontStyle= 'Helvetica';
+        var fontReg= '16px ';
+        var fontHdr= 'bold 16px ';
+        var fontStyle= 'Helvetica';
+        context.font = fontReg + fontStyle;
+
         context.textAlign = "center";
         context.fillStyle = "black";
-        context.lineWidth = lineWidth;
-        context.lineHeight = 20;
+        context.lineHeight = 18;
     
         context.fillText(getUserTimeSelectionHeader(), x, y );
-        context.fillText('Public Transport:', x, y + 30);
-        context.fillText(getPublicTransportDuration() + getPublicTransportWalking(), x, y + 50);
-        context.fillText(getOtherModeHeader(), x, y + 80);
-        context.fillText(getOtherModeDuration() + getOtherModeDistance(), x, y + 100);
+
+        context.font = fontHdr + fontStyle;
+        context.fillText(getOtherModeHeader(), x, y + 25);
+        context.font = fontReg + fontStyle;
+
+        context.fillText(getOtherModeSummary(), x, y + 45);
+
+        context.font = fontHdr + fontStyle;
+        context.fillText('PUBLIC TRANSPORT:', x, y + 70);
+
+        context.font = fontReg + fontStyle;
+        context.fillText(getPublicTransportSummary(ptRouteIsValid), x, y + 90);
+
+       drawMapSummaryLegends(context, x, y + 110, ptColour, otherColour, walkingColour);
+    }
+
+    var drawMapSummaryLegends = function(context, x, legendsY, ptColour, otherColour, walkingColour){
+        context.font = "14px Helvetica";
+        context.textAlign = "left";
+
+        var legendText = 'public transport';
+
+        var lineWidth = 25;
+        var nextLegendIndex = 25;
+        drawSummaryLegend(context,nextLegendIndex, legendsY, nextLegendIndex + lineWidth, legendsY, [], ptColour, 3);
+        context.fillText(legendText, nextLegendIndex + 35, legendsY + 5);
+
+        nextLegendIndex = 170 + context.measureText(legendText).width;
+        drawSummaryLegend(context, nextLegendIndex, legendsY, nextLegendIndex + lineWidth, legendsY, [5], walkingColour, 4);
+        legendText = 'walking';
+        context.fillText(legendText, nextLegendIndex+35, legendsY + 5);
+
+        nextLegendIndex = 170 + nextLegendIndex + context.measureText(legendText).width;
+        drawSummaryLegend(context,nextLegendIndex,legendsY, nextLegendIndex + lineWidth, legendsY, [], otherColour, 3);
+        legendText = "driving";
+        context.fillText(legendText, nextLegendIndex+35, legendsY + 5);
+    }
+    var drawSummaryLegend = function(context,startX, startY, endX, endY, lineDash, lineColour, lineWidth){
+
+        context.beginPath();
+        context.moveTo(startX, startY);
+        context.lineTo(endX, endY);
+
+        context.setLineDash(lineDash);
+        context.strokeStyle = lineColour;
+        context.lineWidth = lineWidth;
+
+        context.stroke();       
     }
 
     var getUserTimeSelectionHeader = function(){
-        return 'First Service on Sun 1 JUN 2016';
+        console.log($scope.getTimeOption());
+
+        var transportChoice = $scope.formattedTimeOption();
+        var date = $scope.formattedDate();
+        return transportChoice + ' on ' + date;
     }
-    var getPublicTransportDuration = function(){
-        return 'Total time: 1hr 2min  ';
-    }
-    var getPublicTransportWalking = function(){
-        return 'Total walking distance: 2km   ';
+    
+    var getPublicTransportSummary = function(ptRouteIsValid){
+
+        if (ptRouteIsValid){
+            var duration = 'Total time: ' + $scope.public.duration + '  ';
+            var distance = 'Total walking distance: ' + $scope.public.distance.replace('Walk: ', '');
+
+            return duration + '  ' + distance;   
+        }
+        else{
+            return 'No Service Available!!';
+        }
     }
     var getOtherModeHeader = function(){
-        return 'Driving:';
+        return  $scope.other.mode.toUpperCase() + ':';
     }
-    var getOtherModeDuration = function(){
-        return 'Total time: 20 min   '
+    var getOtherModeSummary = function(){
+        var duration = 'Total time: ' + $scope.other.duration;
+        var distance = 'Total distance: ' + $scope.other.distance;
+
+        return duration + '  ' + distance;
     }
     var getOtherModeDistance = function(){
-        return 'Total distance: 4km  '
     }
 
     var drawCircleAt = function(center, context, color, gmapsInfo) {
@@ -478,7 +544,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     $scope.renderMemeFinal = function () {
         var context = $rootScope.context;
         var image = document.getElementById('img-out');
-
         var topText = $rootScope.selectedTemplate.firstLine;
         var bottomText = $rootScope.selectedTemplate.secondLine;
 
@@ -734,7 +799,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     $scope.shareImage = function() {
         
         document.getElementById("meme-validation").innerText = '';
-
+console.log('share');
         if ($rootScope.selectedTemplate){
             document.getElementById('map-results').classList.add('done');
             $scope.renderMemeFinal();

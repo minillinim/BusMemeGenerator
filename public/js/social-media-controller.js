@@ -1,6 +1,6 @@
 var app = angular.module('bus-meme');
 
-app.controller('SocialMediaController', function ($scope, $rootScope, $location, MemeFactory) {
+app.controller('SocialMediaController', function ($scope, $rootScope, $location, $route, MemeFactory) {
     var KM_TO_METER_FACTOR = 1000;
     var HASH_TAG = ' %23publictransportfail';
 
@@ -77,6 +77,9 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
         });
     };
 
+    $scope.reloadPage = function() {
+       $route.reload();
+    }
     function validEmail(email) {
         return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+$/.test(email);
     }

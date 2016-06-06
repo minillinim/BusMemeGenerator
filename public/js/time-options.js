@@ -21,6 +21,29 @@ app.controller('TimeController', function ($scope, $rootScope)
 
     $rootScope.getMaxWalk = function() { return $scope.selectedMaxWalk.value; }
     $rootScope.getTimeOption = function() { return $scope.timeOption; }
+
+    $rootScope.formattedTimeOption = function(){
+        var time = $scope.selectedHour + ':' + $scope.selectedMinute + $scope.selectedAmpm;
+
+        switch( $scope.getTimeOption()){
+            case "before":
+                return "Arriving Before " + time;
+            case "after":
+                return "Leaving After " + time;
+            case "first":  
+                return "First Service"; 
+            case "last":  
+                return "Last Service"; 
+        }
+    }
+    $rootScope.formattedDate = function(){
+        var date = $scope.selectedDate.dateValue;
+        
+        return weekdays[date.getDay()].substr(0,3) + ' ' + 
+               date.getDate() + ' ' + 
+               months[date.getMonth()] + ' ' +
+               date.getFullYear();
+    }
     $rootScope.getSelectedTime = function(){
 
         var hour = $scope.selectedHour;

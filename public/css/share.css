@@ -57,7 +57,15 @@ select {
       text-transform: none;
       color: white; }
   .share-panel .share-content {
-    padding-top: 20px; }
+    padding-top: 10px; }
+    .share-panel .share-content .share-description {
+      color: white;
+      margin-bottom: 20px;
+      text-transform: none; }
+    .share-panel .share-content .share-description.bottom {
+      margin-top: 20px; }
+    .share-panel .share-content .start-over {
+      color: #033054; }
 
 .subscribe .subscribe-header {
   color: white;

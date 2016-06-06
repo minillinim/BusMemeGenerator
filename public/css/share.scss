@@ -16,7 +16,19 @@
 	}
 
     .share-content{
-    	padding-top: 20px;
+    	padding-top: 10px;
+
+    	.share-description {
+			color: $input-color;
+			margin-bottom: 20px;
+			text-transform: none;
+		}
+		.share-description.bottom {
+			margin-top:20px;
+		}
+		.start-over{
+			color: $button-color;
+		}
     }
 }
 .subscribe{
