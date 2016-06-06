@@ -96,7 +96,7 @@ select {
 #map-results {
   margin-left: 20%;
   border-left: thick solid #547CD4;
-  height: 750px;
+  height: 900px;
   padding-bottom: 55px; }
   #map-results #invisible-map-anchor {
     width: 0;
@@ -157,7 +157,7 @@ select {
 
 #meme-validation {
   margin-left: 10px;
-  margin-top: 520px; }
+  margin-top: 20px; }
 
 #share-image-button {
   margin-left: 10px;
@@ -205,7 +205,8 @@ select {
     .map-canvas .template-selection .message-header {
       padding-bottom: 10px; }
     .map-canvas .template-selection .message-template {
-      padding: 10px 5px; }
+      padding: 10px 5px;
+      list-style: none; }
     .map-canvas .template-selection .message-template-list {
       padding-left: 30px;
       cursor: pointer;

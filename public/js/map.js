@@ -664,7 +664,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             scrollToElement('invisible-map-anchor');
         }
         else{
-            document.getElementById("meme-validation").innerText = 'Select a meme template on the right hand side to create your meme';
+            document.getElementById("meme-validation").innerText = 'Please choose a meme template to create your meme';
         }
     };
 
