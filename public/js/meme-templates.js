@@ -10,9 +10,11 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
     });
 
     $scope.handleOverlay = function(){
-        $scope.showTemplates=true;
-        document.getElementById("templates").className="template-selection";
-        document.getElementById("map-overlay").className="map-overlay";
+        if (!$rootScope.memeShared){
+            $scope.showTemplates=true;
+            document.getElementById("templates").className="template-selection";
+            document.getElementById("map-overlay").className="map-overlay";   
+        }
     };
     $scope.setSelectedTemplate = function (template) {
         document.getElementById("meme-validation").innerText = '';

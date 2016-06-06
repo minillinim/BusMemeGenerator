@@ -191,6 +191,8 @@ select {
     cursor: pointer;
     border-radius: 3px;
     margin: 6px; }
+  .map-canvas .templates-menu.unclickable {
+    cursor: initial; }
   .map-canvas .template-selection-hidden {
     display: none; }
   .map-canvas .template-selection {

@@ -661,6 +661,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             document.getElementById('map-results').classList.add('done');
             $scope.renderMemeFinal();
             $scope.showImage = true;
+            $rootScope.memeShared = true;
             scrollToElement('invisible-map-anchor');
         }
         else{

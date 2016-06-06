@@ -23,7 +23,7 @@
                 <canvas id="canvas" width="0" height="0"></canvas>
                 <img id="img-out" class="map-image" src="" />
 
-                <img class="templates-menu" src="../assets/menu.svg" ng-click="handleOverlay()"/>
+                <img class="templates-menu" src="../assets/menu.svg" ng-class="{unclickable: memeShared === true}" ng-click="handleOverlay()"/>
                 <div ng-show="showTemplates">
                     <div id="map-overlay" class="map-overlay"></div>
                     <div id="templates" class="template-selection">
@@ -41,7 +41,7 @@
             <!--<a id="dl" ng-click="dlCanvas()">Download Canvas</a>-->
             <img id="img-out-2" class="map-image" src="" style="display:none"/>
             <div id="meme-validation"></div>
-            <input class="button" id="share-image-button" ng-click="$parent.shareImage()" type="submit" value="Next"/>
+            <input class="button" id="share-image-button" ng-click="$parent.shareImage();" type="submit" value="Next"/>
         </div>
 
    
