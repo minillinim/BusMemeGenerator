@@ -2,7 +2,6 @@ input {
   height: 32px;
   margin-right: 0;
   vertical-align: middle;
-  font-size: 14px;
   padding-left: 10px;
   border-radius: 3px;
   border: none;
@@ -17,7 +16,6 @@ input {
   opacity: 0.8; }
 
 select {
-  font-size: 12px;
   border-radius: 3px;
   border: none;
   line-height: 20px;
@@ -30,7 +28,6 @@ select {
   opacity: 0.8; }
 
 .button {
-  font-size: 16px;
   height: 32px;
   vertical-align: middle;
   max-width: none;
@@ -49,52 +46,8 @@ select {
 .checkbox {
   text-transform: none; }
 
-#nav {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1300;
-  height: 10px; }
-  #nav .bus-meme-home {
-    cursor: pointer;
-    font-size: 28px;
-    font-weight: bold;
-    display: inline-block; }
-    #nav .bus-meme-home img {
-      width: 46px;
-      margin: 10px;
-      margin-left: 30px;
-      vertical-align: middle; }
-  #nav .create-meme {
-    display: inline-block;
-    right: 10px;
-    position: fixed;
-    padding: 20px;
-    color: white;
-    text-transform: uppercase;
-    font-size: 18px;
-    cursor: pointer; }
-  #nav .gallery {
-    cursor: pointer;
-    color: white;
-    right: 10px;
-    position: fixed;
-    padding: 20px;
-    display: inline-block; }
-    #nav .gallery img {
-      display: inline-block;
-      width: 16px;
-      padding-right: 5px;
-      padding-top: 1px;
-      vertical-align: top; }
-
-#nav.gallery-nav {
-  background-color: #4468DB;
-  height: 65px; }
-
 .gallery-display {
-  margin-top: 80px; }
+  padding: 50px; }
   .gallery-display .gallery-header h2 {
     font-size: 32px;
     margin-bottom: 5px; }
@@ -145,7 +98,8 @@ select {
   margin-left: 10%; }
   .meme-info span {
     display: block;
-    width: 90%; }
+    width: 90%;
+    font-size: 18px; }
   .meme-info .more-details-label {
     cursor: hand;
     text-decoration: underline; }

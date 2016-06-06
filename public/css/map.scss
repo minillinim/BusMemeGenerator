@@ -1,6 +1,5 @@
 @import 'variables';
 @import 'common';
-@import 'nav';
 
 #map-results {
 
@@ -10,7 +9,7 @@
 
   margin-left: 20%;
   border-left: thick solid $separator-color;
-  height: 900px;
+  height: 950px;
   padding-bottom:55px;
 
   .empty-space {
@@ -55,7 +54,6 @@
           padding-bottom: 2px;
           width: 48%;
           padding-top: 8px;
-          font-size: 12px;
         }
       }
 
@@ -80,8 +78,7 @@
           position:relative;
           z-index:1000 !important;
           background-color: $background-color;
-          color: #FFFFF;
-          font-size: 12px;
+          color: #FFFFFF;
           word-wrap: break-word;
           text-transform: none;
         }

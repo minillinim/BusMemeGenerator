@@ -1,9 +1,9 @@
 @import 'variables';
 @import 'common';
-@import 'nav';
 
 .gallery-display{
-	margin-top:80px;
+
+    padding: 50px;
 
 	.gallery-header{
 
@@ -76,6 +76,7 @@
 	span{
 		display:block;
     	width: 90%;
+        font-size: 18px;
 	}
 
 	.more-details-label{

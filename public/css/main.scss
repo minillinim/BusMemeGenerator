@@ -3,7 +3,7 @@
 @import 'nav';
 
 body {
-  padding: 50px;
+  padding-top: 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   height:100%;
 	background-color:$background-color;
@@ -19,11 +19,11 @@ body {
 
 		.busmeme-logo{
 			margin-right: 20px;
-			width: 130px;
+			width: 80px;
 			display:inline;
 		}
 		.busmeme-title{
-			width: 250px;
+			width: 180px;
 			display:inline;
 		}
 		.description-line{
@@ -41,15 +41,12 @@ body {
 		.second-line{
 			font-size:40px;
 		}
-		.third-line{
-			font-size:32px;
-		} 
 
 	}
 	
 	#journey{
 
-		padding-top:50px;
+		padding-top:30px;
 		margin-left:20%;
 
 		img{
@@ -73,7 +70,7 @@ body {
 
 	.start-address, .dest-address{
 		color:$input-color;
-		font-size:12px;
+		//font-size:16px;
     	padding-bottom: 10px;
 		text-transform:none;
 
@@ -89,7 +86,7 @@ body {
 		padding: 30px 3px 0 0;
 		text-transform: none;
 		color:$input-color;
-		font-size:12px;
+		//font-size:16px;
 
 		.travel-date{
 			width:150px;
@@ -100,17 +97,18 @@ body {
 			padding-left:3px;
 
 			input.radiobutton{
-				margin-left: 10px;
+				margin-left: 20px;
 				margin-right: 10px;
 			}
 			br {
 				display: none;
-			}
-			input.radiobutton.first{
-				margin-left: 0;
+				@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+					display: block;
+				}
 			}
 		}
 		.time-spec {
+			margin-left: 20px;
 			padding-bottom: 15px;
 		}
 	}
@@ -118,20 +116,21 @@ body {
 	.travel-comparison{
 		text-transform: none;
 		color:$input-color;
-		font-size:12px;
+		//font-size:16px;
 
 		p{
 			margin-bottom:0;
 			margin-top: 20px;
 		}
 		input{
-			display:inline;
-		}
-		input.radiobutton.second {
 			margin-left: 20px;
-		}		
+			margin-right: 10px;
+		}
 		br {
 			display: none;
+			@media screen and (max-device-width: $max-device-width) and (orientation: portrait){
+				display: block;
+			}
 		}
 	}
 
@@ -161,7 +160,6 @@ body {
 
 .instructions{
 	text-transform:uppercase;
-	font-size:18px;
 	display: inline-block;
 	padding-top:5px;
 }
