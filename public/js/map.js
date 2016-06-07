@@ -402,28 +402,19 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     var drawMapSummary = function(context, ptRouteIsValid, x, y, ptColour, otherColour, walkingColour){
         
         var fontStyle= 'Helvetica';
-        var fontReg= '16px ';
-        var fontHdr= 'bold 16px ';
+        var fontReg= '20px ';
         var fontStyle= 'Helvetica';
         context.font = fontReg + fontStyle;
 
         context.textAlign = "center";
         context.fillStyle = "black";
-        context.lineHeight = 18;
+        context.lineHeight = 20;
     
-        context.fillText(getUserTimeSelectionHeader(), x, y );
+        context.fillText(getUserTimeSelectionHeader(), x, y + 5);
 
-        context.font = fontHdr + fontStyle;
-        context.fillText(getOtherModeHeader(), x, y + 25);
-        context.font = fontReg + fontStyle;
+        context.fillText(getOtherModeHeader() + getOtherModeSummary(), x , y + 45);
 
-        context.fillText(getOtherModeSummary(), x, y + 45);
-
-        context.font = fontHdr + fontStyle;
-        context.fillText('PUBLIC TRANSPORT:', x, y + 70);
-
-        context.font = fontReg + fontStyle;
-        context.fillText(getPublicTransportSummary(ptRouteIsValid), x, y + 90);
+        context.fillText('PUBLIC TRANSPORT: ' + getPublicTransportSummary(ptRouteIsValid), x, y + 80);
 
        drawMapSummaryLegends(context, x, y + 110, ptColour, otherColour, walkingColour);
     }
@@ -471,27 +462,18 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     var getPublicTransportSummary = function(ptRouteIsValid){
 
         if (ptRouteIsValid){
-            var duration = 'Total time: ' + $scope.public.duration + '  ';
-            var distance = 'Total walking distance: ' + $scope.public.distance.replace('Walk: ', '');
-
-            return duration + '  ' + distance;   
+            return $scope.public.duration + ', ' + $scope.public.distance ;   
         }
         else{
             return 'No Service Available!!';
         }
     }
     var getOtherModeHeader = function(){
-        return  $scope.other.mode.toUpperCase() + ':';
+        return  $scope.other.mode.toUpperCase() + ': ';
     }
     var getOtherModeSummary = function(){
-        var duration = 'Total time: ' + $scope.other.duration;
-        var distance = 'Total distance: ' + $scope.other.distance;
-
-        return duration + '  ' + distance;
+        return $scope.other.duration + ', ' + $scope.other.distance;
     }
-    var getOtherModeDistance = function(){
-    }
-
     var drawCircleAt = function(center, context, color, gmapsInfo) {
         context.beginPath();
         context.strokeStyle = color;
