@@ -1,6 +1,6 @@
 FROM node:argon
 
-ENV NODE_ENV production
+ENV NODE_ENV development
 
 RUN mkdir -p /app
 WORKDIR /app
@@ -9,8 +9,7 @@ RUN npm install
 RUN npm install grunt-cli -g
 RUN npm install load-grunt-tasks -g
 
-RUN grunt scss
-RUN grunt concat
+RUN grunt scss concat
 
 EXPOSE 3000
 
