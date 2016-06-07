@@ -54,9 +54,13 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
 
     $scope.facebookShare = function () {
         $scope.saveImage(function (imageLink) {
-            window.open("https://www.facebook.com/sharer/sharer.php?u=" + imageLink +
-                "&t=" + $rootScope.memeText + HASH_TAG, '',
-                'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+            FB.ui({
+                method: 'share',
+                href: 'http://bus-meme-generator.herokuapp.com',
+                hashtag: HASH_TAG,
+                quote:  $rootScope.memeText
+            }, function(response){});
+
         });
     };
     
