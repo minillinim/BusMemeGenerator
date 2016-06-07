@@ -10,22 +10,14 @@
     <div class="about-header pure-u-1">
         <h2>What are all these <span class="hashtag">#publictransportfail</span>s about anyway?</h2>
 
-        <div class="description-line">
-            <p>
-                On Thursday 10th March 2015 hundreds of people from Logan City came together at Woodridge State High School to witness something remarkable: <span class="highlight">All four Mayoral candidates promising to spend at least $1 million per year in Council funds to improve Logan City's public transport system</span>.
-            </p>
-            <p>
-                That night we demanded that Logan City Council put money into public transport services and our representatives listened, which means our new Mayor <span class="highlight">Luke Smith is committed to fixing public transport and will be putting money on the table!</span>
-            </p>
-            <p>
-                On Monday the 27th June 2016, the newly elected Council will be meeting to fix budget priorities and <span class="highlight">it's up to us to make sure they remember why we gathered at the school that night</span>. We built this website to help you spread the word.
-            </p>
-        </div>
+        <p>
+            On Thursday 10th March 2015 hundreds of people from Logan City came together at Woodridge State High School to witness something remarkable: All four Mayoral candidates promising to spend at least $1 million per year in Council funds to improve Logan City's public transport system.
+            That night we demanded that Logan City Council put money into public transport services and our representatives listened, which means our new Mayor Luke Smith is committed to fixing public transport and will be putting money on the table!
+            On Monday the 27th June 2016, the newly elected Council will be meeting to fix budget priorities and it's up to us to make sure they remember why we gathered at the school that night. We built this website to help you spread the word.
+        </p>
     </div>
-    <div class="about-faqs">
-        <div class="about-question">
-            <div class="about-answer"></div>
-        </div>
+    <div class="about-faqs pure-u-1" ng-repeat="faq in faqs">
+        <h2>{{faq.question}}</h2>
+        <p>{{faq.answer}}</p>
     </div>
-
 </div>

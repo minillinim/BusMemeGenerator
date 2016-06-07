@@ -7,7 +7,7 @@
     .about-header{
 
         h2{
-            font-size:32px;
+            font-size:24px;
             margin-bottom: 5px;
             .hashtag{
                 color:$text-color;
@@ -16,12 +16,29 @@
         .description-line{
             margin-bottom:15px;
             color:$input-color;
-            font-size:18px;
 
             .highlight{
                 font-weight:bold;
                 color:$text-color;
             }
-        } 
+        }
+        p{
+            font-size:18px;
+            color:$input-color;
+        }
+    }
+
+    .about-faqs{
+        width: 100%;
+
+        h2{
+            font-size:24px;
+            margin-bottom: 5px;
+            color:$text-color;
+        }
+        p{
+            font-size:18px;
+            color:$input-color;
+        }
     }
 }

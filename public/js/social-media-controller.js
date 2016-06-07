@@ -23,7 +23,6 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     }
 
     function convertToMeters(distance) {
-        console.log(distance);
         return Number(distance.toLowerCase().replace(' km', '').replace('walk: ', '')) * KM_TO_METER_FACTOR;
     }
 
@@ -54,13 +53,17 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     };
 
     $scope.facebookShare = function () {
+        console.log("HEre1")
         $scope.saveImage(function (imageLink) {
+        console.log("HEre2")
             FB.ui({
                 method: 'share',
-                href: 'http://bus-meme-generator.herokuapp.com',
+                href: 'http://busmeme.org/logan',
                 hashtag: '#' + HASH_TAG,
                 quote:  $rootScope.memeText
-            }, function(response){});
+            }, function(response){
+                console.log(response);
+            });
 
         });
     };
@@ -97,11 +100,8 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
 
     $scope.saveUserDetails = function () {
         $scope.invalidUserInput = !validUser($scope.user);
-
         if (!$scope.invalidUserInput) {
-
             MemeFactory.saveUserDetails($scope.user).then(function (response) {
-                console.log(response.data);
                 $scope.subscribed = true;
             });
         }

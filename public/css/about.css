@@ -1,16 +1,27 @@
 .about-display {
   padding: 50px; }
   .about-display .about-header h2 {
-    font-size: 32px;
+    font-size: 24px;
     margin-bottom: 5px; }
     .about-display .about-header h2 .hashtag {
       color: #FFFA32; }
   .about-display .about-header .description-line {
     margin-bottom: 15px;
-    color: white;
-    font-size: 18px; }
+    color: white; }
     .about-display .about-header .description-line .highlight {
       font-weight: bold;
       color: #FFFA32; }
+  .about-display .about-header p {
+    font-size: 18px;
+    color: white; }
+  .about-display .about-faqs {
+    width: 100%; }
+    .about-display .about-faqs h2 {
+      font-size: 24px;
+      margin-bottom: 5px;
+      color: #FFFA32; }
+    .about-display .about-faqs p {
+      font-size: 18px;
+      color: white; }
 
 /*# sourceMappingURL=about.css.map */
