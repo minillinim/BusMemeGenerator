@@ -31,23 +31,22 @@ module.exports = function (grunt) {
                 }
             }
         },
-        uglify: {
+        concat: {
             options: {
-                mangle: false
+                separator: ';',
             },
-            my_target: {
-                files: {
-                    'public/js/output.min.js': 
-                    ['public/js/places-autocomplete.js', 
-                    'public/js/address-validation.js', 
+            dist: {
+                src: ['public/js/places-autocomplete.js',
+                    'public/js/address-validation.js',
                     'public/js/map.js',
                     'public/js/meme-templates.js',
                     'public/js/time-options.js',
                     'public/js/gallery.js',
                     'public/js/about.js',
+                    'public/js/admin.js',
                     'public/js/social-media-controller.js'
-                    ]
-                }
+                ],
+                dest: 'public/js/output.min.js'
             }
         },
         jasmine_node: {
@@ -114,7 +113,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'scss',
         'develop',
-        'uglify'
+        'concat'
     ]);
     grunt.registerTask('default', [
         'build',
@@ -123,4 +122,6 @@ module.exports = function (grunt) {
     grunt.registerTask('scss', ['sass']);
 
     grunt.registerTask('test', 'jasmine_node');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+
 };
