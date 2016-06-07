@@ -2,7 +2,7 @@ var app = angular.module('bus-meme');
 
 app.controller('SocialMediaController', function ($scope, $rootScope, $location, $route, MemeFactory) {
     var KM_TO_METER_FACTOR = 1000;
-    var HASH_TAG = ' %23publictransportfail';
+    var HASH_TAG = 'publictransportfail';
 
     $scope.user = {};
     $scope.invalidUserInput = false;
@@ -57,7 +57,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
             FB.ui({
                 method: 'share',
                 href: 'http://bus-meme-generator.herokuapp.com',
-                hashtag: HASH_TAG,
+                hashtag: '#' + HASH_TAG,
                 quote:  $rootScope.memeText
             }, function(response){});
 
@@ -70,12 +70,13 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
             var tweetLength = 140;
             var tweetText = $rootScope.memeText;
             var urlLength = 80;
+            var hashtag = ' %23' + HASH_TAG;
             
-            if (tweetText.length + urlLength + HASH_TAG.length > tweetLength) {
-                tweetText = tweetText.substring(0, tweetLength - HASH_TAG.length - urlLength - 2) + '..';
+            if (tweetText.length + urlLength + hashtag.length > tweetLength) {
+                tweetText = tweetText.substring(0, tweetLength - hashtag.length - urlLength - 2) + '..';
             }
 
-            tweetText = tweetText + HASH_TAG;
+            tweetText = tweetText + hashtag;
             window.open("https://twitter.com/intent/tweet?text=" + tweetText + "&url=" + imageLink,
                 '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         });
