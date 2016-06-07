@@ -1,8 +1,3 @@
-google.maps.event.addDomListener(window, 'load', function () {
-
-    loadGoogleAutocomplete();
-});
-
 function loadGoogleAutocomplete(){
 
         setTimeout(function() {
