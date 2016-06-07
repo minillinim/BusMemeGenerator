@@ -544,6 +544,10 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             }
             context.stroke();            
         });
+
+        // Reset line dash to fix bug with frame being dotted 
+        context.beginPath();
+        context.setLineDash([]);
     }
 
     $scope.renderMemeFinal = function () {
