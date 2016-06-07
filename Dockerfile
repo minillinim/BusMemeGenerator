@@ -10,7 +10,7 @@ RUN npm install grunt-cli -g
 RUN npm install load-grunt-tasks -g
 
 RUN grunt scss
-RUN grunt uglify
+RUN grunt concat
 
 EXPOSE 3000
 
