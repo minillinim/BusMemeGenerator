@@ -11,10 +11,13 @@ var express = require('express'),
 
 
 module.exports = function (app) {
-    app.use('/', router);
+    app.use('/logan/', router);
 };
 
 router.get('/', function (req, res, next) {
+    res.render('index', {title: 'Bus Meme Generator'});
+});
+router.get('/logan', function (req, res, next) {
     res.render('index', {title: 'Bus Meme Generator'});
 });
 

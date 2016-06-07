@@ -144,17 +144,15 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
                     addStatus("Retrieving journey information from Translink (allowing 10 sec)...")
 
-                    var tlapiUrl = window.location.href.replace(
-                        "#",
-                        "tl/"+
+                    var tlapiUrl = window.location.href +
+                        "/tl/"+
                         startLat+"/"+
                         startLng+"/"+
                         destLat+"/"+
                         destLng+"/"+
                         $scope.getTimeOption()+"/"+
                         $scope.getSelectedTime().getTime()/1000+"/"
-                        +$scope.getMaxWalk()
-                    );
+                        +$scope.getMaxWalk();
                     
                     $.ajax({
                         type: "GET",
@@ -172,6 +170,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                 distance: prettyDistance(journey.walkingDistance),
                                 duration: prettyDuration(journey.duration)
                             };
+                            console.log('public', $scope.public);
 
                             $scope.ptLatLng = [];
                             if(journey.legs){
@@ -184,7 +183,9 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                 });
                             }
 
+                            console.log('....finding bounds');
                             $scope.ptBounds = findPolylineBounds($scope.ptLatLng);
+                            console.log($scope.ptBounds);
                             d.resolve([true, true]);
                         },
                         error: function (err) {
@@ -564,6 +565,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     };
 
     var getCombinedBounds = function (bounds) {
+        console.log(bounds);
         var bBounds = bounds[0];
         for(var i=1; i< bounds.length; i++) {
             bBounds.extend(bounds[i].getNorthEast());

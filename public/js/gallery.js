@@ -13,13 +13,13 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
          $('#loading-img').hide();
 
         $scope.images.forEach(function(image){
-            image.imageUrl = "/image/" + image.imageLink;
+            image.imageUrl = "/logan/image/" + image.imageLink;
         });
 
     });
 
     $scope.showHomePage = function () {
-        $location.path('');
+        $location.path('/logan');
     }
 
     $scope.formatDistance = function (distance) {

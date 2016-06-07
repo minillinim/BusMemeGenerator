@@ -74,16 +74,16 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
 app.factory('MemeFactory', ['$http', function ($http) {
     return {
         getMemeTemplates: function () {
-            return $http.get('/getMemeTemplates');
+            return $http.get('/logan/getMemeTemplates');
         },
         saveImageDetails: function (imageDetails) {
-            return $http.post('/saveImage', {data: imageDetails});
+            return $http.post('/logan/saveImage', {data: imageDetails});
         },
         getImages: function () {
-            return $http.get('/getImages');
+            return $http.get('/logan/getImages');
         },
         saveUserDetails: function (userDetails) {
-            return $http.post('/saveUser', {data: userDetails});
+            return $http.post('/logan/saveUser', {data: userDetails});
         }
     }
 }]);
