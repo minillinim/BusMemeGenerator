@@ -10,8 +10,9 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     $scope.showImage = false;
     $scope.showMap = false;
     $scope.memeNotSelected = false;
-    $scope.stage1complete = false;
-    $scope.stage2complete = false;
+
+    $scope.canProgressToStage2 = true;
+    $scope.canProgressToStage3 = false;
 
     $scope.origin = null;
     $scope.destination = null;
@@ -172,7 +173,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                 distance: prettyDistance(journey.walkingDistance),
                                 duration: prettyDuration(journey.duration)
                             };
-                            console.log('public', $scope.public);
 
                             $scope.ptLatLng = [];
                             if(journey.legs){
@@ -185,9 +185,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                 });
                             }
 
-                            console.log('....finding bounds');
                             $scope.ptBounds = findPolylineBounds($scope.ptLatLng);
-                            console.log($scope.ptBounds);
                             d.resolve([true, true]);
                         },
                         error: function (err) {
@@ -330,6 +328,10 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             $('#map-status').hide();
             $('#img-out').hide(); 
             $('#map-wrapper').hide();
+            $scope.$apply(function(){
+                $scope.canProgressToStage3 = true;
+                $rootScope.showTemplates=true;
+            });
         });
     }
 
@@ -567,7 +569,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     };
 
     var getCombinedBounds = function (bounds) {
-        console.log(bounds);
         var bBounds = bounds[0];
         for(var i=1; i< bounds.length; i++) {
             bBounds.extend(bounds[i].getNorthEast());
@@ -792,7 +793,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             $rootScope.showTemplates=false;
             scrollToElement('invisible-map-anchor');
             $scope.memeNotSelected = false;
-            $scope.stage2complete = true;
+            $scope.canProgressToStage3 = false;
         } else{
             $scope.memeNotSelected = true;
         }
@@ -804,7 +805,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         document.getElementById('step-1').classList.add('done');
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
-        $scope.stage1Complete = true;
+        $scope.canProgressToStage2 = false;
     }
     
     var scrollToElement = function (id) {

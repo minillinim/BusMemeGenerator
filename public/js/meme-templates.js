@@ -1,7 +1,7 @@
 var app = angular.module('bus-meme');
 
 app.controller('MemeController', function ($scope, $rootScope, $location, MemeFactory, $anchorScroll) {
-    $rootScope.showTemplates = true;
+    $rootScope.showTemplates = false;
     MemeFactory.getMemeTemplates().then(function (response) {
         $scope.memeTemplates = response.data;
         $rootScope.selectedTemplate = '';
