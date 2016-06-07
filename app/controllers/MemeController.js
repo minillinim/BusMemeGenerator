@@ -26,23 +26,6 @@ function generateImageFilename() {
     return (randomNumber + randomNumber + "-" + randomNumber + "-4" + randomNumber.substr(0, 3) + "-" + randomNumber + "-" + randomNumber + randomNumber + randomNumber).toLowerCase();
 }
 
-function createGalleryDirectory(filePath) {
-    var dir = './gallery';
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
-    }
-}
-
-var saveImageToFile = function (data, filename) {
-    createGalleryDirectory(filename);
-    fs.writeFile('./gallery/' + filename + '.png', data.replace(/^data:image\/png;base64,/, ''), 'base64', function (err) {
-        if (err) {
-            console.log(err);
-        }
-        console.log('The file was saved');
-    });
-};
-
 var saveImage = function (req, res, next) {
     var imageLink = generateImageFilename();
     var imageDetails = (JSON.parse(JSON.stringify(req.body))).data;
@@ -57,13 +40,12 @@ var saveImage = function (req, res, next) {
             if (err) {
                 res.json(err);
             }
-            saveImageToFile(imageDetails.imageUrl, imageLink)
             res.status(201).json({imageLink: imageLink});
         });
     } else {
         res.status(400).json("Bad data");
     }
-}
+};
 
 var getMemeTemplates = function (req, res, next) {
     var templates = [];
@@ -85,18 +67,23 @@ var getMemeTemplates = function (req, res, next) {
 var getImages = function (req, res, next) {
     var images = [];
     Image.find({}, {'imageUrl': 0}).stream().on('data', function (data) {
-        console.log('images', data);
         images.push(data);
     }).on('error', function (err) {
         console.log('error', err);
     }).on('close', function () {
         res.json(images);
     });
-}
+};
 
 var getImage = function (req, res, next) {
-    res.sendFile(path.join(__dirname, '../../gallery/' + req.params['imageLink'] + '.png'));
-}
+    var imageUrl;
+    Image.find({"imageLink": req.params['imageLink']}).stream().on('data', function(data) {
+        imageUrl = data.imageUrl;
+    }).on('close', function() {
+        res.setHeader("Content-type", "image/png");
+        res.send(new Buffer(imageUrl.replace(/^data:image\/png;base64,/, ''), 'base64'));
+    });
+};
 
 module.exports = function () {
     return {
@@ -104,6 +91,6 @@ module.exports = function () {
         saveMemeDetails: saveMemeDetails,
         saveImage: saveImage,
         serveImage: getImage,
-        getImages: getImages,
+        getImages: getImages
     }
 };
