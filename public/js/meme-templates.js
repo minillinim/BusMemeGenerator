@@ -21,7 +21,12 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         $rootScope.selectedTemplate = template;
         $scope.renderMemeTemplate();
         $rootScope.showTemplates=false;
+        $scope.showTooltip();
     };
+
+    $scope.showTooltip = function(){
+        $("#meme-tooltip").show().delay(5000).fadeOut();
+    }
 
     $scope.renderMemeTemplate = function () {
         $('#canvas2').remove();

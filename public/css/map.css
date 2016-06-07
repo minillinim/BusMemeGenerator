@@ -70,6 +70,16 @@
     left: 0; }
   .map-canvas .map-overlay-hidden {
     display: none; }
+  .map-canvas .templates-tooltip {
+    position: absolute;
+    left: -65;
+    top: -60;
+    z-index: 10;
+    width: 150px;
+    text-align: center;
+    padding: 5px;
+    text-transform: none;
+    display: none; }
   .map-canvas .map-overlay {
     position: absolute;
     height: 100%;
@@ -83,7 +93,7 @@
     top: 0;
     width: 20px;
     padding: 2px;
-    background-color: #D8E4E8;
+    background-color: #ff57b6;
     border: 2px solid black;
     cursor: pointer;
     border-radius: 3px;

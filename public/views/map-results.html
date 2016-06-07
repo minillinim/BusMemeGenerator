@@ -24,6 +24,9 @@
                 <img id="img-out" class="map-image" src="" />
 
                 <img class="templates-menu" src="../assets/menu.svg" ng-class="{unclickable: memeShared === true}" ng-click="handleOverlay()"/>
+                <div id="meme-tooltip" class="templates-tooltip arrow_box">
+                    Click here to change the meme template!
+                </div>
                 <div ng-show="showTemplates">
                     <div id="map-overlay" class="map-overlay"></div>
                     <div id="templates" class="template-selection">
