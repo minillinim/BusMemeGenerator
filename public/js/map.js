@@ -319,6 +319,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             
             var canvas = document.getElementById("canvas");
             var context = canvas.getContext("2d");
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
             $rootScope.context = context;
             canvas.width = image.width;
             canvas.height = image.height * 1.25;
@@ -823,6 +825,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             $scope.renderMemeFinal();
             $scope.showImage = true;
             $rootScope.memeShared = true;
+            $rootScope.showTemplates=false;
             scrollToElement('invisible-map-anchor');
             $scope.memeNotSelected = false;
         } else{
