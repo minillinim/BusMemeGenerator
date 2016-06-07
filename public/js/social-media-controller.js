@@ -102,6 +102,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
 
             MemeFactory.saveUserDetails($scope.user).then(function (response) {
                 console.log(response.data);
+                $scope.subscribed = true;
             });
         }
     }

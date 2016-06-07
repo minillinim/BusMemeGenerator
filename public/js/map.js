@@ -10,6 +10,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     $scope.showImage = false;
     $scope.showMap = false;
     $scope.memeNotSelected = false;
+    $scope.stage1complete = false;
+    $scope.stage2complete = false;
 
     $scope.origin = null;
     $scope.destination = null;
@@ -790,6 +792,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             $rootScope.showTemplates=false;
             scrollToElement('invisible-map-anchor');
             $scope.memeNotSelected = false;
+            $scope.stage2complete = true;
         } else{
             $scope.memeNotSelected = true;
         }
@@ -801,6 +804,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         document.getElementById('step-1').classList.add('done');
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
+        $scope.stage1Complete = true;
     }
     
     var scrollToElement = function (id) {
