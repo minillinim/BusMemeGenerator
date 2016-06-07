@@ -48,7 +48,7 @@ select {
 
 .arrow_box {
   position: relative;
-  background: #ff57b6;
+  background: #FFFA32;
   border: 2px solid #000000;
   border-radius: 6px; }
 
@@ -64,7 +64,7 @@ select {
 
 .arrow_box:after {
   border-color: rgba(255, 10, 108, 0);
-  border-top-color: #ff57b6;
+  border-top-color: #FFFA32;
   border-width: 10px;
   margin-left: -10px; }
 
