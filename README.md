@@ -71,7 +71,7 @@ export DOCKER_HOST=tcp://localhost:4243
 mkdir -p /var/lib/busmemegenerator_db/data
 docker run -d --name db -v /var/lib/busmemegenerator_db/data:/data/db mongo
 wget https://raw.githubusercontent.com/minillinim/BusMemeGenerator/master/app.env
-docker run -d --link db:db -p 80:80 --env-file ./app.env  willgarcia/busmemegenerator
+docker run -d --link db:db -p 80:80 --env-file ./app.env minillinim/busmemegenerator
 ```
 
 If needed, edit `app.env` to change defaut port / database URI / Node environment
