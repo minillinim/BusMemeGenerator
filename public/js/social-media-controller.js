@@ -23,6 +23,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     }
 
     function convertToMeters(distance) {
+        console.log(distance);
         return Number(distance.toLowerCase().replace(' km', '').replace('walk: ', '')) * KM_TO_METER_FACTOR;
     }
 

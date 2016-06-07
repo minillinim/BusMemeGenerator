@@ -59,11 +59,12 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             if (status == google.maps.DirectionsStatus.OK) {
                 routeDetails['distance'] = result.routes[0].legs[0].distance.text;
                 routeDetails['duration'] = result.routes[0].legs[0].duration.text;
-
+    
                 var latLng = []
                 var currentMode = "";
                 var totalWalkingDistance = 0;
                 routeDetails['polylineCoords'] = []
+
                 result.routes.forEach(function(route) {
                     route.legs.forEach(function(leg) {
                         leg.steps.forEach(function(step) {
@@ -82,11 +83,12 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         });
                     });       
                 });
+
                 if(latLng.length > 0) {
                     routeDetails['polylineCoords'].push( {"mode": currentMode, "coords": latLng} )
                 }
                 routeDetails['bounds'] = result.routes[0].bounds; 
-                if('transit' === mode || 'walking' === mode) {              
+                if('transit' === mode) {              
                     routeDetails['distance'] = totalWalkingDistance;
                 }
                 d.resolve(routeDetails);
@@ -144,9 +146,10 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         addStatus("Success!");
                         $scope.other = {
                             mode: $scope.transport.mode,
-                            distance: dwRoute.distance,
+                            distance: distanceWithMeasure(dwRoute.distance),
                             duration: shorter(dwRoute.duration)
                         };
+
                         $scope.dwLatLng = dwRoute.polylineCoords;
                         $scope.dwBounds = dwRoute.bounds;
                         return [true, false];
@@ -173,8 +176,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         $scope.getSelectedTime().getTime()/1000+"/"
                         +$scope.getMaxWalk()
                     );
-
-                    console.log(tlapiUrl);
                     
                     $.ajax({
                         type: "GET",
@@ -307,7 +308,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             mapSize = 'size=' + $scope.mapWidth + 'x' + $scope.mapWidth;
 
         var imgUrl = staticMapsUrl + mapCenter + '&' + zoomLevel + '&' + mapSize;
-        console.log(imgUrl)
 
         var image = document.getElementById('img-out');
         image.setAttribute('crossorigin', 'anonymous');
@@ -482,8 +482,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     }
 
     var getUserTimeSelectionHeader = function(){
-        console.log($scope.getTimeOption());
-
         var transportChoice = $scope.formattedTimeOption();
         var date = $scope.formattedDate();
         return transportChoice + ' on ' + date;
@@ -780,6 +778,17 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         return duration.replace('Hour', 'Hr');
     };
 
+    var distanceWithMeasure = function(distance){
+        if (Number.isInteger(distance)){
+            if (distance < 1000)
+                return distance + ' m';
+            else
+                return Math.round(distance/100)/10 + ' km'
+        }
+        else
+            return distance;
+    }
+
     var prettyDistance = function(distance) {
         return 'Walk: ' + Math.round(distance/100)/10 + ' Km'
     }
@@ -806,7 +815,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     $scope.shareImage = function() {
         
         document.getElementById("meme-validation").innerText = '';
-console.log('share');
         if ($rootScope.selectedTemplate){
             document.getElementById('map-results').classList.add('done');
             $scope.renderMemeFinal();
