@@ -1,7 +1,7 @@
 var app = angular.module('bus-meme');
 
 app.controller('MemeController', function ($scope, $rootScope, $location, MemeFactory, $anchorScroll) {
-    $scope.showTemplates = true;
+    $rootScope.showTemplates = true;
     MemeFactory.getMemeTemplates().then(function (response) {
         $scope.memeTemplates = response.data;
         $rootScope.selectedTemplate = '';
@@ -11,7 +11,7 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
 
     $scope.handleOverlay = function(){
         if (!$rootScope.memeShared){
-            $scope.showTemplates=true;
+            $rootScope.showTemplates=true;
             document.getElementById("templates").className="template-selection";
             document.getElementById("map-overlay").className="map-overlay";   
         }
@@ -20,8 +20,13 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
         document.getElementById("meme-validation").innerText = '';
         $rootScope.selectedTemplate = template;
         $scope.renderMemeTemplate();
-        $scope.showTemplates=false;
+        $rootScope.showTemplates=false;
+        $scope.showTooltip();
     };
+
+    $scope.showTooltip = function(){
+        $("#meme-tooltip").show().delay(5000).fadeOut();
+    }
 
     $scope.renderMemeTemplate = function () {
         $('#canvas2').remove();
@@ -29,6 +34,8 @@ app.controller('MemeController', function ($scope, $rootScope, $location, MemeFa
 
         var canvas = document.getElementById("canvas2");
         var context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
         var image = document.getElementById('img-out');
         canvas.width = image.width;
         canvas.height = image.height;

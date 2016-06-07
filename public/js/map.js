@@ -1,28 +1,6 @@
-var app = angular.module('bus-meme', ['ngRoute']);
-
-app.config(function ($routeProvider) {
-    $routeProvider.when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MapController'
-    }).when('/galleries', {
-        templateUrl: 'views/gallery.html',
-        controller: 'GalleryController'
-    }).when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutController'        
-    })
-});
+var app = angular.module('bus-meme');
 
 app.controller('MapController', function ($scope, $location, $rootScope, MapService, $anchorScroll) {
-    
-    $rootScope.showGallery = function () {
-        $location.path('/galleries');
-    };
-
-    $rootScope.showAbout = function () {
-        $location.path('/about');
-    };
-
     loadGoogleAutocomplete();
 
     $scope.transport = {
@@ -31,7 +9,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
     $scope.showImage = false;
     $scope.showMap = false;
-    
+    $scope.memeNotSelected = false;
+
     $scope.origin = null;
     $scope.destination = null;
     
@@ -318,6 +297,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             
             var canvas = document.getElementById("canvas");
             var context = canvas.getContext("2d");
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
             $rootScope.context = context;
             canvas.width = image.width;
             canvas.height = image.height * 1.25;
@@ -645,9 +626,9 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
             polylineData.forEach(function(polyline) {
                 var coords = polyline['coords'];
-                for(var i=0; i< polyline.length; i++) {
-                    if (coords[i].lat > latMax) { latMax = coords[i].lat; }
-                    if (coords[i].lat < latMin) { latMin = coords[i].lat; }
+                for(var i=0; i< coords.length; i++) {
+                    if (coords[i].lat < latMax) { latMax = coords[i].lat; }
+                    if (coords[i].lat > latMin) { latMin = coords[i].lat; }
                     if (coords[i].lng > lngMax) { lngMax = coords[i].lng; }
                     if (coords[i].lng < lngMin) { lngMin = coords[i].lng; }
                 }
@@ -661,11 +642,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
             var center = boundingRect.getCenter();
             var d2sw = getLatLonDistanceInKm(center.lat(), center.lng(), latMin, lngMin);
-            var bounds= getSquareBoundingBox(center, d2sw + 0.2);
-            return bounds;
-        }else 
-        return undefined;
-    }
+            return getSquareBoundingBox(center, d2sw + 0.2);
+        } else {
+            return undefined;
+        }
+    };
 
     var getLatLonDistanceInKm = function (lat1,lon1,lat2,lon2) {
 
@@ -817,17 +798,16 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     }
 
     $scope.shareImage = function() {
-        
-        document.getElementById("meme-validation").innerText = '';
         if ($rootScope.selectedTemplate){
             document.getElementById('map-results').classList.add('done');
             $scope.renderMemeFinal();
             $scope.showImage = true;
             $rootScope.memeShared = true;
+            $rootScope.showTemplates=false;
             scrollToElement('invisible-map-anchor');
-        }
-        else{
-            document.getElementById("meme-validation").innerText = 'Please choose a meme template to create your meme';
+            $scope.memeNotSelected = false;
+        } else{
+            $scope.memeNotSelected = true;
         }
     };
 

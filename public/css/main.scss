@@ -10,6 +10,12 @@ body {
 	color:$text-color;
 }
 
+.next-button {
+  margin-top:30px;
+  padding:5px;
+  width:10%;
+}
+
 #main{
 	text-transform:uppercase;
  
@@ -70,7 +76,6 @@ body {
 
 	.start-address, .dest-address{
 		color:$input-color;
-		//font-size:16px;
     	padding-bottom: 10px;
 		text-transform:none;
 
@@ -86,7 +91,6 @@ body {
 		padding: 30px 3px 0 0;
 		text-transform: none;
 		color:$input-color;
-		//font-size:16px;
 
 		.travel-date{
 			width:150px;
@@ -116,7 +120,6 @@ body {
 	.travel-comparison{
 		text-transform: none;
 		color:$input-color;
-		//font-size:16px;
 
 		p{
 			margin-bottom:0;
@@ -132,12 +135,6 @@ body {
 				display: block;
 			}
 		}
-	}
-
-	.next-button{
-		margin-top:20px;
-		padding:5px;
-		width:10%;
 	}
 }
 

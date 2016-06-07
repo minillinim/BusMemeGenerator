@@ -35,10 +35,19 @@ module.exports = function (grunt) {
             options: {
                 separator: ';',
             },
+<<<<<<< HEAD
             dist: {
                 src: ['public/js/places-autocomplete.js',
+=======
+            my_target: {
+                files: {
+                    'public/js/output.min.js': 
+                    ['public/js/app.js',
+                    'public/js/places-autocomplete.js',
+>>>>>>> 8c699687a160e778abb96c714fae9bea696214ce
                     'public/js/address-validation.js',
                     'public/js/map.js',
+                    'public/js/nav.js',
                     'public/js/meme-templates.js',
                     'public/js/time-options.js',
                     'public/js/gallery.js',

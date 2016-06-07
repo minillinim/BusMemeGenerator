@@ -49,3 +49,34 @@ select {
 .checkbox{
     text-transform:none;
 }
+
+
+.arrow_box {
+    position: relative;
+    background: $popup-color;
+    border: 2px solid #000000;
+    border-radius: 6px;
+}
+.arrow_box:after, .arrow_box:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.arrow_box:after {
+    border-color: rgba(255, 10, 108, 0);
+    border-top-color: $popup-color;
+    border-width: 10px;
+    margin-left: -10px;
+}
+.arrow_box:before {
+    border-color: rgba(0, 0, 0, 0);
+    border-top-color: #000000;
+    border-width: 13px;
+    margin-left: -13px;
+}

@@ -111,9 +111,11 @@ app.controller('TimeController', function ($scope, $rootScope)
 
         $scope.selectedAmpm = $scope.ampms[0];
         
-        if (hour > 12){
-            hour = hour - 12;
+        if (hour > 11) {
             $scope.selectedAmpm = $scope.ampms[1];
+        }
+        if (hour > 12) {
+            hour = hour - 12;
         }
 
         if (hour == 0){

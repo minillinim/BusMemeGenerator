@@ -24,6 +24,9 @@
                 <img id="img-out" class="map-image" src="" />
 
                 <img class="templates-menu" src="../assets/menu.svg" ng-class="{unclickable: memeShared === true}" ng-click="handleOverlay()"/>
+                <div id="meme-tooltip" class="templates-tooltip arrow_box">
+                    Click here to change the meme template!
+                </div>
                 <div ng-show="showTemplates">
                     <div id="map-overlay" class="map-overlay"></div>
                     <div id="templates" class="template-selection">
@@ -38,10 +41,8 @@
                     </div>
                 </div>
             </div>
-            <!--<a id="dl" ng-click="dlCanvas()">Download Canvas</a>-->
-            <img id="img-out-2" class="map-image" src="" style="display:none"/>
-            <div id="meme-validation"></div>
-            <input class="button" id="share-image-button" ng-click="$parent.shareImage();" type="submit" value="Next"/>
+            <div id="meme-validation" ng-show="memeNotSelected">Please choose a meme template to create your meme</div>
+            <input class="button next-button" id="share-image-button" ng-click="$parent.shareImage();" type="submit" value="Next"/>
         </div>
 
    
