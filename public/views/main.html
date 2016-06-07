@@ -1,4 +1,4 @@
-<div id="nav">
+<div id="nav" ng-controller="NavController">
     <div class="gallery" ng-click="showGallery()">
         <img src="../assets/gallery.png"/><span>Gallery</span>
     </div>
@@ -12,7 +12,7 @@
     	<img class="busmeme-title" src="../assets/bus-meme-title.svg"/>
         <div class="description-line">Find out if you have a <span class="hashtag">#publictransportfail</span> and spread the word.</div>
     </div>
-        <div ng-include src="'views/journey-details.html'"></div>
-        <div ng-include src="'views/map-results.html'"></div>
-        <div ng-include src="'views/social-media.html'"></div>
-    </div>
+    <div ng-include src="'views/journey-details.html'"></div>
+    <div ng-include src="'views/map-results.html'"></div>
+    <div ng-include src="'views/social-media.html'"></div>
+</div>
