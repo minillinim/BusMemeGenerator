@@ -33,11 +33,12 @@ module.exports = function (grunt) {
         },
         concat: {
             options: {
-                separator: ';',
+                separator: ';'
             },
             dist: {
                 src: ['public/js/places-autocomplete.js',
                     'public/js/address-validation.js',
+                    'public/js/app.js',
                     'public/js/map.js',
                     'public/js/nav.js',
                     'public/js/meme-templates.js',
