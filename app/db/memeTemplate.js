@@ -13,6 +13,6 @@ exports.memeTemplates = [
     },
     {   
         "firstLine":"Logan city council",
-        "secondLine":"Think there's no problem"
+        "secondLine":"Thinks there's no problem"
     }
 ];

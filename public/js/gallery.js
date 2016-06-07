@@ -7,10 +7,15 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
     var ITEMS_PER_PAGE = 9;
 
     MemeFactory.getImages().then(function (response) {
-        $scope.images = response.data
+        
+        $scope.images = response.data;
+
+         $('#loading-img').hide();
+
         $scope.images.forEach(function(image){
             image.imageUrl = "/image/" + image.imageLink;
         });
+
     });
 
     $scope.showHomePage = function () {
