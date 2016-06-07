@@ -4,7 +4,7 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
     $scope.images = [];
     $scope.travelMode = {driving: true, walking: true};
     $scope.sortOption = 'biggestDifference';
-    var ITEMS_PER_PAGE = 12;
+    var ITEMS_PER_PAGE = 3;
 
     MemeFactory.getImages().then(function (response) {
         $scope.images = response.data
