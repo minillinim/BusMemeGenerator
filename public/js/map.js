@@ -10,6 +10,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     $scope.showImage = false;
     $scope.showMap = false;
     $scope.memeNotSelected = false;
+    $scope.showImgOut = false;
 
     $scope.canProgressToStage2 = true;
     $scope.canProgressToStage3 = false;
@@ -293,7 +294,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         image.setAttribute('crossorigin', 'anonymous');
         image.setAttribute('src', imgUrl);
 
-        $('#img-out').show();
         $("#img-out").load(function() {
             
             var canvas = document.getElementById("canvas");
@@ -326,7 +326,6 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
             $('#gmap-canvas').html("");
             $('#map-status').hide();
-            $('#img-out').hide(); 
             $('#map-wrapper').hide();
             $scope.$apply(function(){
                 $scope.canProgressToStage3 = true;

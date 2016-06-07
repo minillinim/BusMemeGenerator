@@ -21,7 +21,7 @@
         <div id="map-image">
             <div class="map-canvas" ng-controller="MemeController">
                 <canvas id="canvas" width="0" height="0"></canvas>
-                <img id="img-out" class="map-image" src="" />
+                <img id="img-out" ng-show="showImgOut" class="map-image" src="" />
 
                 <img class="templates-menu" src="../assets/menu.svg" ng-class="{unclickable: memeShared === true}" ng-click="handleOverlay()" ng-show="canProgressToStage3"/>
                 <div id="meme-tooltip" ng-show="canProgressToStage3" class="templates-tooltip arrow_box">

@@ -57,14 +57,17 @@
       }
 
       .map-wrapper {
+        position:relative;
         padding: 30px 0 80px 50px;
         height: 600px !important;
         width: 600px !important;
         
         #gmap-canvas {
-          height: 100%;
-          width: 100%;
-          position:relative;
+          height: 600px !important;
+          width: 600px !important;
+          position:absolute;
+          top:30px;
+          left:50px;
           z-index:10 !important;
           img {
             max-width: none !important;
@@ -72,9 +75,11 @@
           }
         }
         #map-status {
-          height: 100%;
-          width: 100%;
-          position:relative;
+          height: 600px !important;
+          width: 600px !important;
+          position:absolute;
+          top:30px;
+          left:50px;
           z-index:1000 !important;
           background-color: $background-color;
           color: #FFFFFF;
@@ -174,7 +179,7 @@
 }
 
 #map-image {
-    margin-left: 25px;
+    margin-left: 50px;
     margin-top: 20px;
 }
 
