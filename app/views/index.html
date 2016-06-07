@@ -39,8 +39,16 @@
     </script>
 </head>
 <body ng-app="bus-meme">
-  <div class="container">
-    <div ng-view></div>
-  </div>
+  <!--[if lt IE 9 ]>
+    Browser not supported
+  <![endif]-->
+
+  <!--[if gte IE 8]>-->
+  <![if !IE]>
+    <div class="container">
+        <div ng-view></div>
+    </div>
+  <![endif]-->
+
 </body>
 </html>

@@ -6,8 +6,11 @@ var express = require('express'),
     MemeDetails = mongoose.model('MemeDetails'),
     Image = mongoose.model('Image'),
     Location = mongoose.model('Location'),
-    MemeController = require('./MemeController');
-    UserController = require('./UserController');
+    MemeController = require('./MemeController'),
+    UserController = require('./UserController'),
+    AdminController = require('./AdminController'),
+    ExportController = require('./ExportController')
+    ;
 
 
 module.exports = function (app) {
@@ -29,6 +32,10 @@ router.get('/image/:imageLink', MemeController().serveImage);
 router.get('/getImages', MemeController().getImages);
 
 router.post('/saveUser', UserController().saveUserDetails);
+
+router.post('/userLogin', AdminController().userLogin);
+
+router.get('/exportUsers', ExportController().exportUsers);
 
 router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', function (req, res, next) {
     tlapi().getJourneysBetween(req.params.startLat,

@@ -10,6 +10,12 @@ app.config(function ($routeProvider) {
     }).when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutController'        
+    }).when('/admin', {
+        templateUrl: 'views/admin.html',
+        controller: 'AdminController'
+    }).when('/export', {
+        templateUrl: 'views/export.html',
+        controller: 'AdminController'
     })
 });
 
@@ -21,6 +27,14 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
     $rootScope.showAbout = function () {
         $location.path('/about');
+    };
+
+    $rootScope.signIn = function () {
+        $location.path('/admin');
+    };
+
+    $rootScope.exportUsers = function () {
+        $location.path('/export');
     };
 
     loadGoogleAutocomplete();

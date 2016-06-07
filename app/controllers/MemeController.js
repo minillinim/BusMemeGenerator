@@ -57,7 +57,9 @@ var saveImage = function (req, res, next) {
             if (err) {
                 res.json(err);
             }
-            saveImageToFile(imageDetails.imageUrl, imageLink)
+
+            console.log(imageDetails.imageUrl, imageLink);
+            saveImageToFile(imageDetails.imageUrl, imageLink);
             res.status(201).json({imageLink: imageLink});
         });
     } else {
