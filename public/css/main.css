@@ -112,6 +112,11 @@ body {
   background-color: #6595FC;
   color: #FFFA32; }
 
+.next-button {
+  margin-top: 30px;
+  padding: 5px;
+  width: 10%; }
+
 #main {
   text-transform: uppercase; }
   #main #title {
@@ -193,10 +198,6 @@ body {
       @media screen and (max-device-width: 480px) and (orientation: portrait) {
         .journey-details .travel-comparison br {
           display: block; } }
-  .journey-details .next-button {
-    margin-top: 20px;
-    padding: 5px;
-    width: 10%; }
 
 .step-content {
   display: table;

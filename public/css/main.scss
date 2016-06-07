@@ -10,6 +10,12 @@ body {
 	color:$text-color;
 }
 
+.next-button {
+  margin-top:30px;
+  padding:5px;
+  width:10%;
+}
+
 #main{
 	text-transform:uppercase;
  
@@ -132,12 +138,6 @@ body {
 				display: block;
 			}
 		}
-	}
-
-	.next-button{
-		margin-top:20px;
-		padding:5px;
-		width:10%;
 	}
 }
 

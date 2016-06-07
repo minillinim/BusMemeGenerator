@@ -38,10 +38,8 @@
                     </div>
                 </div>
             </div>
-            <!--<a id="dl" ng-click="dlCanvas()">Download Canvas</a>-->
-            <img id="img-out-2" class="map-image" src="" style="display:none"/>
-            <div id="meme-validation"></div>
-            <input class="button" id="share-image-button" ng-click="$parent.shareImage();" type="submit" value="Next"/>
+            <div id="meme-validation" ng-show="memeNotSelected">Please choose a meme template to create your meme</div>
+            <input class="button next-button" id="share-image-button" ng-click="$parent.shareImage();" type="submit" value="Next"/>
         </div>
 
    

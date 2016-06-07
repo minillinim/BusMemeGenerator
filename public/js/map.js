@@ -31,7 +31,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
     $scope.showImage = false;
     $scope.showMap = false;
-    
+    $scope.memeNotSelected = false;
+
     $scope.origin = null;
     $scope.destination = null;
     
@@ -817,17 +818,15 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     }
 
     $scope.shareImage = function() {
-        
-        document.getElementById("meme-validation").innerText = '';
         if ($rootScope.selectedTemplate){
             document.getElementById('map-results').classList.add('done');
             $scope.renderMemeFinal();
             $scope.showImage = true;
             $rootScope.memeShared = true;
             scrollToElement('invisible-map-anchor');
-        }
-        else{
-            document.getElementById("meme-validation").innerText = 'Please choose a meme template to create your meme';
+            $scope.memeNotSelected = false;
+        } else{
+            $scope.memeNotSelected = true;
         }
     };
 
