@@ -23,6 +23,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     }
 
     function convertToMeters(distance) {
+        console.log(distance);
         return Number(distance.toLowerCase().replace(' km', '').replace('walk: ', '')) * KM_TO_METER_FACTOR;
     }
 
@@ -69,11 +70,10 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
             
             var tweetLength = 140;
             var tweetText = $rootScope.memeText;
-            var urlLength = 80;
             var hashtag = ' %23' + HASH_TAG;
             
-            if (tweetText.length + urlLength + hashtag.length > tweetLength) {
-                tweetText = tweetText.substring(0, tweetLength - hashtag.length - urlLength - 2) + '..';
+            if (tweetText.length + imageLink.length + hashtag.length > tweetLength) {
+                tweetText = tweetText.substring(0, tweetLength - hashtag.length - imageLink.length - 2) + '..';
             }
 
             tweetText = tweetText + hashtag;
