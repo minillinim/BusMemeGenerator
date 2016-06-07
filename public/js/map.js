@@ -626,9 +626,9 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
             polylineData.forEach(function(polyline) {
                 var coords = polyline['coords'];
-                for(var i=0; i< polyline.length; i++) {
-                    if (coords[i].lat > latMax) { latMax = coords[i].lat; }
-                    if (coords[i].lat < latMin) { latMin = coords[i].lat; }
+                for(var i=0; i< coords.length; i++) {
+                    if (coords[i].lat < latMax) { latMax = coords[i].lat; }
+                    if (coords[i].lat > latMin) { latMin = coords[i].lat; }
                     if (coords[i].lng > lngMax) { lngMax = coords[i].lng; }
                     if (coords[i].lng < lngMin) { lngMin = coords[i].lng; }
                 }
@@ -642,11 +642,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
             var center = boundingRect.getCenter();
             var d2sw = getLatLonDistanceInKm(center.lat(), center.lng(), latMin, lngMin);
-            var bounds= getSquareBoundingBox(center, d2sw + 0.2);
-            return bounds;
-        }else 
-        return undefined;
-    }
+            return getSquareBoundingBox(center, d2sw + 0.2);
+        } else {
+            return undefined;
+        }
+    };
 
     var getLatLonDistanceInKm = function (lat1,lon1,lat2,lon2) {
 
