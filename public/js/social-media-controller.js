@@ -46,7 +46,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
             MemeFactory.saveImageDetails(imageDetails).then(function (response) {
                 var baseUrl = $location.absUrl().replace('#/', '');
                 var imageLink = encodeURIComponent(response.data.imageLink);
-                $rootScope.imageLink = baseUrl + 'image/' + imageLink;
+                $rootScope.imageLink = baseUrl + '/image/' + imageLink;
                 callback($rootScope.imageLink);
             });
         }
