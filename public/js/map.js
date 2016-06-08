@@ -1,6 +1,6 @@
 var app = angular.module('bus-meme');
 
-app.controller('MapController', function ($scope, $location, $rootScope, MapService, $anchorScroll, FacebookService, locationUtil) {
+app.controller('MapController', function ($scope, $location, $rootScope, MapService, $anchorScroll, BusMemeConfig, FacebookService, locationUtil) {
     FacebookService.intialiseFacebook();
 
     loadGoogleAutocomplete();
@@ -288,7 +288,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
         var gmapsInfo = getMapConversionInfo();
 
-        var staticMapsUrl = 'https://maps.googleapis.com/maps/api/staticmap?',
+        var staticMapsUrl = BusMemeConfig.GOOGLE_MAP_STATIC_URL,
             mapCenter = 'center=' + $scope.center.lat() + ',' + $scope.center.lng(),
             zoomLevel = 'zoom=' + $scope.zoom,
             mapSize = 'size=' + $scope.mapWidth + 'x' + $scope.mapWidth;

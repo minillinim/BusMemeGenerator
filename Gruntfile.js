@@ -156,12 +156,14 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build:dev', [
         'scss',
+        'ngconstant:dev',
         'develop',
         'concat'
     ]);
     grunt.registerTask('build:prod', [
         'clean',
         'scss',
+        'ngconstant:prod',
         'concat',
         'uglify'
     ]);
@@ -173,5 +175,4 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test', 'jasmine_node');
     grunt.loadNpmTasks('grunt-contrib-concat');
-
 };
