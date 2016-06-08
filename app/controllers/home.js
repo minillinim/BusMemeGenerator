@@ -12,12 +12,13 @@ var express = require('express'),
 
 module.exports = function (app) {
     app.use('/logan/', router);
+    app.use('/', router);
 };
 
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
     res.render('index', {title: 'Bus Meme Generator'});
 });
-router.get('/logan', function (req, res, next) {
+router.get('/logan', function (req, res) {
     res.render('index', {title: 'Bus Meme Generator'});
 });
 
@@ -33,7 +34,7 @@ router.get('/getImages', MemeController().getImages);
 
 router.post('/saveUser', UserController().saveUserDetails);
 
-router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', function (req, res, next) {
+router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', function (req, res) {
     tlapi().getJourneysBetween(req.params.startLat,
         req.params.startLng,
         req.params.endLat,
