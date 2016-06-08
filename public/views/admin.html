@@ -3,7 +3,7 @@
 
     <div class="admin-display pure-g">
         <div class="user-input">
-            <input name="token" type="text" maxlength="100" id="login" ng-model="token" placeholder="ADMIN TOKEN" />
+            <input name="token" type="password" maxlength="100" id="login" ng-model="token" placeholder="ADMIN TOKEN" />
             <input class="button login" ng-click="userLogin()" value="Login" />
             <div ng-show="authFail" class="pure-u-1-3"><span>Invalid token!</span></div>
         </div>
