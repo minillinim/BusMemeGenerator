@@ -72,6 +72,7 @@ module.exports = function (grunt) {
                     'public/js/admin.js',
                     'public/js/facebook-init.js',
                     'public/js/config.js',
+                    'public/js/image-view.js',
                     'public/js/social-media-controller.js'
                 ],
                 dest: 'public/js/output.min.js'
@@ -175,4 +176,5 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test', 'jasmine_node');
     grunt.loadNpmTasks('grunt-contrib-concat');
+
 };

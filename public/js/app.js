@@ -17,6 +17,10 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: 'views/about.html',
         controller: 'AboutController'
     }).
+    when('/logan/meme', {
+        templateUrl: 'views/image-viewer.html',
+        controller: 'ImageViewController'
+    }).
     otherwise({ redirectTo: '/logan' });
 
     $locationProvider.html5Mode(true);

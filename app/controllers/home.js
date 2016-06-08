@@ -21,6 +21,15 @@ router.get('/', function (req, res) {
 router.get('/logan', function (req, res) {
     res.render('index', {title: 'Bus Meme Generator'});
 });
+router.get('/logan/galleries', function (req, res) {
+    res.render('index', {title: 'Bus Meme Generator'});
+});
+router.get('/logan/meme', function (req, res) {
+    res.render('index', {title: 'Bus Meme Generator'});
+});
+router.get('/logan/about', function (req, res) {
+    res.render('index', {title: 'Bus Meme Generator'});
+});
 
 router.get('/getMemeTemplates', MemeController().getMemeTemplates);
 
