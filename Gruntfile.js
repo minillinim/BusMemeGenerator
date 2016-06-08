@@ -31,6 +31,30 @@ module.exports = function (grunt) {
                 }
             }
         },
+        ngconstant: {
+            options: {
+                name: 'bus-meme.config',
+                dest: 'public/js/config.js',
+                constants: {
+                    BusMemeConfig: grunt.file.readJSON('config/frontend_config/development.json')
+                }
+            },
+            dev: {
+                constants: {
+                    BusMemeConfig: grunt.file.readJSON('config/frontend_config/development.json')
+                }
+            },
+            qa: {
+                constants: {
+                    BusMemeConfig: grunt.file.readJSON('config/frontend_config/development.json')
+                }
+            },
+            prod: {
+                constants: {
+                    BusMemeConfig: grunt.file.readJSON('config/frontend_config/production.json')
+                }
+            }
+        },
         concat: {
             options: {
                 separator: ';'
@@ -46,6 +70,8 @@ module.exports = function (grunt) {
                     'public/js/gallery.js',
                     'public/js/about.js',
                     'public/js/admin.js',
+                    'public/js/facebook-init.js',
+                    'public/js/config.js',
                     'public/js/social-media-controller.js'
                 ],
                 dest: 'public/js/output.min.js'

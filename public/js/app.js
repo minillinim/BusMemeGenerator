@@ -1,4 +1,4 @@
-var app = angular.module('bus-meme', ['ngRoute']);
+var app = angular.module('bus-meme', ['ngRoute', 'bus-meme.config']);
 
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider.
