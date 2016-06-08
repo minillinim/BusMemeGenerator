@@ -57,7 +57,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
         console.log("HEre2")
             FB.ui({
                 method: 'share',
-                href: 'http://busmeme.org/logan',
+                href: imageLink,
                 hashtag: '#' + HASH_TAG,
                 quote:  $rootScope.memeText
             }, function(response){
