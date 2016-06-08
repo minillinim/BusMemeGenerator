@@ -22,3 +22,22 @@ app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 });
 
+app.factory('locationUtil', function($location) {
+    return {
+        getLocationPath: function () {
+            var host = $location.host(),
+                protocol = $location.protocol(),
+                port = $location.port(),
+                path = $location.path();
+            var locationPath;
+            if (port) {
+                locationPath = protocol + '://' + host + ':' + port + path;
+            } else {
+                locationPath = protocol + '://' + host + path;
+            }
+            console.log(locationPath);
+            return locationPath;
+        }
+    }
+});
+

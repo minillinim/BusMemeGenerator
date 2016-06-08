@@ -1,6 +1,6 @@
 var app = angular.module('bus-meme');
 
-app.controller('SocialMediaController', function ($scope, $rootScope, $location, $route, MemeFactory) {
+app.controller('SocialMediaController', function ($scope, $rootScope, $location, $route, MemeFactory, locationUtil) {
     var KM_TO_METER_FACTOR = 1000;
     var HASH_TAG = 'publictransportfail';
 
@@ -45,7 +45,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
 
             MemeFactory.saveImageDetails(imageDetails).then(function (response) {
                 var imageLink = encodeURIComponent(response.data.imageLink);
-                $rootScope.imageLink = $location.absUrl() + '/image/' + imageLink;
+                $rootScope.imageLink = locationUtil.getLocationPath() + '/image/' + imageLink;
                 callback($rootScope.imageLink);
             });
         }
@@ -85,8 +85,10 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     };
 
     $scope.reloadPage = function() {
+        $rootScope.imageLink = '';
        $route.reload();
-    }
+    };
+
     function validEmail(email) {
         return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+$/.test(email);
     }

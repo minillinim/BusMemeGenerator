@@ -1,6 +1,6 @@
 var app = angular.module('bus-meme');
 
-app.controller('MapController', function ($scope, $location, $rootScope, MapService, $anchorScroll) {
+app.controller('MapController', function ($scope, $location, $rootScope, MapService, $anchorScroll, locationUtil) {
     loadGoogleAutocomplete();
 
     $scope.transport = {
@@ -146,9 +146,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                     var d = Q.defer();
                     if(!dirStatus[0]) { d.resolve(dirStatus); }
 
-                    addStatus("Retrieving journey information from Translink (allowing 10 sec)...")
-
-                    var tlapiUrl = window.location.href +
+                    addStatus("Retrieving journey information from Translink (allowing 10 sec)...");
+                    var tlapiUrl = locationUtil.getLocationPath() +
                         "/tl/"+
                         startLat+"/"+
                         startLng+"/"+
