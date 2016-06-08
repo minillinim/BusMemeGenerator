@@ -10,4 +10,8 @@ app.controller('NavController', function ($scope, $location) {
         $location.path('/logan/about');
     };
 
+    $scope.signIn = function () {
+        $location.path('/admin');
+    };
+
 });

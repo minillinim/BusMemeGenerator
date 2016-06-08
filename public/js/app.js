@@ -21,7 +21,15 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: 'views/image-viewer.html',
         controller: 'ImageViewController'
     }).
-    otherwise({ redirectTo: '/logan' });
+    when('/admin', {
+        templateUrl: 'views/admin.html',
+        controller: 'AdminController'
+    }).
+    when('/export', {
+        templateUrl: 'views/export.html',
+        controller: 'AdminController'
+    })
+    .otherwise({ redirectTo: '/logan' });
 
     $locationProvider.html5Mode(true);
 });

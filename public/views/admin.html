@@ -1,0 +1,17 @@
+<div  ng-controller="AdminController">
+    <div id="nav" class="gallery-nav">
+        <div class="bus-meme-home" ng-click="showHomePage()">
+            <img src="../assets/bus-meme-logo.svg"/>BUS MEME GENERATOR
+        </div>
+        <div class="create-meme">
+            <span>Sign in to continue</span>
+        </div>
+    </div>
+    <div class="admin-display pure-g">
+        <div class="user-input">
+            <input name="token" type="text" maxlength="100" id="login" ng-model="token" placeholder="ADMIN TOKEN" />
+            <input class="button login" ng-click="userLogin()" value="Login" />
+            <div ng-show="authFail" class="pure-u-1-3"><span>Invalid token!</span></div>
+        </div>
+    </div>
+</div>

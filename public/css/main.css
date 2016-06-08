@@ -100,30 +100,23 @@ select {
     text-transform: uppercase;
     font-size: 18px;
     cursor: pointer; }
+  #nav .gallery, #nav .about, #nav .signin {
+    cursor: pointer;
+    color: white;
+    position: fixed;
+    padding: 20px;
+    display: inline-block; }
+    #nav .gallery img, #nav .about img, #nav .signin img {
+      display: inline-block;
+      width: 20px;
+      padding-right: 5px;
+      vertical-align: top; }
   #nav .gallery {
-    cursor: pointer;
-    color: white;
-    right: 10px;
-    position: fixed;
-    padding: 20px;
-    display: inline-block; }
-    #nav .gallery img {
-      display: inline-block;
-      width: 20px;
-      padding-right: 5px;
-      vertical-align: top; }
+    right: 10px; }
   #nav .about {
-    cursor: pointer;
-    color: white;
-    right: 100px;
-    position: fixed;
-    padding: 20px;
-    display: inline-block; }
-    #nav .about img {
-      display: inline-block;
-      width: 20px;
-      padding-right: 5px;
-      vertical-align: top; }
+    right: 100px; }
+  #nav .signin {
+    right: 180px; }
 
 #nav.gallery-nav {
   background-color: #4468DB;

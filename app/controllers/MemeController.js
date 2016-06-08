@@ -2,24 +2,13 @@ var mongoose = require('mongoose'),
     path = require('path'),
     fs = require('fs'),
     MemeTemplate = mongoose.model('MemeTemplate'),
-    Image = mongoose.model('Image'),
-    MemeDetails = mongoose.model('MemeDetails');
+    Image = mongoose.model('Image');
 
 var defaultMeme = [
     {firstLine: 'Public Transport', secondLine: 'FAIL!!!'},
     {firstLine: 'Logan City Council', secondLine: 'Needs to invest in Public Transport!'},
     {firstLine: 'Public Transport', secondLine: 'Couldnt get much worse...'},
     {firstLine: 'And then you wonder why', secondLine: 'everyone owns a car..'}];
-
-var saveMemeDetails = function (req, res, next) {
-    var memeDetails = new MemeDetails(req.body);
-    memeDetails.save(function (err) {
-        if (err) {
-            res.json(err);
-        }
-        res.status(201).json(req.body);
-    });
-};
 
 function generateImageFilename() {
     var randomNumber = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -31,9 +20,7 @@ var saveImage = function (req, res, next) {
     var imageDetails = (JSON.parse(JSON.stringify(req.body))).data;
     imageDetails.imageLink = imageLink;
     imageDetails.createDate = new Date();
-
-    console.log(imageDetails);
-
+    
     if (imageDetails) {
         var imageFromuser = new Image(imageDetails);
         imageFromuser.save(function (err, image) {
@@ -88,7 +75,6 @@ var getImage = function (req, res, next) {
 module.exports = function () {
     return {
         getMemeTemplates: getMemeTemplates,
-        saveMemeDetails: saveMemeDetails,
         saveImage: saveImage,
         serveImage: getImage,
         getImages: getImages
