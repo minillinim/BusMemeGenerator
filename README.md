@@ -7,11 +7,11 @@ Code for the QCA / transport action group bus route meme project
 
 #### No-docker setup
 
-Start MongoDB and the application environments by running this command:
+Start MongoDB/Node server and the application environments by running this command:
 
 ```
 mongod
-grunt
+BM_ADMIN_TOKEN=test grunt
 ```
 
 #### Docker setup
@@ -39,7 +39,16 @@ docker exec -it busmemegenerator_db_1 bash
 root@221d3a2b4173:/# mongo
 ```
 
+Application models: [ "Image", "MemeTemplate", "User" ]
+Useful commands: `use [MY-DB-NAME]`, `db.getCollectionNames()`, `db.[MY-COLLECTION].find({})`, `db.[MY-COLLECTION].drop({})`
+
 ### Production
+
+#### Facebook integration
+
+Create 2 applications:
+- BusMemeGenerator: make sure the "Site URL" matches the production website URL (e.g. `http://busmeme.org`)
+- BusMemeGeneratorQA, which is a test app (see here what's a FB test app here: https://developers.facebook.com/docs/apps/test-apps/): make sure the "Site URL" matches the QA website URL (e.g. `http://bus-meme-generator.herokuapp.com`)
 
 #### Docker installation
 
@@ -71,7 +80,8 @@ export DOCKER_HOST=tcp://localhost:4243
 mkdir -p /var/lib/busmemegenerator_db/data
 docker run -d --name db -v /var/lib/busmemegenerator_db/data:/data/db mongo
 wget https://raw.githubusercontent.com/minillinim/BusMemeGenerator/master/app.env
-docker run -d --link db:db -p 80:80 --env-file ./app.env minillinim/busmemegenerator
+docker pull minillinim/busmemegenerator
+docker run -d --link db:db -p 80:80 --env-file ./app.env --name busm-app minillinim/busmemegenerator
 ```
 
 If needed, edit `app.env` to change defaut port / database URI / Node environment

@@ -29,10 +29,9 @@
     	font-size:18px;
     	cursor:pointer;
     }
-    .gallery{
+    .gallery, .about, .signin{
         cursor:pointer;
         color: $input-color;
-        right: 10px;
         position: fixed;
         padding: 20px;
         display:inline-block;
@@ -44,21 +43,18 @@
             vertical-align: top;
         }
     }
+
+    .gallery {
+      right: 10px;
+    }
+
     .about{
-        cursor:pointer;
-        color: $input-color;
-        right: 100px;
-        position: fixed;
-        padding: 20px;
-        display:inline-block;
-        
-        img{
-            display:inline-block;
-            width:20px;
-            padding-right: 5px;
-            vertical-align: top;
-        }
-    }    
+      right: 100px;
+    }
+
+    .signin {
+      right: 180px;
+    }
 }
 
 #nav.gallery-nav{

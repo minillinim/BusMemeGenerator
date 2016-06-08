@@ -27,7 +27,8 @@ module.exports = function (grunt) {
                     'public/css/share.css': 'public/css/share.scss',
                     'public/css/gallery.css': 'public/css/gallery.scss',
                     'public/css/map.css': 'public/css/map.scss',
-                    'public/css/about.css': 'public/css/about.scss'
+                    'public/css/about.css': 'public/css/about.scss',
+                    'public/css/admin.css': 'public/css/admin.scss'
                 }
             }
         },
@@ -73,6 +74,7 @@ module.exports = function (grunt) {
                     'public/js/facebook-init.js',
                     'public/js/config.js',
                     'public/js/image-view.js',
+                    'public/js/export.js',
                     'public/js/social-media-controller.js'
                 ],
                 dest: 'public/js/output.min.js'
