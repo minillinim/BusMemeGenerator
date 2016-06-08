@@ -51,6 +51,19 @@ module.exports = function (grunt) {
                 dest: 'public/js/output.min.js'
             }
         },
+        uglify: {
+            options: {
+                mangle: false
+            },
+            my_target: {
+                files: {
+                    'public/js/output.min.js':
+                    [
+                        'public/js/output.min.js'
+                    ]
+                }
+            }
+        },
         jasmine_node: {
             options: {
                 forceExit: true,
@@ -73,7 +86,7 @@ module.exports = function (grunt) {
                     'config/*.js',
                     'public/js/*.js'
                 ],
-                tasks: ['build', 'delayed-livereload']
+                tasks: ['build:dev', 'delayed-livereload']
             },
             css: {
                 files: [
@@ -111,14 +124,23 @@ module.exports = function (grunt) {
             });
         }, 500);
     });
+    grunt.registerTask('clean', 'Delete all the generated files', function() {
+        grunt.file.delete('public/js/output.min.js');
+    });
 
-    grunt.registerTask('build', [
+    grunt.registerTask('build:dev', [
         'scss',
         'develop',
         'concat'
     ]);
+    grunt.registerTask('build:prod', [
+        'clean',
+        'scss',
+        'concat',
+        'uglify'
+    ]);
     grunt.registerTask('default', [
-        'build',
+        'build:dev',
         'watch'
     ]);
     grunt.registerTask('scss', ['sass']);

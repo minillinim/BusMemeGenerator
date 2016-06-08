@@ -9,7 +9,7 @@ RUN npm install
 RUN npm install grunt-cli -g
 RUN npm install load-grunt-tasks -g
 
-RUN grunt scss concat
+RUN grunt build:prod
 
 EXPOSE 3000
 
