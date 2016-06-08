@@ -2,7 +2,7 @@ var app = angular.module('bus-meme');
 
 app.factory('FacebookService', function (BusMemeConfig) {
     return {
-        intialiseFacebook: function(){
+        initialiseFacebook: function(){
             window.fbAsyncInit = function () {
                 FB.init({
                     appId: BusMemeConfig.FACEBOOK_APP_ID,

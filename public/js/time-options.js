@@ -1,10 +1,9 @@
 var app = angular.module('bus-meme');
 
-app.controller('TimeController', function ($scope, $rootScope) 
-{
-    var weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-    var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    $scope.ampms = ["am", "pm"];
+app.controller('TimeController', function ($scope, $rootScope, BusMemeConfig) {
+    var weekdays = BusMemeConfig.WEEK_DAYS;
+    var months = BusMemeConfig.MONTHS_NAME;
+    $scope.ampms = BusMemeConfig.TIME_OF_DAY;
 
     $scope.days = getSevenDays();
     $scope.selectedDate = $scope.days[0];
@@ -35,7 +34,7 @@ app.controller('TimeController', function ($scope, $rootScope)
             case "last":  
                 return "Last Service"; 
         }
-    }
+    };
     $rootScope.formattedDate = function(){
         var date = $scope.selectedDate.dateValue;
         
@@ -43,22 +42,20 @@ app.controller('TimeController', function ($scope, $rootScope)
                date.getDate() + ' ' + 
                months[date.getMonth()] + ' ' +
                date.getFullYear();
-    }
+    };
     $rootScope.getSelectedTime = function(){
 
         var hour = $scope.selectedHour;
         if ($scope.selectedAmpm == 'pm')
             hour += 12;
 
-        var date = new Date($scope.selectedDate.dateValue.getFullYear(), 
+        return new Date($scope.selectedDate.dateValue.getFullYear(),
                         $scope.selectedDate.dateValue.getMonth(),
                         $scope.selectedDate.dateValue.getDate(),
                         hour,
                         $scope.selectedMinute,
                         0,0);
-
-        return date;
-    }
+    };
 
     function getSevenDays(){
         days = [];
@@ -140,7 +137,7 @@ app.controller('TimeController', function ($scope, $rootScope)
     }
 
     function getWalkingOptions(){
-        var walkingOptions = [
+        return [
             {label:'Up to 100m', value:'100'},
             {label:'Up to 250m', value:'250'},
             {label:'Up to 500m', value:'500'},
@@ -149,7 +146,5 @@ app.controller('TimeController', function ($scope, $rootScope)
             {label:'Up to 2km', value:'2000'},
             {label:'Up to 4km', value:'4000'}
         ];
-
-        return walkingOptions;
     }
 });

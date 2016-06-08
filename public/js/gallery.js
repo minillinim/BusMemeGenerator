@@ -1,18 +1,17 @@
 var app = angular.module('bus-meme');
 
-app.controller('GalleryController', function ($scope, $location, MemeFactory) {
+app.controller('GalleryController', function ($scope, $location, MemeFactory, BusMemeConfig) {
     $scope.images = [];
     $scope.travelMode = {driving: true, walking: true};
     $scope.sortOption = 'biggestDifference';
-    var ITEMS_PER_PAGE = 9;
 
     MemeFactory.getImages().then(function (response) {
-        
+
         $scope.images = response.data;
 
-         $('#loading-img').hide();
+        $('#loading-img').hide();
 
-        $scope.images.forEach(function(image){
+        $scope.images.forEach(function (image) {
             image.imageUrl = "/logan/image/" + image.imageLink;
         });
 
@@ -20,7 +19,7 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
 
     $scope.showHomePage = function () {
         $location.path('/logan');
-    }
+    };
 
     $scope.formatDistance = function (distance) {
         if (distance < 1000)
@@ -29,7 +28,8 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
             var distanceInKm = distance / 1000;
             return distanceInKm + "km";
         }
-    }
+    };
+
     $scope.formatTravelTime = function (time) {
         var timeInMinutes = time / (60000);
         if (timeInMinutes < 60) {
@@ -40,7 +40,7 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
             var minutesLeft = timeInMinutes - (hours * 60);
             return hours + " hrs " + minutesLeft + " mins";
         }
-    }
+    };
 
     $scope.getSortingCriteria = function (sortOption) {
         if (sortOption === "biggestDifference")
@@ -50,14 +50,15 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
 
     $scope.getDateDisplay = function (dbDate) {
         var date = new Date(dbDate);
-        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var months = BusMemeConfig.MONTHS_NAME;
 
         return date.getDate() + ' ' +
             months[date.getMonth()] + ' ' +
             date.getFullYear();
-    }
+    };
+
     /*pagination*/
-    $scope.itemsPerPage = ITEMS_PER_PAGE;
+    $scope.itemsPerPage = BusMemeConfig.ITEMS_PER_PAGE;
     $scope.currentPage = 0;
 
     $scope.prevPage = function () {
@@ -77,7 +78,7 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
     $scope.range = function () {
         var range = [];
 
-        for (i = 0; i < $scope.pageCount(); i++) {
+        for (var i = 0; i < $scope.pageCount(); i++) {
             range.push(i);
         }
 
@@ -85,14 +86,10 @@ app.controller('GalleryController', function ($scope, $location, MemeFactory) {
     };
 
     $scope.setPage = function (n) {
-        if (n < 0)
+        if ((n < 0) || (n > $scope.pageCount()))
             return;
-
-        if (n > $scope.pageCount())
-            return;
-
         $scope.currentPage = n;
-    }
+    };
 
     $scope.nextPage = function () {
         if ($scope.currentPage < $scope.pageCount() - 1) {

@@ -47,7 +47,6 @@ app.factory('locationUtil', function($location) {
             } else {
                 locationPath = protocol + '://' + host + path;
             }
-            console.log(locationPath);
             return locationPath;
         }
     }

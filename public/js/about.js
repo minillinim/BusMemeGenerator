@@ -5,7 +5,7 @@ app.controller('AboutController', function ($scope, $location) {
 
     $scope.showHomePage = function () {
         $location.path('/logan');
-    }
+    };
 
     $scope.faqs.push({
         "question": "How does this site work?",

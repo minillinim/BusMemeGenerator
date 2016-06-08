@@ -1,7 +1,7 @@
 var app = angular.module('bus-meme');
 
-app.controller('MapController', function ($scope, $location, $rootScope, MapService, $anchorScroll, BusMemeConfig, FacebookService, locationUtil) {
-    FacebookService.intialiseFacebook();
+app.controller('MapController', function ($scope, $location, $rootScope, MapService, $anchorScroll, BusMemeConfig, FacebookService, locationUtil, $q, $http) {
+    FacebookService.initialiseFacebook();
 
     loadGoogleAutocomplete();
 
@@ -30,7 +30,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
     var getGoogleRoute = function (mode, startLat, startLng, endLat, endLng) {
 
-        var d = Q.defer();
+        var d = $q.defer();
 
         var travelOptions = {
             startLat: startLat,
@@ -88,11 +88,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
     var clearStatus = function () {
         $('#map-status').html('');
-    }
+    };
 
     var addStatus = function (message) {
         $('#map-status').html($('#map-status').html() + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + message);
-    }
+    };
 
     $scope.getMapData = function () {
 
@@ -147,7 +147,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             ).then(
                 function (dirStatus) {
 
-                    var d = Q.defer();
+                    var d = $q.defer();
                     if (!dirStatus[0]) {
                         d.resolve(dirStatus);
                     }
@@ -205,9 +205,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 function (dirStatus) {
                     if (dirStatus[0]) {  // Google driving worked
                         if (dirStatus[1]) {  // Translink PT worked
-                            $scope.$apply(function () {
-                                $scope.mapToImage(true);
-                            });
+                            $scope.mapToImage(true);
                         } else { // Translink PT failed
                             // Try google for PT route...
                             $scope.ptLatLng = [];
@@ -261,9 +259,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                 }
                             ).then(
                                 function (ptRouteIsValid) {
-                                    $scope.$apply(function () {
-                                        $scope.mapToImage(ptRouteIsValid);
-                                    });
+                                    $scope.mapToImage(ptRouteIsValid);
                                 }
                             );
                         }
@@ -337,7 +333,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 $rootScope.showTemplates = true;
             });
         });
-    }
+    };
 
     $scope.mapToImage = function (ptRouteIsValid) {
         $scope.mapWidth = 600;
@@ -387,7 +383,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 break;
             }
         }
-    }
+    };
 
     var drawLegend = function (context, gmapsInfo, yStart, width, height, imageHeight) {
 
@@ -406,11 +402,10 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         context.strokeStyle = '#000000';
         context.lineWidth = lineHeight;
         context.stroke();
-    }
+    };
 
     var drawMapSummary = function (context, ptRouteIsValid, x, y, ptColour, otherColour, walkingColour) {
 
-        var fontStyle = 'Helvetica';
         var fontReg = '20px ';
         var fontStyle = 'Helvetica';
         context.font = fontReg + fontStyle;
@@ -426,7 +421,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         context.fillText('PUBLIC TRANSPORT: ' + getPublicTransportSummary(ptRouteIsValid), x, y + 80);
 
         drawMapSummaryLegends(context, x, y + 110, ptColour, otherColour, walkingColour);
-    }
+    };
 
     var drawMapSummaryLegends = function (context, x, legendsY, ptColour, otherColour, walkingColour) {
         context.font = "14px Helvetica";
@@ -460,13 +455,13 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         context.lineWidth = lineWidth;
 
         context.stroke();
-    }
+    };
 
     var getUserTimeSelectionHeader = function () {
         var transportChoice = $scope.formattedTimeOption();
         var date = $scope.formattedDate();
         return transportChoice + ' on ' + date;
-    }
+    };
 
     var getPublicTransportSummary = function (ptRouteIsValid) {
 
@@ -476,13 +471,13 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         else {
             return 'No Service Available!!';
         }
-    }
+    };
     var getOtherModeHeader = function () {
         return $scope.other.mode.toUpperCase() + ': ';
-    }
+    };
     var getOtherModeSummary = function () {
         return $scope.other.duration + ', ' + $scope.other.distance;
-    }
+    };
     var drawCircleAt = function (center, context, color, gmapsInfo) {
         context.beginPath();
         context.strokeStyle = color;
@@ -490,7 +485,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         var centerXy = getXYcoords(gmapsInfo, center);
         context.arc(centerXy[0], centerXy[1], 8, 0, 2 * Math.PI);
         context.stroke();
-    }
+    };
 
     var drawPolylines = function (polylineData, context, lineWidth, lineColor, gmapsInfo) {
 
@@ -520,7 +515,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         // Reset line dash to fix bug with frame being dotted 
         context.beginPath();
         context.setLineDash([]);
-    }
+    };
 
     $scope.renderMemeFinal = function () {
         var context = $rootScope.context;
@@ -604,7 +599,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             "projection": projection,
             "width": container.offsetWidth
         };
-    }
+    };
 
     var getXYcoords = function (mapInfo, latLng) {
 
@@ -613,7 +608,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             (worldPoint.x - mapInfo.origin.x) * mapInfo.xScale,
             (worldPoint.y - mapInfo.origin.y) * mapInfo.yScale
         ];
-    }
+    };
     var findPolylineBounds = function (polylineData) {
         if (polylineData[0]) {
             var latMax = polylineData[0].coords[0].lat,
@@ -777,11 +772,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         }
         else
             return distance;
-    }
+    };
 
     var prettyDistance = function (distance) {
         return 'Walk: ' + Math.round(distance / 100) / 10 + ' Km'
-    }
+    };
 
     var prettyDuration = function (duration) {
         var mins = duration % 60;
@@ -800,7 +795,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             return hrs + ' Hr ' + mString;
         }
         return mString;
-    }
+    };
 
     $scope.shareImage = function () {
         if ($rootScope.selectedTemplate) {
@@ -824,7 +819,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         document.getElementById('summary-from').innerText = document.getElementById('start-address').value;
         document.getElementById('summary-to').innerText = document.getElementById('dest-address').value;
         $scope.canProgressToStage2 = false;
-    }
+    };
 
     var scrollToElement = function (id) {
 

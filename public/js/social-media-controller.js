@@ -1,9 +1,6 @@
 var app = angular.module('bus-meme');
 
-app.controller('SocialMediaController', function ($scope, $rootScope, $location, $route, MemeFactory, locationUtil) {
-    var KM_TO_METER_FACTOR = 1000;
-    var HASH_TAG = 'publictransportfail';
-
+app.controller('SocialMediaController', function ($scope, $rootScope, $location, $route, MemeFactory, locationUtil, BusMemeConfig) {
     $scope.user = {};
     $scope.invalidUserInput = false;
 
@@ -23,8 +20,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     }
 
     function convertToMeters(distance) {
-
-        return Number(distance.toLowerCase().replace(' km', '').replace('walk: ', '')) * KM_TO_METER_FACTOR;
+        return Number(distance.toLowerCase().replace(' km', '').replace('walk: ', '')) * BusMemeConfig.KM_TO_METER_FACTOR;
     }
 
     $scope.saveImage = function (callback) {
@@ -53,27 +49,25 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
     };
 
     $scope.facebookShare = function () {
-        console.log("HEre1")
         $scope.saveImage(function (imageLink) {
-        console.log("HEre2")
             FB.ui({
                 method: 'share',
                 href: imageLink,
-                hashtag: '#' + HASH_TAG,
-                quote:  $rootScope.memeText
-            }, function(response){
+                hashtag: '#' + BusMemeConfig.HASH_TAG,
+                quote: $rootScope.memeText
+            }, function (response) {
                 console.log(response);
             });
         });
     };
-    
+
     $scope.twitterShare = function () {
-        $scope.saveImage(function (imageLink) { 
-            
+        $scope.saveImage(function (imageLink) {
+
             var tweetLength = 140;
             var tweetText = $rootScope.memeText;
-            var hashtag = ' %23' + HASH_TAG;
-            
+            var hashtag = ' %23' + BusMemeConfig.HASH_TAG;
+
             if (tweetText.length + imageLink.length + hashtag.length > tweetLength) {
                 tweetText = tweetText.substring(0, tweetLength - hashtag.length - imageLink.length - 2) + '..';
             }
@@ -84,9 +78,9 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
         });
     };
 
-    $scope.reloadPage = function() {
+    $scope.reloadPage = function () {
         $rootScope.imageLink = '';
-       $route.reload();
+        $route.reload();
     };
 
     function validEmail(email) {
