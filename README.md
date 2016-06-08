@@ -48,7 +48,7 @@ Useful commands: `use [MY-DB-NAME]`, `db.getCollectionNames()`, `db.[MY-COLLECTI
 
 Create 2 applications:
 - BusMemeGenerator: make sure the "Site URL" matches the production website URL (e.g. `http://busmeme.org`)
-- BusMemeGeneratorQA, which is a test app (see here what's a FB test app here: https://developers.facebook.com/docs/apps/test-apps/): make sure the "Site URL" matches the QA website URL (e.g. `http://bus-meme-generator.herokuapp.com`)
+- BusMemeGeneratorQA, which is a test app (see here what's a FB test app here: https://developers.facebook.com/docs/apps/test-apps/): make sure the "Site URL" matches the QA website URL (e.g. `http://bus-meme-generator.herokuapp.com`). Note: only private members can be added to a test FB app (it's not possible to publish it)
 
 #### Docker installation
 
