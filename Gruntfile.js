@@ -46,7 +46,7 @@ module.exports = function (grunt) {
             },
             qa: {
                 constants: {
-                    BusMemeConfig: grunt.file.readJSON('config/frontend_config/development.json')
+                    BusMemeConfig: grunt.file.readJSON('config/frontend_config/qa.json')
                 }
             },
             prod: {
