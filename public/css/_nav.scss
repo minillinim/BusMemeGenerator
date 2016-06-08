@@ -29,7 +29,7 @@
     	font-size:18px;
     	cursor:pointer;
     }
-    .gallery, .about, .signin{
+    .gallery, .about, .signin, .new-meme{
         cursor:pointer;
         color: $input-color;
         position: fixed;
@@ -55,6 +55,11 @@
     .signin {
       right: 180px;
     }
+
+    .new-meme {
+      right: 265px;
+    }
+
 }
 
 #nav.gallery-nav{

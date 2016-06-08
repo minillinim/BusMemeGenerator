@@ -1,11 +1,5 @@
-<div id="nav" class="about-nav">
-    <div class="bus-meme-home" ng-click="showHomePage()">
-        <img src="../assets/bus-meme-logo.svg"/>BUS MEME GENERATOR
-    </div>
-    <div class="create-meme" ng-click="showHomePage()">
-        <span ng-click="showHomePage()">+ Create Meme</span>
-    </div>
-</div>
+<div ng-include src="'views/_nav.html'"></div>
+
 <div class="about-display pure-g" ng-controller="AboutController">
     <div class="about-header pure-u-1">
         <h2>What are all these <span class="hashtag">#publictransportfail</span>s about anyway?</h2>

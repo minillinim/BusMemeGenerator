@@ -1,11 +1,5 @@
-<div id="nav" class="gallery-nav">
-    <div class="bus-meme-home" ng-click="showHomePage()">
-        <img src="../assets/bus-meme-logo.svg"/>BUS MEME GENERATOR
-    </div>
-    <div class="create-meme" ng-click="showHomePage()">
-        <span ng-click="showHomePage()">+ Create Meme</span>
-    </div>
-</div>
+<div ng-include src="'views/_nav.html'"></div>
+
 <div class="gallery-display pure-g" ng-controller="GalleryController">
     <div class="gallery-header pure-u-1">
         <h2>Gallery</h2>

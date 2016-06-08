@@ -1,11 +1,9 @@
 <div ng-controller="ExportController">
-    <div id="nav" class="gallery-nav">
-        <div class="bus-meme-home" ng-click="showHomePage()">
-            <img src="../assets/bus-meme-logo.svg"/>BUS MEME GENERATOR
-        </div>
-        <div class="create-meme">
-            <span ng-click="signOut()">Sign out</span>
-        </div>
+
+    <div ng-include src="'views/_nav.html'"></div>
+
+    <div class="create-meme">
+        <span ng-click="signOut()">Sign out</span>
     </div>
     <div class="admin-display pure-g">
         <div ng-click="exportUsers()" class="export-header pure-u-1">Export users</div>
