@@ -5,14 +5,14 @@ exports.memeTemplates = [
     },
     {   
         "firstLine":"Logan city council",
-        "secondLine":"Invest in better buses!"
+        "secondLine":"Let's get this fixed!"
     },
     {   
-        "firstLine":"And then they wonder",
-        "secondLine":"Why everyone owns a car"
+        "firstLine":"I'd catch a bus",
+        "secondLine":"If it was reliable"
     },
     {   
-        "firstLine":"Logan city council",
-        "secondLine":"Thinks there's no problem"
+        "firstLine":"Logan residents",
+        "secondLine":"Deserve better"
     }
 ];
