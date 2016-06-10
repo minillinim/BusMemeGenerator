@@ -80,22 +80,23 @@ select {
   right: 0;
   left: 0;
   z-index: 1300;
-  height: 10px; }
+  background-color: #4468DB;
+  height: 50px; }
   #nav .bus-meme-home {
     cursor: pointer;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: bold;
     display: inline-block; }
     #nav .bus-meme-home img {
-      width: 46px;
-      margin: 10px;
+      width: 34px;
+      margin: 8px;
       margin-left: 30px;
       vertical-align: middle; }
   #nav .create-meme {
     display: inline-block;
     right: 10px;
     position: fixed;
-    padding: 20px;
+    padding: 15px;
     color: white;
     text-transform: uppercase;
     font-size: 18px;
@@ -104,7 +105,7 @@ select {
     cursor: pointer;
     color: white;
     position: fixed;
-    padding: 20px;
+    padding: 15px;
     display: inline-block; }
     #nav .gallery img, #nav .about img, #nav .signin img, #nav .new-meme img {
       display: inline-block;
@@ -119,14 +120,6 @@ select {
     right: 180px; }
   #nav .new-meme {
     right: 265px; }
-
-#nav.gallery-nav {
-  background-color: #4468DB;
-  height: 65px; }
-
-#nav.about-nav {
-  background-color: #4468DB;
-  height: 65px; }
 
 body {
   padding-top: 20px;
@@ -144,7 +137,8 @@ body {
   text-transform: uppercase; }
   #main #title {
     text-transform: none;
-    text-align: center; }
+    text-align: center;
+    margin-top: 40px; }
     #main #title .busmeme-logo {
       margin-right: 20px;
       width: 80px;
