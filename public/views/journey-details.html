@@ -53,6 +53,13 @@
             <input class="radiobutton second" type="radio" ng-model="transport.mode" value="walking" ng-checked="false"> No, I rely on public
             transport
         </div>
+        <div class="travel-comparison">
+            <p>Is the maximum walking distance critical for you?</p>
+            <br class="input-break"/>
+            <input class="radiobutton" type="radio" ng-model="transport.preference" value="distance" ng-checked="false"> Yes, It's more important than travel time
+            <br class="input-break"/>
+            <input class="radiobutton second" type="radio" ng-model="transport.preference" value="speed" ng-checked="true"> No, I'd rather just get there faster
+        </div>
         <div id="validation-errors"></div>
         <input class="button next-button" ng-click="getMapData()" ng-show="canProgressToStage2" type="submit" value="Next" />
 

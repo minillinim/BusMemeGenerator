@@ -31,8 +31,8 @@ function _getModeString(mode) {
   return "public"
 }
 
-function getJourneysBetween(startLat, startLng, destLat, destLng, mode, at, walkMax) {
-  //localhost:3000/tl/-27.415458/153.050513/-27.465918/153.025939/after/1464961050/1200/
+function getJourneysBetween(startLat, startLng, destLat, destLng, mode, at, walkMax, sortPreference) {
+  //localhost:3000/tl/-27.415458/153.050513/-27.465918/153.025939/after/1464961050/1200/distance
   tripInfo = {
     "startLat": startLat,
     "startLng": startLng,
@@ -40,7 +40,8 @@ function getJourneysBetween(startLat, startLng, destLat, destLng, mode, at, walk
     "destLng": destLng,
     "walkSpeed": default_walk_speed,
     "walkMax": walkMax,
-    "at": _convertTime(at)
+    "at": _convertTime(at),
+    "sortPreference": sortPreference
   };
 
   switch(mode) {
@@ -119,13 +120,13 @@ function _getJourneysBetween(tripInfo, startLoc, destLoc) {
       }
     ).then(
       function(response) {
-        var itineraries = [response.TravelOptions.Itineraries[0]];
+        var itineraries = response.TravelOptions.Itineraries;
         return _processItineraries(tripInfo, [], itineraries);
       }
     ).then(
       function(processedItineraries) {
         if(processedItineraries.length > 0) {
-          d.resolve(processedItineraries[0]);
+          d.resolve(_getBestItinerary(processedItineraries, tripInfo.sortPreference));
         } else {
           d.resolve(undefined);
         }
@@ -135,6 +136,57 @@ function _getJourneysBetween(tripInfo, startLoc, destLoc) {
     d.resolve(undefined);
   }
   return d.promise;    
+}
+
+function _getBestItinerary(itineraries, sortPreference) {
+  var checkStruct = {};
+      shortest = 100000000000;
+
+  var index = 0;
+  console.log(JSON.stringify(itineraries));
+
+  itineraries.forEach(function(itinerary) {
+    var walkingDistance = parseInt(itinerary.walkingDistance);
+    var duration = parseInt(itinerary.duration);
+
+    if(sortPreference==="distance") {
+      if(checkStruct[walkingDistance]) {
+        checkStruct[walkingDistance].push([index, duration])
+      } else {
+        checkStruct[walkingDistance] = [[index, duration]];
+      }
+      if(walkingDistance < shortest) {
+        shortest = walkingDistance;
+      }
+    } else {
+      if(checkStruct[duration]) {
+        checkStruct[duration].push([index, walkingDistance]);
+      } else {
+        checkStruct[duration] = [[index, walkingDistance]];
+      }
+      if(duration < shortest) {
+        shortest = duration;
+      }
+    }
+    index++;
+  });
+
+  console.log(JSON.stringify(checkStruct));
+
+  var bestIndex = 0;
+  var bestValue = checkStruct[shortest][0][1];
+  index = 0;
+  checkStruct[shortest].forEach(function(info) {
+    if(info[1] < bestValue) {
+      bestValue = info[1];
+      bestIndex = index;
+    }
+    index += 1;
+  });
+  console.log(bestIndex)
+  console.log(checkStruct[shortest][bestIndex])
+  console.log(itineraries[checkStruct[shortest][bestIndex][0]])
+  return itineraries[checkStruct[shortest][bestIndex][0]];
 }
 
 function _getLocation(lat, lng) {
@@ -211,41 +263,21 @@ function _processLegs(tripInfo, processedLegs, legs) {
 
   if(processedLegs.length < legs.length) {
     var leg = legs[processedLegs.length];
-    _getStopLocationById(leg.FromStopId, tripInfo.startLat, tripInfo.startLng).then(
-      function(locationInfo) {
-        var processed_leg = {};
-        processed_leg["startDesc"] = locationInfo.Description;
-        processed_leg["startLat"] = locationInfo.Position.Lat;
-        processed_leg["startLng"] = locationInfo.Position.Lng;
-        return processed_leg;
-      }
-    ).then(
-      function(processed_leg) {
-        return _getStopLocationById(leg.ToStopId, tripInfo.destLat, tripInfo.destLng).then(
-          function(locationInfo) {
-            processed_leg["destDesc"] = locationInfo.Description;
-            processed_leg["destLat"] = locationInfo.Position.Lat;
-            processed_leg["destLng"] = locationInfo.Position.Lng;
+    var processed_leg = {};
 
-            if(leg.TravelMode == travel_by_walk) {
-              processed_leg["totalWalkDistance"] = leg.DistanceM;
-            } else {
-              processed_leg["totalWalkDistance"] = 0;
-            }
+    if(leg.TravelMode == travel_by_walk) {
+      processed_leg["totalWalkDistance"] = leg.DistanceM;
+    } else {
+      processed_leg["totalWalkDistance"] = 0;
+    }
 
-            processed_leg["departureTime"] = _parseTimeString(leg.DepartureTime);
-            processed_leg["duration"] = leg.DurationMins;
-            processed_leg["polyline"] = leg.Polyline;
-            processed_leg["travelMode"] = _getModeString(leg.TravelMode);
+    processed_leg["departureTime"] = _parseTimeString(leg.DepartureTime);
+    processed_leg["duration"] = leg.DurationMins;
+    processed_leg["polyline"] = leg.Polyline;
+    processed_leg["travelMode"] = _getModeString(leg.TravelMode);
 
-            return processed_leg;
-          }
-        );
-      }
-    ).then(function(processed_leg){
-      processedLegs.push(processed_leg);
-      d.resolve(_processLegs(tripInfo, processedLegs, legs));
-    });
+    processedLegs.push(processed_leg);
+    d.resolve(_processLegs(tripInfo, processedLegs, legs));
   } else {
     d.resolve(processedLegs)
   }

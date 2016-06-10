@@ -6,7 +6,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     loadGoogleAutocomplete();
 
     $scope.transport = {
-        mode: 'driving'
+        mode: 'driving',
+        preference: 'speed'
     };
 
     $scope.showImage = false;
@@ -149,7 +150,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
                     var d = $q.defer();
 
-                    if (!directionsStatus.dw) { d.resolve( { "dw": false, "pt": false } ); return d.promise; }
+                    if (!directionsStatus.dw) { d.resolve( { "dw": false, "pt": "none" } ); return d.promise; }
 
                     addStatus("Retrieving journey information from Translink (allowing 10 seconds)...");
                     var tlapiUrl = locationUtil.getLocationPath() +
@@ -159,11 +160,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         destLat + "/" +
                         destLng + "/" +
                         $scope.getTimeOption() + "/" +
-                        $scope.getSelectedTime().getTime() / 1000 + "/"
-                        + $scope.getMaxWalk();
+                        $scope.getSelectedTime().getTime() / 1000 + "/" +
+                        "4000/" +
+                        $scope.transport.preference;
 
-                    
-                    console.log(tlapiUrl);
+                    console.log(tlapiUrl, $scope.transport);
 
                     $.ajax({
                         type: "GET",
@@ -172,7 +173,8 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         success: function (journey) {
                             if (!journey) {
                                 addStatus("Failed to retrieve journey information");
-                                d.resolve( { "dw": true, "pt": false } );
+                                d.resolve( { "dw": true, "pt": "none" } );
+                                return;
                             }
 
                             addStatus("Success!");
@@ -194,11 +196,16 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                             }
 
                             $scope.ptBounds = findPolylineBounds($scope.ptLatLng);
-                            d.resolve( { "dw": true, "pt": true } );
+                            if($scope.getMaxWalk() < journey.walkingDistance) {
+                                // will need to walk too far
+                                d.resolve( { "dw": true, "pt": "badWalk" } );
+                            } else {
+                                d.resolve( { "dw": true, "pt": "transport" } );
+                            }
                         },
                         error: function (err) {
                             addStatus("Journey could not be retrieved, trying Google...");
-                            d.resolve( { "dw": true, "pt": false } );
+                            d.resolve( { "dw": true, "pt": "none" } );
                         }
                     });
                     return d.promise;
@@ -207,9 +214,14 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 function (directionsStatus) {
                     var d = $q.defer();
 
-                    if(!directionsStatus.dw) { d.resolve( {"dw": false, "pt": "none" } ); return d.promise; }
-                    if(directionsStatus.pt) { d.resolve( {"dw": true, "pt": "transport" } ); return d.promise; }
-                    if ($scope.transport.mode === 'walking') { d.resolve( { "dw": true, "pt": "none" } ); return d.promise; }
+                    if(!directionsStatus.dw ||                      // Driving failed
+                        directionsStatus.pt === "badWalk" ||        // Walk was too far but PT available
+                        directionsStatus.pt === "transport" ||      // Everything is OK
+                        $scope.transport.mode === 'walking')        // No need to ask for walking directions twice
+                    {
+                        d.resolve(directionsStatus);
+                        return d.promise;
+                    }
 
                     $scope.ptLatLng = [];
                     addStatus("Retrieving walking directions from Google...");
@@ -402,7 +414,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
         context.fillText(getOtherModeHeader() + getOtherModeSummary(), x, y + 90);
 
-        context.fillText(getPublicTransportSummary(ptRouteProperties==="transport"), x, y + 120);
+        context.fillText(getPublicTransportSummary(ptRouteProperties), x, y + 120);
 
         drawMapSummaryLegends(context, x, y + 141, ptColour, otherColour, walkingColour);
     };
@@ -465,12 +477,13 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         return transportChoice + ' on ' + date;
     };
 
-    var getPublicTransportSummary = function (ptRouteIsValid) {
+    var getPublicTransportSummary = function (ptRouteProperties) {
 
-        if (ptRouteIsValid) {
+        if (ptRouteProperties==="transport") {
             return 'PUBLIC TRANSPORT: ' + $scope.public.duration + ', ' + $scope.public.distance;
-        }
-        else {
+        } else if (ptRouteProperties==="badWalk") {
+            return 'PUBLIC TRANSPORT: ' + $scope.public.duration + ', ' + $scope.public.distance;
+        } else {
             if($scope.public.duration !== '') {
                 return "You could try walk: " + ("" +$scope.public.distance).replace("Walk: ", "") + " for " + $scope.public.duration;
             }

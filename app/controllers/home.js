@@ -52,14 +52,15 @@ router.get('/exportMemeTemplates', ExportController().exportMemeTemplates);
 router.get('/exportImages', ExportController().exportImages);
 
 
-router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax', function (req, res) {
+router.get('/tl/:startLat/:startLng/:endLat/:endLng/:mode/:at/:walkMax/:sortPreference', function (req, res) {
     tlapi().getJourneysBetween(req.params.startLat,
         req.params.startLng,
         req.params.endLat,
         req.params.endLng,
         req.params.mode,
         req.params.at,
-        req.params.walkMax)
+        req.params.walkMax,
+        req.params.sortPreference)
         .then(function (processedJourney) {
             res.send(processedJourney);
         });
