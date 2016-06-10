@@ -24,13 +24,18 @@
 
             <div class="time-options">
                 <br class="input-break"/>
-                <input class="radiobutton first" type="radio" ng-model="timeOption" name="timeOption" value="after" ng-checked="timeOption=='after'">Leave After</input>
+                <input id="top1" class="radiobutton first" type="radio" ng-model="timeOption" name="timeOption" value="after" ng-checked="timeOption=='after'">
+                <label for="top1">Leave After</label>
                 <br class="input-break"/>
-                <input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="before" ng-checked="timeOption=='before'">Arrive Before</input>
+                <input id="top2" class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="before" ng-checked="timeOption=='before'">
+                <label for="top2">Arrive Before</label>
                 <br class="input-break"/>
-                <input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="first" ng-checked="timeOption=='first'">Earliest Services</input>
+                <input id="top3" class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="first" ng-checked="timeOption=='first'">
+                <label for="top3">Earliest Services</label>
                 <br class="input-break"/>
-                <input class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="last" ng-checked="timeOption=='last'">Latest Services</input>
+                <input id="top4" class="radiobutton" type="radio" ng-model="timeOption" name="timeOption" value="last" ng-checked="timeOption=='last'">
+                <label for="top4">Latest Services</label>
+
             </div>
 
             <div class="time-spec" ng-show="timeOption == 'before' || timeOption == 'after'">
@@ -48,17 +53,20 @@
         <div class="travel-comparison">
             <p>Do you have a car?</p>
             <br class="input-break"/>
-            <input class="radiobutton" type="radio" ng-model="transport.mode" value="driving" ng-checked="true"> Yes, I do
+            <input id="tcm1" class="radiobutton jselector" type="radio" ng-model="transport.mode" value="driving" ng-checked="true">
+            <label for="tcm1">Yes, I do</label>
             <br class="input-break"/>
-            <input class="radiobutton second" type="radio" ng-model="transport.mode" value="walking" ng-checked="false"> No, I rely on public
-            transport
+            <input id="tcm2" class="radiobutton jselector second" type="radio" ng-model="transport.mode" value="walking" ng-checked="false"> 
+            <label for="tcm2">No, I rely on public transport</label>
         </div>
         <div class="travel-comparison">
             <p>Is the maximum walking distance critical for you?</p>
             <br class="input-break"/>
-            <input class="radiobutton" type="radio" ng-model="transport.preference" value="distance" ng-checked="false"> Yes, It's more important than travel time
+            <input id="tcp1" class="radiobutton jselector" type="radio" ng-model="transport.preference" value="distance" ng-checked="false">
+            <label for="tcp1">Yes, It's more important than travel time</label>
             <br class="input-break"/>
-            <input class="radiobutton second" type="radio" ng-model="transport.preference" value="speed" ng-checked="true"> No, I'd rather just get there faster
+            <input id="tcp2" class="radiobutton jselector second" type="radio" ng-model="transport.preference" value="speed" ng-checked="true">
+            <label for="tcp2">No, I'd rather just get there faster</label>
         </div>
         <div id="validation-errors"></div>
         <input class="button next-button" ng-click="getMapData()" ng-show="canProgressToStage2" type="submit" value="Next" />
