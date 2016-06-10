@@ -2,10 +2,15 @@
 
     <div ng-include src="'views/_nav.html'"></div>
 
-    <div class="create-meme">
-        <span ng-click="signOut()">Sign out</span>
-    </div>
     <div class="admin-display pure-g">
+        <div class="user-input">
+            <input name="token" type="password" maxlength="100" id="login" ng-model="token" placeholder="ADMIN TOKEN" />
+            <input class="button subscribe" type="submit" ng-click="userLogin()" value="Login" />
+            <div ng-show="authFail" class="pure-u-1-3"><span>Invalid token!</span></div>
+        </div>
+    </div>
+
+    <div class="admin-display pure-g" ng-show="userSignedIn">
         <div ng-click="exportUsers()" class="export-header pure-u-1">Export users</div>
         <div ng-click="exportMemeTemplates()" class="export-header pure-u-1">Export meme templates</div>
         <div ng-click="exportImages()" class="export-header pure-u-1">Export images details</div>

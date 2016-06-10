@@ -32,6 +32,12 @@ router.get('/logan/meme', function (req, res) {
 router.get('/logan/about', function (req, res) {
     res.render('index', {title: 'Bus Meme Generator'});
 });
+router.get('/admin', function (req, res) {
+    res.render('index', {title: 'Bus Meme Generator'});
+});
+router.get('/export', function (req, res) {
+    res.render('index', {title: 'Bus Meme Generator'});
+});
 
 router.get('/getMemeTemplates', MemeController().getMemeTemplates);
 

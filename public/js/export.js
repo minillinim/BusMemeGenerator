@@ -1,14 +1,26 @@
 var app = angular.module('bus-meme');
 
-app.controller('ExportController', function ($scope, $http, $location) {
+app.controller('ExportController', function ($scope, $http, $location, AuthFactory) {
 
-    if (!sessionStorage.getItem('isAuthenticated') || sessionStorage.getItem('isAuthenticated') == 'false') {
-        $location.path('');
-    }
+    $scope.authFail = false;
+    $scope.userSignedIn = false;
 
-    $scope.signOut = function () {
-        sessionStorage.setItem('isAuthenticated', false);
+    $scope.showHomePage = function () {
         $location.path('');
+    };
+
+    $scope.userLogin = function () {
+        AuthFactory.userLogin($scope.token).then(function (response) {
+
+            if (response.data.isAuthenticated) {
+                $scope.authFail = false;
+                $scope.userSignedIn = true;
+                $location.path('/export');
+            }
+        }, function(err){
+            $scope.authFail = true;
+            $scope.userSignedIn = false;
+        });
     };
 
     var dataExport = function (data, modelName) {
@@ -24,21 +36,29 @@ app.controller('ExportController', function ($scope, $http, $location) {
     };
 
     $scope.exportUsers = function() {
-        $http.get('/exportUsers').then(function (response) {
+        $http.get('/exportUsers?token=' + $scope.token).then(function (response) {
             dataExport(response.data, 'users');
         });
     };
     $scope.exportMemeTemplates = function() {
-        $http.get('/exportMemeTemplates').then(function (response) {
+        $http.get('/exportMemeTemplates?token=' + $scope.token).then(function (response) {
             dataExport(response.data, 'templates');
         });
     };
     $scope.exportImages = function() {
-        $http.get('/exportImages').then(function (response) {
+        $http.get('/exportImages?token=' + $scope.token).then(function (response) {
             dataExport(response.data, 'images');
         });
     };
 
 });
+
+app.factory('AuthFactory', ['$http', function ($http) {
+    return {
+        userLogin: function (token) {
+            return $http.post('/userLogin', {data: token});
+        }
+    }
+}]);
 
 
