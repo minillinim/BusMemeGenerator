@@ -139,17 +139,17 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
                         $scope.dwLatLng = dwRoute.polylineCoords;
                         $scope.dwBounds = dwRoute.bounds;
-                        return {"dw": true, "pt": false};
+                        return { "dw": true, "pt": false };
                     }
                     addStatus("Failed to retrieve directions, please wait a moment and try again");
-                    return {"dw": false, "pt": false};
+                    return { "dw": false, "pt": false };
                 }
             ).then(
                 function (directionsStatus) {
 
                     var d = $q.defer();
 
-                    if (!directionsStatus.dw) { d.resolve( {"dw": false, "pt": false} ); return d.promise; }
+                    if (!directionsStatus.dw) { d.resolve( { "dw": false, "pt": false } ); return d.promise; }
 
                     addStatus("Retrieving journey information from Translink (allowing 10 seconds)...");
                     var tlapiUrl = locationUtil.getLocationPath() +
@@ -162,6 +162,9 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         $scope.getSelectedTime().getTime() / 1000 + "/"
                         + $scope.getMaxWalk();
 
+                    
+                    console.log(tlapiUrl);
+
                     $.ajax({
                         type: "GET",
                         url: tlapiUrl,
@@ -169,7 +172,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                         success: function (journey) {
                             if (!journey) {
                                 addStatus("Failed to retrieve journey information");
-                                d.resolve( {"dw": true, "pt": false} );
+                                d.resolve( { "dw": true, "pt": false } );
                             }
 
                             addStatus("Success!");
@@ -191,11 +194,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                             }
 
                             $scope.ptBounds = findPolylineBounds($scope.ptLatLng);
-                            d.resolve( {"dw": true, "pt": true} );
+                            d.resolve( { "dw": true, "pt": true } );
                         },
                         error: function (err) {
                             addStatus("Journey could not be retrieved, trying Google...");
-                            d.resolve( {"dw": true, "pt": false} );
+                            d.resolve( { "dw": true, "pt": false } );
                         }
                     });
                     return d.promise;
@@ -204,9 +207,9 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                 function (directionsStatus) {
                     var d = $q.defer();
 
-                    if(!directionsStatus.dw) { d.resolve( {"dw": false, "pt": false} ); return d.promise; }
-                    if(directionsStatus.pt) { d.resolve( {"dw": true, "pt": true} ); return d.promise; }
-                    if ($scope.transport.mode === 'walking') { d.resolve( {"dw": true, "pt": false} ); return d.promise; }
+                    if(!directionsStatus.dw) { d.resolve( {"dw": false, "pt": "none" } ); return d.promise; }
+                    if(directionsStatus.pt) { d.resolve( {"dw": true, "pt": "transport" } ); return d.promise; }
+                    if ($scope.transport.mode === 'walking') { d.resolve( { "dw": true, "pt": "none" } ); return d.promise; }
 
                     $scope.ptLatLng = [];
                     addStatus("Retrieving walking directions from Google...");
@@ -221,12 +224,13 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
                                 };
                                 $scope.ptLatLng = ptRoute.polylineCoords;
                                 $scope.ptBounds = ptRoute.bounds;
-                                d.resolve( {"dw": true, "pt": true} );
+                                d.resolve( {"dw": true, "pt": "walk"} );
+                            } else {
+                                d.resolve( {"dw": true, "pt": "none"} );
+                                addStatus("Failed to retrieve walking directions");
                             }
-                            addStatus("Failed to retrieve walking directions");
-                            d.resolve( {"dw": true, "pt": false} );
                         }
-                    );
+                    );                    
                     return d.promise;
                 }
             ).then(
@@ -250,7 +254,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         }
     };
 
-    var renderStaticMap = function (ptRouteIsValid) {
+    var renderStaticMap = function (ptRouteProperties) {
 
         var gmapsInfo = getMapConversionInfo();
 
@@ -273,7 +277,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
             $rootScope.context = context;
             canvas.width = image.width;
-            canvas.height = image.height * 1.25;
+            canvas.height = image.height * 1.3;
             context.drawImage(image, 0, 0, canvas.width, image.height);
 
             var lineWidth = 2;
@@ -286,14 +290,14 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
             drawCircleAt($scope.origin, context, markerColor, gmapsInfo)
             drawCircleAt($scope.destination, context, marker2Color, gmapsInfo)
 
-            if (ptRouteIsValid) {
+            if (ptRouteProperties !== "none") {
                 drawPolylines($scope.ptLatLng, context, lineWidth, ptRouteColor, gmapsInfo);
             }
             drawPolylines($scope.dwLatLng, context, lineWidth, otherRouteColor, gmapsInfo);
 
             drawLegend(context, gmapsInfo, image.height, canvas.width, canvas.height - image.height, image.height);
 
-            drawMapSummary(context, ptRouteIsValid, image.width / 2, image.height + 20, ptRouteColor, otherRouteColor, markerColor);
+            drawMapSummary(context, ptRouteProperties, image.width / 2, image.height + 20, ptRouteColor, otherRouteColor, markerColor);
 
             $('#gmap-canvas').html("");
             $('#map-status').hide();
@@ -305,9 +309,9 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         });
     };
 
-    $scope.mapToImage = function (ptRouteIsValid) {
+    $scope.mapToImage = function (ptRouteProperties) {
         $scope.mapWidth = 600;
-        if (ptRouteIsValid) {
+        if (ptRouteProperties !== "none") {
             $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
         } else {
             $scope.bounds = getCombinedBounds([$scope.dwBounds]);
@@ -328,11 +332,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         google.maps.event.addListenerOnce($scope.map, 'idle', function () {
             if ($scope.map.getZoom() != $scope.zoom) {
                 google.maps.event.addListenerOnce($scope.map, "zoom_changed", function () {
-                    renderStaticMap(ptRouteIsValid);
+                    renderStaticMap(ptRouteProperties);
                 });
                 $scope.map.setZoom($scope.zoom);
             } else {
-                renderStaticMap(ptRouteIsValid);
+                renderStaticMap(ptRouteProperties);
             }
         });
     };
@@ -374,23 +378,33 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         context.stroke();
     };
 
-    var drawMapSummary = function (context, ptRouteIsValid, x, y, ptColour, otherColour, walkingColour) {
+    var drawMapSummary = function (context, ptRouteProperties, x, y, ptColour, otherColour, walkingColour) {
 
-        var fontReg = '20px ';
-        var fontStyle = 'Helvetica';
-        context.font = fontReg + fontStyle;
-
+        var fontSize = '24';
+        var fontFace = 'Helvetica';
         context.textAlign = "center";
+        context.lineHeight = 24;
+        
         context.fillStyle = "black";
-        context.lineHeight = 20;
+        
+        if(ptRouteProperties !== "transport") { context.fillStyle = "red"; }
+        context.font = "bold " + fontSize + 'px ' + fontFace;
+        context.fillText(getEndpointSummary(ptRouteProperties==="transport"), x, y + 8);
 
-        context.fillText(getUserTimeSelectionHeader(), x, y + 5);
+        context.fillStyle = "black";
+        fontSize = 14;
+        context.font = fontSize + 'px ' + fontFace;
+        context.fillText(getMaxWalkSummary(), x, y + 30);
 
-        context.fillText(getOtherModeHeader() + getOtherModeSummary(), x, y + 45);
+        fontSize = 20;
+        context.font = fontSize + 'px ' + fontFace;
+        context.fillText(getUserTimeSelectionHeader(), x, y + 60);
 
-        context.fillText('PUBLIC TRANSPORT: ' + getPublicTransportSummary(ptRouteIsValid), x, y + 80);
+        context.fillText(getOtherModeHeader() + getOtherModeSummary(), x, y + 90);
 
-        drawMapSummaryLegends(context, x, y + 110, ptColour, otherColour, walkingColour);
+        context.fillText(getPublicTransportSummary(ptRouteProperties==="transport"), x, y + 120);
+
+        drawMapSummaryLegends(context, x, y + 141, ptColour, otherColour, walkingColour);
     };
 
     var drawMapSummaryLegends = function (context, x, legendsY, ptColour, otherColour, walkingColour) {
@@ -403,7 +417,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         var nextLegendIndex = 25;
         drawSummaryLegend(context, nextLegendIndex, legendsY, nextLegendIndex + lineWidth, legendsY, [], ptColour, 3);
         context.fillText(legendText, nextLegendIndex + 35, legendsY + 5);
-
+        
         nextLegendIndex = 170 + context.measureText(legendText).width;
         drawSummaryLegend(context, nextLegendIndex, legendsY, nextLegendIndex + lineWidth, legendsY, [5], walkingColour, 4);
         legendText = 'walking';
@@ -427,6 +441,24 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         context.stroke();
     };
 
+    var getEndpointSummary = function (ptRouteIsValid) {
+        var startSuburb = document.getElementById('startSuburb').value,
+            destSuburb = document.getElementById('destSuburb').value;
+        var ret = startSuburb + " to " + destSuburb;
+        if(ptRouteIsValid) { return ret; }
+        return "No service from " + ret;
+    };
+
+    var getMaxWalkSummary = function () {
+        var walk = parseInt($scope.getMaxWalk());
+        if(walk < 1000) {
+            walk = walk + " m";
+        } else {
+            walk = Math.floor(walk/100)/10 + " km";
+        }
+        return "(with max walk: " + walk + ")";
+    };
+
     var getUserTimeSelectionHeader = function () {
         var transportChoice = $scope.formattedTimeOption();
         var date = $scope.formattedDate();
@@ -436,11 +468,14 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     var getPublicTransportSummary = function (ptRouteIsValid) {
 
         if (ptRouteIsValid) {
-            return $scope.public.duration + ', ' + $scope.public.distance;
+            return 'PUBLIC TRANSPORT: ' + $scope.public.duration + ', ' + $scope.public.distance;
         }
         else {
-            return 'No Service Available!!';
+            if($scope.public.duration !== '') {
+                return "You could try walk: " + ("" +$scope.public.distance).replace("Walk: ", "") + " for " + $scope.public.duration;
+            }
         }
+        return '';
     };
     var getOtherModeHeader = function () {
         return $scope.other.mode.toUpperCase() + ': ';

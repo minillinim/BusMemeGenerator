@@ -30,9 +30,9 @@ function setGoogleListener(control, name){
         var latitude = place.geometry.location.lat();
         var longitude = place.geometry.location.lng();
             
-        getPostalCode(latitude, longitude).then(
-            function (postcode) {
-                setAddressDetails(name, latitude,longitude, postcode);
+        getLocationInfo(latitude, longitude).then(
+            function (info) {
+                setAddressDetails(name, latitude, longitude, info.postCode, info.suburb);
             }, 
             function (err) {
                 console.debug('An error occurred during postcode resolution.', err);
@@ -41,19 +41,21 @@ function setGoogleListener(control, name){
     });
     
     $("#dest-address").keydown(function () {
-        setAddressDetails('dest', '','','');        
+        setAddressDetails('dest', '','','','');        
     });
     $("#start-address").keydown(function () {
-        setAddressDetails('start', '','','');
+        setAddressDetails('start', '','','','');
     });
 
 }
 
-function setAddressDetails(name, lat, long, postcode){
+function setAddressDetails(name, lat, long, postcode, suburb){
     document.getElementById(name + "PostCode").value = postcode;                        
+    document.getElementById(name + "Suburb").value = suburb;                        
     document.getElementById(name + "AddressLat").value = lat;
     document.getElementById(name + "AddressLong").value = long;
 }
+
 function readPostalCode(place) {
 
     var outOfBoundAddress = false;
@@ -76,18 +78,34 @@ function readPostalCode(place) {
     return '';    
 }
 
-function getPostalCode(latitude, longitude) {
+function readSuburb(place) {
+
+    var suburb = '';
+    for (var i = 0; i < place.address_components.length; i++) {
+        if(place.address_components[i].types.length == 2) {
+            if(place.address_components[i].types[0] === 'locality' && place.address_components[i].types[1] === 'political') {
+                suburb = place.address_components[i].short_name;
+                break;
+            }
+        }
+    }
+    return suburb;
+}
+
+function getLocationInfo(latitude, longitude) {
     var deferred = $.Deferred(),
         geocoder = new google.maps.Geocoder;
         
     geocoder.geocode(
         {'location': {lat: latitude, lng: longitude} }, 
         function(results, status) {
+            var postcode = '';
             if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
                 for (var i = 0; i < results.length; i++) {
-                    var postcode = readPostalCode(results[i]);
+                    postcode = readPostalCode(results[i]);
                     if ('' != postcode) {
-                        deferred.resolve(postcode);
+                        var suburb = readSuburb(results[i]);
+                        deferred.resolve( { 'postCode': postcode, 'suburb': suburb } );
                         break;
                     }
                 }
