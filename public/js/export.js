@@ -6,11 +6,6 @@ app.controller('ExportController', function ($scope, $http, $location) {
         $location.path('');
     }
 
-    $scope.signOut = function () {
-        sessionStorage.setItem('isAuthenticated', false);
-        $location.path('');
-    };
-
     var dataExport = function (data, modelName) {
         var element = angular.element('<a/>');
         var today = new Date();
