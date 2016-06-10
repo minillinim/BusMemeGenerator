@@ -21,13 +21,9 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: 'views/image-viewer.html',
         controller: 'ImageViewController'
     }).
-    when('/admin', {
-        templateUrl: 'views/admin.html',
-        controller: 'AdminController'
-    }).
     when('/export', {
         templateUrl: 'views/export.html',
-        controller: 'AdminController'
+        controller: 'ExportController'
     })
     .otherwise({ redirectTo: '/logan' });
 

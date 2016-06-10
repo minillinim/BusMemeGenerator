@@ -70,7 +70,6 @@ module.exports = function (grunt) {
                     'public/js/time-options.js',
                     'public/js/gallery.js',
                     'public/js/about.js',
-                    'public/js/admin.js',
                     'public/js/facebook-init.js',
                     'public/js/config.js',
                     'public/js/image-view.js',

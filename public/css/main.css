@@ -116,10 +116,8 @@ select {
     right: 10px; }
   #nav .about {
     right: 100px; }
-  #nav .signin {
-    right: 180px; }
   #nav .new-meme {
-    right: 265px; }
+    right: 180px; }
 
 body {
   padding-top: 20px;
