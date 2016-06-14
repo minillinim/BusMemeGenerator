@@ -269,6 +269,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
     var isHistoricalTime = function () {
         var currentTime = new Date().getTime()
+        console.log($scope.getSelectedTime().getTime(), currentTime, $scope.getSelectedTime().getTime() <  currentTime)
         return $scope.getSelectedTime().getTime() < currentTime;
     }
 
@@ -331,7 +332,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         $scope.mapWidth = 600;
 
         $scope.showOldTimeWarning = isHistoricalTime();
-        
+
         if (ptRouteProperties !== "none") {
             $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
         } else {

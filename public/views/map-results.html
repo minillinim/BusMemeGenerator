@@ -19,7 +19,11 @@
             <div id="gmap-canvas"></div>
         </div>
         <div id="map-image">
-            <div class="time-warning" ng-show="showOldTimeWarning">Warning! Asking for historic journey information may result in Translink not returning a valid trip. Try refreshing the page and asking for the same journey next week.</div><br>
+            <div class="time-warning" ng-show="showOldTimeWarning">
+                Warning! Asking for historic journey information may result in Translink not returning a valid trip.<br>
+                Try refreshing the page and asking for the same journey but next week.
+            </div>
+            <br>
             <div class="map-canvas" ng-controller="MemeController">
                 <canvas id="canvas" width="0" height="0"></canvas>
                 <img id="img-out" ng-show="showImgOut" class="map-image" src="" />
