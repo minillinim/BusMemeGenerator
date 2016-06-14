@@ -42,7 +42,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
 
             MemeFactory.saveImageDetails(imageDetails).then(function (response) {
                 var imageLink = encodeURIComponent(response.data.imageLink);
-                $rootScope.imageLink = locationUtil.getLocationPath() + '/meme?image=' + imageLink;
+                $rootScope.imageLink = locationUtil.getLocationPath() + '/image/' + imageLink;
                 callback($rootScope.imageLink);
             });
         }
@@ -54,7 +54,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
                 method: 'share',
                 href: imageLink,
                 hashtag: '#' + BusMemeConfig.HASH_TAG,
-                quote: $rootScope.memeText
+                quote: $rootScope.memeText + " Go to http://busmeme.org"
             }, function (response) {
                 console.log(response);
             });
