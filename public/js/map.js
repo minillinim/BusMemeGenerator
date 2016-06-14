@@ -14,6 +14,7 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
     $scope.showMap = false;
     $scope.memeNotSelected = false;
     $scope.showImgOut = false;
+    $scope.showOldTimeWarning = false;
 
     $scope.canProgressToStage2 = true;
     $scope.canProgressToStage3 = false;
@@ -266,6 +267,11 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
         }
     };
 
+    var isHistoricalTime = function () {
+        var currentTime = new Date().getTime()
+        return $scope.getSelectedTime().getTime() < currentTime;
+    }
+
     var renderStaticMap = function (ptRouteProperties) {
 
         var gmapsInfo = getMapConversionInfo();
@@ -323,6 +329,9 @@ app.controller('MapController', function ($scope, $location, $rootScope, MapServ
 
     $scope.mapToImage = function (ptRouteProperties) {
         $scope.mapWidth = 600;
+
+        $scope.showOldTimeWarning = isHistoricalTime();
+        
         if (ptRouteProperties !== "none") {
             $scope.bounds = getCombinedBounds([$scope.ptBounds, $scope.dwBounds]);
         } else {
