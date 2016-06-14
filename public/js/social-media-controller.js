@@ -42,7 +42,7 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
 
             MemeFactory.saveImageDetails(imageDetails).then(function (response) {
                 var imageLink = encodeURIComponent(response.data.imageLink);
-                $rootScope.imageLink = locationUtil.getLocationPath() + '/meme?image=' + imageLink;
+                $rootScope.imageLink = locationUtil.getLocationPath() + '/image/' + imageLink;
                 callback($rootScope.imageLink);
             });
         }
@@ -50,12 +50,13 @@ app.controller('SocialMediaController', function ($scope, $rootScope, $location,
 
     $scope.facebookShare = function () {
         $scope.saveImage(function (imageLink) {
-            FB.ui({
+            var facebookShareOpts = {
                 method: 'share',
                 href: imageLink,
                 hashtag: '#' + BusMemeConfig.HASH_TAG,
-                quote: $rootScope.memeText
-            }, function (response) {
+                quote: $rootScope.memeText + " Visit http://busmeme.org and find out if you have a #publictransportfail"
+            };
+            FB.ui(facebookShareOpts, function (response) {
                 console.log(response);
             });
         });
